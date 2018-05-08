@@ -35,7 +35,9 @@
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
 	var selectedItems = $("#edit-items").val();
-	var selectedArcana = $(".edit-arcana").val();
+	var selectedArcana = $(".edit-arcana").map(function(){
+      return this.value;
+    }).get().join(',');
 	console.log(selectedArcana);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
