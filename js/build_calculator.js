@@ -14,7 +14,7 @@
 	var fullBuild = {};
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
-	var selecteditems = $("#edit-items").val();
+	var selectedItems = $("#edit-items").val();
 	var heroKeys = [
       "field_ability_power",
       "field_ad_per_level",
