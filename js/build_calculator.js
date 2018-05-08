@@ -16,7 +16,6 @@
   function generateBuild(settings) {
 	var fullBuild = {};
 	var selectedHero = $("#edit-hero").val();
-	console.log(selectedHero);
 	var selectedLevel = $("#edit-level").val();
 	var heroKeys = [
       "field_ability_power",
@@ -49,6 +48,7 @@
       "field_percent_pen_ap",
       ];
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
+	console.log(fullBuild);
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
 	for (var data in fullBuild) {
