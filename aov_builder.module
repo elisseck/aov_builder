@@ -11,6 +11,8 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$heroData = aov_builder_query_heroes();
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
+	
+	return $form;
   }
 }
 
