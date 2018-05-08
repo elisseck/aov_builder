@@ -81,7 +81,8 @@
 	return fullBuild;
   }
   
-  function addItems(items, fullBuild) {
+  function addItems(items, selectedItems, fullBuild) {
     //do item stuff
+	return fullBuild;
   }
 })(jQuery, Drupal);
