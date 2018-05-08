@@ -76,6 +76,7 @@
 	console.log(items);
 	console.log(selectedItems);
 	for (var item in selectedItems) {
+		console.log(item);
 	  if (items.hasOwnProperty(item)) {
 		for (var key in items[item]) {
 	      if (key.hasOwnProperty(0)) {
