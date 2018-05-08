@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function ($) {
   function elementWatchers(context) {
 	$(context).find("#edit-hero, #edit-level, #edit-items").once("build_calculator").each(function() {
 	  $(this).change(function() {
