@@ -3,9 +3,13 @@
     attach: function (context, settings) {
       $("#edit-hero, #edit-level, #edit-items", context).once('build_calculator').each(function() {
 	    $(this).change(function() {
-          console.log("changed input");
+          generateBuild(settings);
         });
 	  });
     }
   };
+  
+  function generateBuild(settings) {
+	console.log(settings.herData);
+  }
 })(jQuery, Drupal);
