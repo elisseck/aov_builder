@@ -10,6 +10,8 @@
   };
   
   function generateBuild(settings) {
-	$(".full_build").remove().append( "<p>" + settings.heroData + "</p>" );
+	buildContainer = $(".full_build");
+	buildContainer.empty();
+	buildContainer.append( "<p>" + settings.heroData + "</p>" );
   }
 })(jQuery, Drupal);
