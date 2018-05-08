@@ -60,7 +60,9 @@ function aov_builder_query_heroes() {
   foreach ($nodes as $node) {
 	$nid = $node->id();
     foreach ($heroKeys as $key) {
-	  $data[$nid][$key] = $node->get($key)->getValue();
+	  $data[$nid][$key]['values'] = $node->get($key)->getValue();
+	  $data[$nid][$key]['labels'] = $node->$key->getFieldDefinition()->getLabel();
+	  $data[$nid][$key]['title'] = $node->label();
     }
   }
   return $data;
@@ -133,7 +135,7 @@ function aov_builder_query_arcana() {
   foreach ($nodes as $node) {
     $nid = $node->id();
 	foreach ($arcanaKeys as $key) {
-	  $data[$nid][$key] = $node->get($key)->getValue();
+	  $data[$nid][$key]['values'] = $node->get($key)->getValue();
 	}
   }
   return $data;

@@ -45,7 +45,7 @@
 	//apply items next
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	//apply level scaling
-	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
+	fullBuild = scaleByLevel(settings.heroData[selectedHero]['values'], selectedLevel, fullBuild);
 	//output
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
