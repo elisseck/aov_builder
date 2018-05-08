@@ -82,9 +82,9 @@
 	  if (items.hasOwnProperty(selectedItems[i])) {
 		for (var key in items[selectedItems[i]]) {
 	      if (items[selectedItems[i]][key].hasOwnProperty(0)) {
-			console.log(key[0]);
-			console.log(key[0]['value']);
-		    fullBuild[key] += parseFloat(key[0]['value']);
+			console.log(items[selectedItems[i]]key[0]);
+			console.log(items[selectedItems[i]]key[0]['value']);
+		    fullBuild[key] += parseFloat(items[selectedItems[i]]key[0]['value']);
 		  }
 		}
 	  }
