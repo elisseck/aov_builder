@@ -4,9 +4,6 @@
 	  console.log(settings.heroData);
       $("#edit-hero, #edit-level, #edit-items", context).once('build_calculator').each(function() {
 	    $(this).change(function() {
-		  var selectedHero = $("#edit-hero").val();
-		  var selectedLevel = $("#edit-level").val();
-		  var selectedItems = $("#edit-items").val();
           generateBuild(settings);
         });
 	  });
@@ -17,6 +14,7 @@
 	var fullBuild = {};
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
+	var selecteditems = $("#edit-items").val();
 	var heroKeys = [
       "field_ability_power",
       "field_ad_per_level",
