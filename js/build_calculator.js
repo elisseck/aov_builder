@@ -43,9 +43,10 @@
 	//output
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
+	console.log(fullBuild);
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
-	    buildContainer.append( "<p>" + fullBuild[data] + "</p>" );
+	    buildContainer.append( "<p><strong>" + data + ":</strong> " + fullBuild[data] + "</p>" );
 	  }
 	}
   }
