@@ -4,6 +4,9 @@
 	  console.log(settings.heroData);
       $("#edit-hero, #edit-level, #edit-items", context).once('build_calculator').each(function() {
 	    $(this).change(function() {
+		  var selectedHero = $("#edit-hero").val();
+		  var selectedLevel = $("#edit-level").val();
+		  var selectedItems = $("#edit-items").val();
           generateBuild(settings);
         });
 	  });
@@ -45,9 +48,33 @@
       "field_percent_pen_ad",
       "field_percent_pen_ap",
       ];
-	fullBuild["hp"] = parseFloat(settings.heroData[selectedHero]['field_hp'][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(settings.heroData[selectedHero]['field_hp_per_level'][0]['value']);
+	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
-	buildContainer.append( "<p>" + fullBuild["hp"] + "</p>" );
+	for (var data in fullBuild) {
+	  if (fullBuild.hasOwnProperty(data)) {
+	    buildContainer.append( "<p>" + fullBuild[data] + "</p>" );
+	  }
+	}
+  }
+  
+  function scaleByLevel(hero, selectedLevel, fullBuild) {
+	var levelScales = {
+		"field_hp": "field_hp_per_level",
+		"field_mana": "field_mana_per_level",
+		"field_armor": "field_armor_per_level",
+		"field_critical_damage": "field_critd_per_level",
+		"field_attack_speed": "field_as_per_level",
+		"field_attack_damage": "field_ad_per_level",
+		"field_magic_defense": "field_md_per_level",
+		"field_mana_regen_5_seconds": "field_mana5_per_level",
+		"field_hp_regen_5_seconds": "field_hp5_per_level",
+	}
+	for (var key in levelScales) {
+      if (levelScales.hasOwnProperty(key)) {
+        fullBuild[key] = parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
+      }
+    }
+	return fullBuild;
   }
 })(jQuery, Drupal);
