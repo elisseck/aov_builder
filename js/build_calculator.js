@@ -46,7 +46,7 @@
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	//apply level scaling
 	console.log(settings.heroData);
-	fullBuild = scaleByLevel(settings.heroData[selectedHero]['values'], selectedLevel, fullBuild);
+	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
 	//output
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
@@ -71,8 +71,8 @@
 	}
 	for (var key in levelScales) {
       if (levelScales.hasOwnProperty(key)) {
-		if (hero[key].hasOwnProperty(0) && hero[levelScales[key]].hasOwnProperty(0)) {
-          fullBuild[key] += parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
+		if (hero[key]['values'].hasOwnProperty(0) && hero[levelScales[key]]['values'].hasOwnProperty(0)) {
+          fullBuild[key] += parseFloat(hero[key]['values'][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
 		}
       }
     }

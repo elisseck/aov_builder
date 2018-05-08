@@ -62,7 +62,7 @@ function aov_builder_query_heroes() {
     foreach ($heroKeys as $key) {
 	  $data[$nid][$key]['values'] = $node->get($key)->getValue();
 	  $data[$nid][$key]['labels'] = $node->$key->getFieldDefinition()->getLabel();
-	  $data[$nid][$key]['title'] = $node->label();
+	  $data[$nid]['title'] = $node->label();
     }
   }
   return $data;
