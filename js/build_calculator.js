@@ -73,14 +73,11 @@
   }
   
   function addItems(items, selectedItems, fullBuild) {
-	console.log(items);
-	console.log(selectedItems);
-	for (var item in selectedItems) {
-		console.log(item);
-	  if (items.hasOwnProperty(item)) {
-		for (var key in items[item]) {
+	len = selectedItems.length;
+	for (var i = 0; i < len; i++) {
+	  if (items.hasOwnProperty(selectedItem[i])) {
+		for (var key in items[selectedItem[i]]) {
 	      if (key.hasOwnProperty(0)) {
-			  console.log(key);
 		    fullBuild[key] += parseFloat(key[0]['value']);
 		  }
 		}
