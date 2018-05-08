@@ -1,7 +1,7 @@
 (function ($, Drupal) {
   Drupal.behaviors.build_calculator = {
     attach: function (context, settings) {
-      $("#edit-hero, #edit-level, #edit-items", context).once('build_calculator').each(function() {
+      $("#edit-hero, #edit-level, #edit-items, .edit-arcana", context).once('build_calculator').each(function() {
 	    $(this).change(function() {
           generateBuild(settings);
         });
@@ -10,7 +10,7 @@
   };
   
   function generateBuild(settings) {
-	//initialize build stats as numbers
+	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
 	  "field_ability_power": 0,
       "field_armor": 0,
@@ -35,7 +35,10 @@
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
 	var selectedItems = $("#edit-items").val();
+	var selectedArcana = $(".edit-arcana").val();
+	console.log(selectedArcana);
 	//apply arcana first
+	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	//apply level scaling
@@ -85,5 +88,10 @@
 	  }
 	}
 	return fullBuild;
+  }
+  
+  function addArcana(arcana, selectedArcana, fullBuild) {
+  //do arcana things
+  return fullBuild;
   }
 })(jQuery, Drupal);

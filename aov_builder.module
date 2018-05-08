@@ -10,6 +10,8 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   if ($form['#form_id']== 'webform_submission_build_calculator_add_form') {
 	$heroData = aov_builder_query_heroes();
 	$itemData = aov_builder_query_items();
+	$arcanaData = aov_builder_query_arcana();
+	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
@@ -91,6 +93,41 @@ function aov_builder_query_items() {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'item');
+  $nids = $query->execute();
+  $nodes = entity_load_multiple('node', $nids);
+  foreach ($nodes as $node) {
+    $nid = $node->id();
+	foreach ($itemKeys as $key) {
+	  $data[$nid][$key] = $node->get($key)->getValue();
+	}
+  }
+  return $data;
+}
+
+function aov_builder_query_arcana() {
+  $data = array();
+  $arcanaKeys = array(
+  "field_ability_power",
+  "field_armor",
+  "field_attack_damage",
+  "field_attack_speed",
+  "field_cdr",
+  "field_crit_chance",
+  "field_critical_damage"
+  "field_flat_pen_ad",
+  "field_flat_pen_ap",
+  "field_hp",
+  "field_hp_regen_5_seconds",
+  "field_life_steal",
+  "field_magic_defense",
+  "field_magic_life_steal",
+  "field_movement_speed",
+  "field_cost",
+  "field_gold_value",
+  );
+  $query = \Drupal::entityQuery('node')
+    ->condition('status', 1)
+    ->condition('type', 'arcana');
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
   foreach ($nodes as $node) {
