@@ -1,0 +1,7 @@
+<?php
+
+function aov_builder_preprocess_page(&$variables){
+  if ($variables['is_front'] == TRUE) {
+    $variables['#attached']['library'][] = 'aov_builder/build_calculator';
+  }
+}

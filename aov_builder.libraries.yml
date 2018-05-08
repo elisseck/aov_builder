@@ -1,0 +1,7 @@
+build_calculator:
+  version: 1.x    
+  js:
+    js/build_calculator.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
