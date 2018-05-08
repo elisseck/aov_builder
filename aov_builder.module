@@ -5,3 +5,8 @@ function aov_builder_preprocess_page(&$variables){
     $variables['#attached']['library'][] = 'aov_builder/build_calculator';
   }
 }
+
+function hook_views_post_render(ViewExecutable $view, &$output, CachePluginBase $cache) {
+  dpm($view);
+  dpm($output);
+}
