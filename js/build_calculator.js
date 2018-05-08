@@ -1,7 +1,7 @@
 (function ($, Drupal) {
   Drupal.behaviors.build_calculator = {
     attach: function (context, settings) {
-      $("#edit-hero, #edit-level, #edit-items, .edit-arcana", context).once('build_calculator').each(function() {
+      $("#edit-hero, #edit-level, .edit-items, .edit-arcana", context).once('build_calculator').each(function() {
 	    $(this).change(function() {
           generateBuild(settings);
         });
@@ -34,11 +34,12 @@
 	};
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
-	var selectedItems = $("#edit-items").val();
+	var selectedItems = $(".edit-items").map(function(){
+      return this.value;
+    }).get().join(',');
 	var selectedArcana = $(".edit-arcana").map(function(){
       return this.value;
     }).get().join(',');
-	console.log(settings);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
@@ -48,7 +49,6 @@
 	//output
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
-	console.log(fullBuild);
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
 	    buildContainer.append( "<p><strong>" + data + ":</strong> " + fullBuild[data] + "</p>" );
@@ -79,12 +79,13 @@
   }
   
   function addItems(items, selectedItems, fullBuild) {
-	var len = selectedItems.length;
+	var arr = selectedItems.split(',');
+	var len = arr.length;
 	for (var i = 0; i < len; i++) {
-	  if (items.hasOwnProperty(selectedItems[i])) {
-		for (var key in items[selectedItems[i]]) {
-	      if (items[selectedItems[i]][key].hasOwnProperty(0)) {
-		    fullBuild[key] += parseFloat(items[selectedItems[i]][key][0]['value']);
+	  if (items.hasOwnProperty(arr[i])) {
+		for (var key in items[arr[i]]) {
+	      if (items[arr[i]][key].hasOwnProperty(0)) {
+		    fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
 		  }
 		}
 	  }
