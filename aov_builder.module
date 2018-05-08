@@ -9,7 +9,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   // Adding custom validation for the welcome page type field.
   if ($form['#form_id']== 'webform_submission_build_calculator_add_form') {
 	$heroData = aov_builder_query_heroes();
-	$build['#attached']['drupalSettings']['heroData'] = $heroData;
+	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
   }
 }
