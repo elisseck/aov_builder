@@ -74,7 +74,7 @@
 	for (var key in levelScales) {
       if (levelScales.hasOwnProperty(key)) {
 		if (hero[key].hasOwnProperty(0) && hero[levelScales[key]].hasOwnProperty(0)) {
-          fullBuild[key] = parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
+          fullBuild[key] += parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
 		}
       }
     }
@@ -82,6 +82,15 @@
   }
   
   function addItems(items, selectedItems, fullBuild) {
+	for (var item in selectedItems) {
+	  if (items.hasOwnProperty(item)) {
+		for (var key in items[item]) {
+	      if (key.hasOwnProperty(0)) {
+		    fullBuild[key] += parseFloat(key[0]['value']);
+		  }
+		}
+	  }
+	}
     //do item stuff
 	return fullBuild;
   }
