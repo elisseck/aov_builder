@@ -49,7 +49,7 @@
       ];
 	//apply arcana first
 	//apply items next
-	dpm(selectedItems);
+	console.log(selectedItems);
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
 	var buildContainer = $(".full_build");
