@@ -81,7 +81,7 @@
 		console.log(selectedItems[i])
 	  if (items.hasOwnProperty(selectedItems[i])) {
 		for (var key in items[selectedItems[i]]) {
-	      if (key.hasOwnProperty(0)) {
+	      if (items[selectedItems[i]][key].hasOwnProperty(0)) {
 			console.log(key[0]);
 			console.log(key[0]['value']);
 		    fullBuild[key] += parseFloat(key[0]['value']);
