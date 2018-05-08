@@ -10,6 +10,6 @@
   };
   
   function generateBuild(settings) {
-	console.log(settings.herData);
+	console.log(settings.heroData);
   }
 })(jQuery, Drupal);
