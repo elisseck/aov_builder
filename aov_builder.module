@@ -1,12 +1,14 @@
 <?php
 
-function aov_builder_preprocess_page(&$variables){
-  if ($variables['is_front'] == TRUE) {
-    $variables['#attached']['library'][] = 'aov_builder/build_calculator';
-  }
-}
+use Drupal\Core\Form\FormStateInterface;
 
-function hook_views_post_render(ViewExecutable $view, &$output, CachePluginBase $cache) {
-  dpm($view);
-  dpm($output);
+/**
+ * Implements hook_form_alter().
+ */
+function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Adding custom validation for the welcome page type field.
+  if ($form_id == 'webform-submission-build-calculator-node-4-add-form') {
+	dpm($form);
+    // Do some stuff.
+  }
 }
