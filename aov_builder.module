@@ -62,7 +62,7 @@ function aov_builder_query_heroes() {
 function aov_builder_query_items() {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
-    ->condition('type', 'item')
+    ->condition('type', 'item');
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
   
