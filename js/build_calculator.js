@@ -95,11 +95,11 @@
   function addArcana(arcana, selectedArcana, fullBuild) {
     var selected = selectedArcana.split(',');
 	var len = selected.length;
-	for (var i = 0; i < len; i++) {
-      if (arcana.hasOwnProperty(selected[i])) {
-	    for (var key in arcana[selected[i]]) {
-		  if (arcana[selected[i]][key].hasOwnProperty(0)) {
-		    fullBuild[key] += parseFloat(arcana[selected[i]][key][0]['value']);
+	for (var j = 0; j < len; j++) {
+      if (arcana.hasOwnProperty(selected[j])) {
+	    for (var key in arcana[selected[j]]) {
+		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
+		    fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
 		  }
 		}
 	  }
