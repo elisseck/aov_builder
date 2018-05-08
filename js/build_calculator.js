@@ -77,6 +77,7 @@
 	len = selectedItems.length;
 	for (var i = 0; i < len; i++) {
 	  if (items.hasOwnProperty(selectedItems[i])) {
+		  console.log(items.selectedItems[i]);
 		for (var key in items[selectedItems[i]]) {
 	      if (key.hasOwnProperty(0)) {
 			console.log(key);
