@@ -38,7 +38,7 @@
 	var selectedArcana = $(".edit-arcana").map(function(){
       return this.value;
     }).get().join(',');
-	console.log(selectedArcana);
+	console.log(settings);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
@@ -79,7 +79,7 @@
   }
   
   function addItems(items, selectedItems, fullBuild) {
-	len = selectedItems.length;
+	var len = selectedItems.length;
 	for (var i = 0; i < len; i++) {
 	  if (items.hasOwnProperty(selectedItems[i])) {
 		for (var key in items[selectedItems[i]]) {
@@ -93,7 +93,17 @@
   }
   
   function addArcana(arcana, selectedArcana, fullBuild) {
-  //do arcana things
-  return fullBuild;
+    var selected = selectedArcana.split(',');
+	var len = selected.length;
+	for (var i = 0; i < len, i++) {
+      if (arcana.hasOwnProperty(selected[i])) {
+	    for (var key in arcana[selected[i]]) {
+		  if (arcana[selected[i]][key].hasOwnProperty(0)) {
+		    fullBuild[key] += parseFloat(arcana[selected[i]][key][0]['value']);
+		  }
+		}
+	  }
+	}
+    return fullBuild;
   }
 })(jQuery, Drupal);
