@@ -76,6 +76,7 @@
   function addItems(items, selectedItems, fullBuild) {
 	len = selectedItems.length;
 	for (var i = 0; i < len; i++) {
+		console.log(items);
 	  if (items.hasOwnProperty(selectedItems[i])) {
 		  console.log(items.selectedItems[i]);
 		for (var key in items[selectedItems[i]]) {
