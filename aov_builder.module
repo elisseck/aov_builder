@@ -113,7 +113,7 @@ function aov_builder_query_arcana() {
   "field_attack_speed",
   "field_cdr",
   "field_crit_chance",
-  "field_critical_damage"
+  "field_critical_damage",
   "field_flat_pen_ad",
   "field_flat_pen_ap",
   "field_hp",
