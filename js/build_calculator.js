@@ -11,8 +11,10 @@
   };
   
   function generateBuild(settings) {
-	var selectedHero = $("edit-hero").val();
+	var fullBuild = {};
+	var selectedHero = $("#edit-hero").val();
 	console.log(selectedHero);
+	var selectedLevel = $("#edit-level").val();
 	var heroKeys = [
       "field_ability_power",
       "field_ad_per_level",
@@ -43,9 +45,9 @@
       "field_percent_pen_ad",
       "field_percent_pen_ap",
       ];
-	//settings.heroData[selectedHero]
+	fullBuild["hp"] = settings.heroData[selectedHero]['field_hp'][0]['value'] + (selectedLevel - 1) * settings.heroData[selectedHero]['field_hp_per_level'][0]['value'];
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
-	buildContainer.append( "<p>" + settings.heroData + "</p>" );
+	buildContainer.append( "<p>" + fullBuild["hp"] + "</p>" );
   }
 })(jQuery, Drupal);
