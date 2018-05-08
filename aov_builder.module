@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Adding custom validation for the welcome page type field.
-  if ($form_id == 'webform-submission-build-calculator-node-4-add-form') {
+  if ($form['#form_id']== 'webform_submission_build_calculator') {
 	dpm($form);
     // Do some stuff.
   }
