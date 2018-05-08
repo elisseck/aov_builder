@@ -45,7 +45,7 @@
       "field_percent_pen_ad",
       "field_percent_pen_ap",
       ];
-	fullBuild["hp"] = settings.heroData[selectedHero]['field_hp'][0]['value'] + (selectedLevel - 1) * settings.heroData[selectedHero]['field_hp_per_level'][0]['value'];
+	fullBuild["hp"] = parseFloat(settings.heroData[selectedHero]['field_hp'][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(settings.heroData[selectedHero]['field_hp_per_level'][0]['value']);
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
 	buildContainer.append( "<p>" + fullBuild["hp"] + "</p>" );
