@@ -132,7 +132,7 @@ function aov_builder_query_arcana() {
   $nodes = entity_load_multiple('node', $nids);
   foreach ($nodes as $node) {
     $nid = $node->id();
-	foreach ($itemKeys as $key) {
+	foreach ($arcanaKeys as $key) {
 	  $data[$nid][$key] = $node->get($key)->getValue();
 	}
   }
