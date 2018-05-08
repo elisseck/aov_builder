@@ -50,9 +50,10 @@
 	//output
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
+	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero][title] + "</h2></div>")
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
-	    buildContainer.append( "<p><strong>" + data + ":</strong> " + fullBuild[data] + "</p>" );
+	    buildContainer.append( "<p><strong>" + settings.heroData[selectedHero][data]['labels'] + ":</strong> " + fullBuild[data] + "</p>" );
 	  }
 	}
   }
