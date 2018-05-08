@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, Drupal) {
   Drupal.behaviors.build_calculator = {
     attach: function (context, settings) {
       $(context).find("#edit-hero, #edit-level, #edit-items").once("build_calculator").each(function() {
@@ -8,4 +8,4 @@
 	  });
     }
   };
-})(jQuery);
+})(jQuery, Drupal);
