@@ -9,7 +9,9 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   // Adding custom validation for the welcome page type field.
   if ($form['#form_id']== 'webform_submission_build_calculator_add_form') {
 	$heroData = aov_builder_query_heroes();
+	$itemData = aov_builder_query_items();
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
+	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
 	
 	return $form;
@@ -63,11 +65,40 @@ function aov_builder_query_heroes() {
 }
 
 function aov_builder_query_items() {
+  $data = array();
+  $itemKeys = array(
+  "field_ability_power",
+  "field_armor",
+  "field_attack_damage",
+  "field_attack_speed",
+  "field_cdr",
+  "field_crit_chance",
+  "field_critical_damage",
+  "field_flat_pen_ad",
+  "field_flat_pen_ap",
+  "field_hp",
+  "field_hp_regen_5_seconds",
+  "field_life_steal",
+  "field_magic_defense",
+  "field_magic_life_steal",
+  "field_mana",
+  "field_mana_regen_5_seconds",
+  "field_movement_speed",
+  "field_percent_pen_ad",
+  "field_percent_pen_ap",
+  "field_passive_description",
+  "field_cost",
+  );
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'item');
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
-  
-  $entity->get('field_name')->getValue();
+  foreach ($nodes as $node) {
+    $nid = $node->id();
+	foreach ($itemKeys as $key) {
+	  $data[$nid][$key] = $node->get($key)->getValue();
+	}
+  }
+  return $data;
 }

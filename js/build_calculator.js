@@ -47,8 +47,11 @@
       "field_percent_pen_ad",
       "field_percent_pen_ap",
       ];
+	//apply arcana first
+	//apply items next
+	dpm(selectedItems);
+	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
-	console.log(fullBuild);
 	var buildContainer = $(".full_build");
 	buildContainer.empty();
 	for (var data in fullBuild) {
@@ -78,5 +81,9 @@
       }
     }
 	return fullBuild;
+  }
+  
+  function addItems(items, fullBuild) {
+    //do item stuff
   }
 })(jQuery, Drupal);
