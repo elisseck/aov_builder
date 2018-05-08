@@ -72,7 +72,9 @@
 	}
 	for (var key in levelScales) {
       if (levelScales.hasOwnProperty(key)) {
-        fullBuild[key] = parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
+		if (hero[key].hasOwnProperty(0) && hero[levelScales[key]].hasOwnProperty(0)) {
+          fullBuild[key] = parseFloat(hero[key][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]][0]['value']);
+		}
       }
     }
 	return fullBuild;
