@@ -65,8 +65,10 @@
   
   function getBaseStats(hero, fullBuild) {
     for (var key in hero) {
-      if (hero[key]['values'].hasOwnProperty(0) && fullBuild.hasOwnProperty(key)) {
-	    fullBuild[key] += parseFloat(hero[key]['values'][0]['value']);
+	  if (hero[key].hasOwnProperty['values']) {
+        if (hero[key]['values'].hasOwnProperty(0) && fullBuild.hasOwnProperty(key)) {
+	      fullBuild[key] += parseFloat(hero[key]['values'][0]['value']);
+	    }
 	  }
 	}
 	return fullBuild;
