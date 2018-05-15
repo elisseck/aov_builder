@@ -93,7 +93,13 @@
 	  if (items.hasOwnProperty(arr[i])) {
 		for (var key in items[arr[i]]) {
 	      if (items[arr[i]][key].hasOwnProperty(0)) {
-		    fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
+			if (items[arr[i]][key] == "field_movement_speed_percent") {
+			  console.log(fullBuild["field_movement_speed"]);
+			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
+			  console.log(fullBuild["field_movement_speed"]);
+			} else {
+		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
+			}
 		  }
 		}
 	  }
