@@ -52,7 +52,7 @@
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>")
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
-		if (fullBuild[data] !== NaN) {
+		if (fullBuild[data] !== "NaN") {
 		  var label = "";
 		  if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		    label = settings.heroData[selectedHero][data]['labels'];
@@ -92,6 +92,7 @@
 	  if (items.hasOwnProperty(arr[i])) {
 		for (var key in items[arr[i]]) {
 	      if (items[arr[i]][key].hasOwnProperty(0)) {
+			  console.log(items[arr[i]][key]);
 			if (items[arr[i]][key] == "field_movement_speed_percent") {
 			  console.log(fullBuild);
 			  console.log(fullBuild["field_movement_speed"]);
