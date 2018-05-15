@@ -40,6 +40,8 @@
 	var selectedArcana = $(".edit-arcana").map(function(){
       return this.value;
     }).get().join(',');
+	//get base stats
+	fullBuild = getBaseStats(settings.heroData[selectedHero], fullBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
@@ -63,6 +65,15 @@
 	}
   }
   
+  function getBaseStats(hero, fullBuild) {
+    for (var key in hero) {
+      if (hero[key]['values'].hasOwnProperty(0) {
+	    fullBuild[key] += parseFloat(hero[key]['values'][0]['value']);
+	  }
+	}
+	return fullBuild;
+  }
+  
   function scaleByLevel(hero, selectedLevel, fullBuild) {
 	var levelScales = {
 		"field_hp": "field_hp_per_level",
@@ -78,7 +89,7 @@
 	for (var key in levelScales) {
       if (levelScales.hasOwnProperty(key)) {
 		if (hero[key]['values'].hasOwnProperty(0) && hero[levelScales[key]]['values'].hasOwnProperty(0)) {
-          fullBuild[key] += parseFloat(hero[key]['values'][0]['value']) + (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
+          fullBuild[key] += (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
 		}
       }
     }
