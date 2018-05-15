@@ -53,11 +53,13 @@
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>")
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
-		var label = "";
-		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
-		  label = settings.heroData[selectedHero][data]['labels'];
+		if (fullBuild[data] !== NaN) {
+		  var label = "";
+		  if (settings.heroData[selectedHero].hasOwnProperty(data)) {
+		    label = settings.heroData[selectedHero][data]['labels'];
+		  }
+		  buildContainer.append( "<p><strong>" + label + ":</strong> " + fullBuild[data] + "</p>" );
 		}
-	    buildContainer.append( "<p><strong>" + label + ":</strong> " + fullBuild[data] + "</p>" );
 	  }
 	}
   }
