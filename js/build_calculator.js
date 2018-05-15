@@ -54,20 +54,18 @@
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>")
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
-		if (fullBuild[data] !== "NaN") {
-		  var label = "";
-		  if (settings.heroData[selectedHero].hasOwnProperty(data)) {
-		    label = settings.heroData[selectedHero][data]['labels'];
-		  }
-		  buildContainer.append( "<p><strong>" + label + ":</strong> " + fullBuild[data] + "</p>" );
+		var label = "";
+		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
+		  label = settings.heroData[selectedHero][data]['labels'];
 		}
+		buildContainer.append( "<p><strong>" + label + ":</strong> " + fullBuild[data] + "</p>" );
 	  }
 	}
   }
   
   function getBaseStats(hero, fullBuild) {
     for (var key in hero) {
-      if (hero[key]['values'].hasOwnProperty(0)) {
+      if (hero[key]['values'].hasOwnProperty(0) && fullBuild.hasOwnProperty(key)) {
 	    fullBuild[key] += parseFloat(hero[key]['values'][0]['value']);
 	  }
 	}
@@ -105,7 +103,7 @@
 	      if (items[arr[i]][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
-			} else {
+			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
 			}
 		  }
@@ -122,7 +120,11 @@
       if (arcana.hasOwnProperty(selected[j])) {
 	    for (var key in arcana[selected[j]]) {
 		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
-		    fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
+		    if (key == "field_movement_speed_percent") {
+			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key][0]['value'])/100));
+			} else if (fullBuild.hasOwnProperty(key)) {
+		      fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
+			}
 		  }
 		}
 	  }
