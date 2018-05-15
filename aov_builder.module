@@ -91,6 +91,8 @@ function aov_builder_query_items() {
   "field_percent_pen_ap",
   "field_passive_description",
   "field_cost",
+  "field_movement_speed",
+  "field_movement_speed_percent",
   );
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
@@ -123,7 +125,7 @@ function aov_builder_query_arcana() {
   "field_life_steal",
   "field_magic_defense",
   "field_magic_life_steal",
-  "field_movement_speed",
+  "field_movement_speed_percent",
   "field_cost",
   "field_gold_value",
   );
