@@ -48,10 +48,14 @@
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
-	//output
+	//output to visible container and hidden container to separate nice markup vs easy data values
 	var buildContainer = $(".full_build");
+	var hiddenContainer = $('input[name="full_build_hidden"]');
 	buildContainer.empty();
-	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>")
+	hiddenContainer.val("");
+	fullBuild['title'] = settings.heroData[selectedHero]['title'];
+	hiddenContainer.val(JSON.stringify(fullBuild));
+	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
 		var label = "";
