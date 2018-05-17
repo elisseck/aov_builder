@@ -53,7 +53,6 @@
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	buildContainer.empty();
 	hiddenContainer.val("");
-	fullBuild['title'] = settings.heroData[selectedHero]['title'];
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	for (var data in fullBuild) {
