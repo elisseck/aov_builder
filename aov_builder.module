@@ -11,11 +11,12 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$heroData = aov_builder_query_heroes();
 	$itemData = aov_builder_query_items();
 	$arcanaData = aov_builder_query_arcana();
+	$skillAndBonusData = aov_builder_query_skills_and_bonuses();
+	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
 	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
-	
 	return $form;
   }
 }
@@ -138,6 +139,61 @@ function aov_builder_query_arcana() {
     $nid = $node->id();
 	foreach ($arcanaKeys as $key) {
 	  $data[$nid][$key]['values'] = $node->get($key)->getValue();
+	}
+  }
+  return $data;
+}
+
+function aov_builder_query_skills_and_bonuses() {
+  $data = array();
+  //get skills
+  $skillKeys = array(
+  "body",
+  "field_hero",
+  "field_cooldown",
+  "field_cooldown_per_level",
+  "field_output_type",
+  "field_scaling",
+  "field_scaling_stat",
+  "field_skill_cost",
+  "field_skill_type",
+  "field_level_1",
+  "field_skill_damage_per_level",
+  );
+  $skillQuery = \Drupal::entityQuery('node')
+    ->condition('status', 1)
+    ->condition('type', 'skill');
+  $skillNids = $skillQuery->execute();
+  $skillNodes = entity_load_multiple('node', $skillNids);
+  //get bonuses
+  $bonusKeys = array(
+  "body",
+  "field_bonus_damage_level_1",
+  "field_bonus_damage_per_level",
+  "field_damage_over_time",
+  "field_output_type",
+  "field_scaling",
+  "field_scaling_stat",
+  "field_skill_reference",
+  );
+  $bonusQuery = \Drupal::entityQuery('node')
+    ->condition('status', 1)
+    ->condition('type', 'bonus');
+  $bonusNids = $bonusQuery->execute();
+  $bonusNodes = entity_load_multiple('node', $bonusNids);
+  //assemble data keyed by hero, then skill, then bonuses
+  foreach ($skillNodes as $node) {
+	$heroID = $node->get('field_hero')->getValue();
+	$nid = $node->id();
+	foreach ($skillKeys as $key) {
+      $data[$heroID][$nid][$key]['values'] = $node->get($key)->getValue();
+	  foreach ($bonusNode as $bNode) {
+	    $skillID = $bNode->get('field_skill_reference')->getValue();
+	    $nid = $bNode->id();
+	    foreach ($bonusKeys as $bKey) {
+	      $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $bNode->get($bKey)->getValue();
+	    }
+      }
 	}
   }
   return $data;
