@@ -183,12 +183,12 @@ function aov_builder_query_skills_and_bonuses() {
   $bonusNodes = entity_load_multiple('node', $bonusNids);
   //assemble data keyed by hero, then skill, then bonuses
   foreach ($skillNodes as $node) {
-	$heroID = $skillNode->get('field_hero')->getValue();
+	$heroID = $skillNode->get('field_hero')->getValue()['target_id'];
 	$nid = $skillNode->id();
 	foreach ($skillKeys as $key) {
       $data[$heroID][$nid][$key]['values'] = $skillNode->get($key)->getValue();
 	  foreach ($bonusNodes as $bNode) {
-	    $skillID = $bNode->get('field_skill_reference')->getValue();
+	    $skillID = $bNode->get('field_skill_reference')->getValue()['target_id'];
 	    $nid = $bNode->id();
 	    foreach ($bonusKeys as $bKey) {
 	      $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $bNode->get($bKey)->getValue();
