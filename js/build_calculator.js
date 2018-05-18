@@ -40,8 +40,13 @@
 	var selectedArcana = $(".edit-arcana").map(function(){
       return this.value;
     }).get().join(',');
+	var selectedSkillLevels = $(".edit-skill-levels").map(function(){
+      return this.value;
+    }).get().join(',');
 	//get base stats
 	fullBuild = getBaseStats(settings.heroData[selectedHero], fullBuild);
+	//get skills
+	skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
@@ -75,6 +80,22 @@
 	  }
 	}
 	return fullBuild;
+  }
+  
+  function getSkills(skills, levels) {
+	var skillScales = {
+	  "field_cooldown": "field_cooldown_per_level",
+	  "field_level_1": "field_skill_damage_per_level",
+	}
+	var bonusScales = {
+	  "field_bonus_damage_level_1": "field_bonus_damage_per_level",
+	}
+	console.log(skills);
+	for (var key in skillScales) {
+	  if (skillScales.hasOwnProperty(key)) {
+	    //
+	  }
+	}
   }
   
   function scaleByLevel(hero, selectedLevel, fullBuild) {
