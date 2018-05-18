@@ -91,6 +91,7 @@
 	  "field_bonus_damage_level_1": "field_bonus_damage_per_level",
 	}
 	console.log(skills);
+	console.log(levels);
 	for (var key in skillScales) {
 	  if (skillScales.hasOwnProperty(key)) {
 	    //
