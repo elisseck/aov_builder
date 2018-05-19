@@ -187,7 +187,7 @@ function aov_builder_query_skills_and_bonuses() {
   $termQuery = \Drupal::entityQuery('taxonomy_term')
    ->condition('vid', 'scaling_stats');
   $tids = $termQuery->execute();
-  $statTerms = Term::loadMultiple($tids);
+  $statTerms = entity_load_multiple('taxonomy_term', $tids);
   
   //get output types from term
   $outputQuery = \Drupal::entityQuery('taxonomy_term')
