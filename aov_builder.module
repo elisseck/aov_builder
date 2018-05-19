@@ -193,7 +193,7 @@ function aov_builder_query_skills_and_bonuses() {
   $outputQuery = \Drupal::entityQuery('taxonomy_term')
    ->condition('vid', 'output_types');
   $tids = $termQuery->execute();
-  $outputTerms = Term::loadMultiple($tids);
+  $outputTerms = entity_load_multiple('taxonomy_term', $tids);
   
   //assemble data keyed by hero, then skill, then bonuses
   foreach ($skillNodes as $node) {
