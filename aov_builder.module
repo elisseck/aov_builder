@@ -165,6 +165,7 @@ function aov_builder_query_skills_and_bonuses() {
     ->condition('type', 'skill');
   $skillNids = $skillQuery->execute();
   $skillNodes = entity_load_multiple('node', $skillNids);
+
   //get bonuses
   $bonusKeys = array(
   "body",
@@ -181,18 +182,45 @@ function aov_builder_query_skills_and_bonuses() {
     ->condition('type', 'bonus');
   $bonusNids = $bonusQuery->execute();
   $bonusNodes = entity_load_multiple('node', $bonusNids);
+
+  //get scaling stats from term
+  $termQuery = \Drupal::entityQuery('taxonomy_term')
+   ->condition('vid', 'scaling_stats');
+  $tids = $termQuery->execute();
+  $statTerms = Term::loadMultiple($tids);
+  
+  //get output types from term
+  $outputQuery = \Drupal::entityQuery('taxonomy_term')
+   ->condition('vid', 'output_types');
+  $tids = $termQuery->execute();
+  $outputTerms = Term::loadMultiple($tids);
+  
   //assemble data keyed by hero, then skill, then bonuses
   foreach ($skillNodes as $node) {
 	$heroID = $node->get('field_hero')->getValue()[0]['target_id'];
 	$nid = $node->id();
+	$data[$heroID][$nid]['title']['values'] = $node->getTitle();
 	foreach ($skillKeys as $key) {
-      $data[$heroID][$nid][$key]['values'] = $node->get($key)->getValue();
+	  if ($key == 'field_scaling_stat') {
+	    $statTarget = $node->get('field_scaling_stat')->getValue()[0]['target_id'];
+		$data[$heroID][$nid][$key]['values'] = $statTerms[$statTarget]->get('description')->value;
+	  } else {
+		$data[$heroID][$nid][$key]['values'] = $node->get($key)->getValue();
+	  }
 	  foreach ($bonusNodes as $bNode) {
 	    $skillID = $bNode->get('field_skill_reference')->getValue()[0]['target_id'];
+		$bStatTarget = $bNode->get('field_scaling_stat')->getValue()[0]['target_id'];
+		$bOutputTarget = $bNode->get('field_output_type')->getValue()[0]['target_id'];
 	    $bNid = $bNode->id();
 		if ($skillID == $nid) {
 	      foreach ($bonusKeys as $bKey) {
-	        $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $bNode->get($bKey)->getValue();
+			if ($bKey == 'field_scaling_stat') {
+			  $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $statTerms[$bStatTarget]->get('description')->value;
+			} else if ($bKey == 'field_output_type') {
+			  $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $outputTerms[$bOutputTarget]->get('description')->value;
+			} else {
+			  $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $bNode->get($bKey)->getValue();
+			}
 	      }
 		}
       }
