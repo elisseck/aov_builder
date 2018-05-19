@@ -215,7 +215,9 @@ function aov_builder_query_skills_and_bonuses() {
 		if ($skillID == $nid) {
 	      foreach ($bonusKeys as $bKey) {
 			if ($bKey == 'field_scaling_stat') {
-			  $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $statTerms[$bStatTarget]->get('description')->value;
+			  if ($statTerms[$bStatTarget]) {
+			    $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $statTerms[$bStatTarget]->get('description')->value;
+			  }
 			} else if ($bKey == 'field_output_type') {
 			  if ($outputTerms[$bOutputTarget]) {
 			    $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $outputTerms[$bOutputTarget]->get('description')->value;
