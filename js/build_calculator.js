@@ -101,28 +101,30 @@
 	  for (var key in skill) {
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skill.hasOwnProperty(key)) {
-		  if (skill[key]['values'].hasOwnProperty(0)) {
-			if (skill[key]['values'][0].hasOwnProperty('value')) {
-			  if (skillScales.hasOwnProperty(key)) {
-				//if it's a scaling field, scale value by the current fullBuild value for the scaling stat
-				if (key == 'field_scaling') {
-				  skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) * parseFloat(fullBuild[skill['field_scaling_stat']]);
-				} else {
-				//cases for each skill type so we scale by the correct level for level scaling
-				  if (skill['field_skill_type']['values'][0]['value'] == 'Passive') {
-				    skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
-				  } else if (skill['field_skill_type']['values'][0]['value'] == 'Skill 1') {
-				    skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
-				  } else if (skill['field_skill_type']['values'][0]['value'] == 'Skill 2') {
-				    skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+		  if (skill[key].hasOwnProperty('values')) {
+		    if (skill[key]['values'].hasOwnProperty(0)) {
+			  if (skill[key]['values'][0].hasOwnProperty('value')) {
+			    if (skillScales.hasOwnProperty(key)) {
+				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
+				  if (key == 'field_scaling') {
+				    skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) * parseFloat(fullBuild[skill['field_scaling_stat']]);
 				  } else {
-				    skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
-				  }
+				  //cases for each skill type so we scale by the correct level for level scaling
+				    if (skill['field_skill_type']['values'][0]['value'] == 'Passive') {
+				      skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
+				    } else if (skill['field_skill_type']['values'][0]['value'] == 'Skill 1') {
+				      skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
+				    } else if (skill['field_skill_type']['values'][0]['value'] == 'Skill 2') {
+				      skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+				    } else {
+				      skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
+				    }
+			      }
+			    } else {
+			      skillBuild[skill][key] = skill[key]['values'][0]['value'];
 			    }
-			  } else {
-			    skillBuild[skill][key] = skill[key]['values'][0]['value'];
 			  }
-			}
+		    }
 		  }
 		}
 	  }
