@@ -54,11 +54,14 @@
 	//get skills last because they require fullBuild data
 	skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels, selectedHero, selectedLevel, fullBuild);
 	//output to visible container and hidden container to separate nice markup vs easy data values
+	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
 	var hiddenContainer = $('input[name="full_build_hidden"]');
-	buildContainer.empty();
+	buildContainer.add(skillContainer).empty();
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
+	//build skill grid
+	var appended = appendToSkillContainer(skillBuild);
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
@@ -115,6 +118,8 @@
 				    $skillBuild[skill][key] = parseFloat(skill[key]['values'][0]['value']) + (parseFloat(skill[skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
 				  }
 			    }
+			  } else {
+			    skillBuild[skill][key] = skill[key]['values'][0]['value'];
 			  }
 			}
 		  }
@@ -182,5 +187,11 @@
 	  }
 	}
     return fullBuild;
+  }
+  
+  function appendToSkillContainer(skillBuild) {
+    var markup = '<div id="skills-final">'
+	markup += (JSON.stringify(skillBuild))
+	markup += '</div>'
   }
 })(jQuery, Drupal);
