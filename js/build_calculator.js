@@ -96,7 +96,7 @@
 	  "field_bonus_damage_level_1": "field_bonus_damage_per_level",
 	  "field_scaling": "field_scaling_stat",
 	}
-	for var (skill in skills) {
+	for (var skill in skills) {
 	  for var (key in skill) {
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skill.hasOwnProperty(key)) {
