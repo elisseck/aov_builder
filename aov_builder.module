@@ -191,7 +191,7 @@ function aov_builder_query_skills_and_bonuses() {
   
   //get output types from term
   $outputQuery = \Drupal::entityQuery('taxonomy_term')
-   ->condition('vid', 'output_types');
+   ->condition('vid', 'output_type');
   $tids = $termQuery->execute();
   $outputTerms = entity_load_multiple('taxonomy_term', $tids);
   
