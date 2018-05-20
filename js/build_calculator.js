@@ -86,7 +86,7 @@
   }
   
   function getSkills(skills, levels, hero, heroLevel, fullBuild) {
-	var skillBuild = "";
+	var skillBuild = {};
 	levels = levels.split(',');
 	var skillScales = {
 	  "field_cooldown": "field_cooldown_per_level",
@@ -100,9 +100,7 @@
 	for (var skill in skills) {
 	  skillBuild[skill] = {};
 	  for (var key in skills[skill]) {
-		if (skillBuild.hasOwnProperty(skill)) {
 		  skillBuild[skill][key] = {};
-		}
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skills[skill].hasOwnProperty(key)) {
 		  if (skills[skill][key].hasOwnProperty('values')) {
