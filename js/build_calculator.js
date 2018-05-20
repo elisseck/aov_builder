@@ -61,7 +61,7 @@
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	//build skill grid
-	var appended = appendToSkillContainer(skillBuild);
+	var appended = appendToSkillContainer(skillContainer, skillBuild);
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
@@ -190,9 +190,10 @@
     return fullBuild;
   }
   
-  function appendToSkillContainer(skillBuild) {
+  function appendToSkillContainer(container, skillBuild) {
     var markup = '<div id="skills-final">'
 	markup += (JSON.stringify(skillBuild))
 	markup += '</div>'
+	container.append(markup);
   }
 })(jQuery, Drupal);
