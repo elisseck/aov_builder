@@ -101,7 +101,7 @@
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skill.hasOwnProperty(key)) {
 		  if (skill[key]['values'].hasOwnProperty(0)) {
-			if (skill[key]['values'][0].hasOwnProperty('value') {
+			if (skill[key]['values'][0].hasOwnProperty('value')) {
 			  if (skillScales.hasOwnProperty(key)) {
 				//if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				if (key == 'field_scaling') {
