@@ -124,10 +124,10 @@
 			      }
 			    }
 			  }
-		    }
-			else {
+			  else {
 			  skillBuild[skill][key] = skills[skill][key]['values'];
-			}
+			  }
+		    }
 		  }
 		}
 	  }
