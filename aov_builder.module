@@ -210,7 +210,9 @@ function aov_builder_query_skills_and_bonuses() {
 	    $outputTarget = $node->get('field_output_type')->getValue()[0]['target_id'];
 		if ($outputTerms[$outputTarget]) {
 		  $data[$heroID][$nid][$key]['values'] = $outputTerms[$outputTarget]->get('description')->value;
-	    }
+	    } else {
+		  $data[$heroID][$nid][$key]['values'] = "N/A";
+		}
 	  }
 	  else {
 		$data[$heroID][$nid][$key]['values'] = $node->get($key)->getValue();
