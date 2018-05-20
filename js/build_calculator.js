@@ -125,11 +125,13 @@
 			    }
 			  }
 		    }
+			else {
+			  skillBuild[skill][key] = skills[skill][key]['values'];
+			}
 		  }
 		}
 	  }
 	  //stragglers with weird structure
-	  skillBuild[skill]['body'] = skills[skill]['body']['values'];
 	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['values'];
 	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['values'];
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
