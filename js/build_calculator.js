@@ -122,10 +122,10 @@
 				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
 				    }
 			      }
+			    } 
+				else {
+			      skillBuild[skill][key] = skills[skill][key]['values'];
 			    }
-			  }
-			  else {
-			  skillBuild[skill][key] = skills[skill][key]['values'];
 			  }
 		    }
 		  }
