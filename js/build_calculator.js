@@ -8,7 +8,7 @@
 	  });
     }
   };
-  
+
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
@@ -73,7 +73,7 @@
 	  }
 	}
   }
-  
+
   function getBaseStats(hero, fullBuild) {
     for (var key in hero) {
 	  if (hero[key].hasOwnProperty('values')) {
@@ -84,7 +84,7 @@
 	}
 	return fullBuild;
   }
-  
+
   function getSkills(skills, levels, hero, heroLevel, fullBuild) {
 	var skillBuild = {};
 	levels = levels.split(',');
@@ -100,7 +100,7 @@
 	for (var skill in skills) {
 	  skillBuild[skill] = {};
 	  for (var key in skills[skill]) {
-		  skillBuild[skill][key] = {};
+		skillBuild[skill][key] = {};
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skills[skill].hasOwnProperty(key)) {
 		  if (skills[skill][key].hasOwnProperty('values')) {
@@ -109,7 +109,6 @@
 			    if (skillScales.hasOwnProperty(key)) {
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling') {
-					  console.log(fullBuild[skills[skill]['field_scaling_stat']['values']]);
 				    skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
 				  } else {
 				  //cases for each skill type so we scale by the correct level for level scaling
@@ -123,20 +122,20 @@
 				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
 				    }
 			      }
-			    } else {
-			      skillBuild[skill][key] = skills[skill][key]['values'][0]['value'];
 			    }
 			  }
-		    } else {
-			  skillBuild[skill][key] = skills[skill][key]['values'];
-			}
+		    }
 		  }
 		}
 	  }
+	  //stragglers with weird structure
+	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['values'];
+	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['values'];
+	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	}
 	return skillBuild;
   }
-  
+
   function scaleByLevel(hero, selectedLevel, fullBuild) {
 	var levelScales = {
 		"field_hp": "field_hp_per_level",
@@ -158,7 +157,7 @@
     }
 	return fullBuild;
   }
-  
+
   function addItems(items, selectedItems, fullBuild) {
 	var arr = selectedItems.split(',');
 	var len = arr.length;
@@ -177,7 +176,7 @@
 	}
 	return fullBuild;
   }
-  
+
   function addArcana(arcana, selectedArcana, fullBuild) {
     var selected = selectedArcana.split(',');
 	var len = selected.length;
@@ -196,7 +195,7 @@
 	}
     return fullBuild;
   }
-  
+
   function appendToSkillContainer(container, skillBuild) {
     var markup = '<div id="skills-final">'
 	markup += (JSON.stringify(skillBuild))
