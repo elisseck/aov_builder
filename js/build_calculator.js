@@ -97,7 +97,7 @@
 	  "field_scaling": "field_scaling_stat",
 	}
 	for (var skill in skills) {
-	  for var (key in skill) {
+	  for (var key in skill) {
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skill.hasOwnProperty(key)) {
 		  if (skill[key]['values'].hasOwnProperty(0)) {
