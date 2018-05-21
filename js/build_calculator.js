@@ -89,9 +89,9 @@
 	var skillBuild = {};
 	levels = levels.split(',');
 	var skillScales = {
+	  "field_scaling": "field_scaling_stat",
 	  "field_cooldown": "field_cooldown_per_level",
 	  "field_level_1": "field_skill_damage_per_level",
-	  "field_scaling": "field_scaling_stat",
 	}
 	var bonusScales = {
 	  "field_bonus_damage_level_1": "field_bonus_damage_per_level",

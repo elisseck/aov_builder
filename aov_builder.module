@@ -148,13 +148,13 @@ function aov_builder_query_skills_and_bonuses() {
   $data = array();
   //get skills
   $skillKeys = array(
+  "field_scaling",
+  "field_scaling_stat",
   "body",
   "field_hero",
   "field_cooldown",
   "field_cooldown_per_level",
   "field_output_type",
-  "field_scaling",
-  "field_scaling_stat",
   "field_skill_cost",
   "field_skill_type",
   "field_level_1",
