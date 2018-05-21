@@ -103,34 +103,34 @@
 		skillBuild[skill][key] = {};
 		//a ton of sanity checks because we really have no idea what's coming in here
 	    if (skills[skill].hasOwnProperty(key)) {
-		  if (skills[skill][key].hasOwnProperty('values')) {
-		    if (skills[skill][key]['values'].hasOwnProperty(0)) {
-			  if (skills[skill][key]['values'][0].hasOwnProperty('value')) {
-			    if (skillScales.hasOwnProperty(key)) {
-				  //deal with each skills bonuses here - should separate this out and return the correct value
-				  if (key == 'bonuses') {
-					skillBuild[skill][key] = processBonuses(skills[skill][key]);
-				  }
+		  if (key == 'bonuses') {
+		    skillBuild[skill][key] = processBonuses(skills[skill][key], levels, skills[skill]['field_skill_type']['values'][0]['value'], fullBuild, bonusScales, heroLevel);
+		  } else {
+		    if (skills[skill][key].hasOwnProperty('values')) {
+		      if (skills[skill][key]['values'].hasOwnProperty(0)) {
+			    if (skills[skill][key]['values'][0].hasOwnProperty('value')) {
+			      if (skillScales.hasOwnProperty(key)) {
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
-				  if (key == 'field_scaling') {
-				    skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
-				  } else {
-				  //cases for each skill type so we scale by the correct level for level scaling
-				    if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
-				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
-				    } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
-				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
-				    } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 2') {
-				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+				    if (key == 'field_scaling') {
+				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
 				    } else {
-				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
-				    }
+				    //cases for each skill type so we scale by the correct level for level scaling
+				      if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
+				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
+				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
+				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
+				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 2') {
+				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+				      } else {
+				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
+				      }
+			        }
+			      } 
+				  else {
+			        skillBuild[skill][key] = skills[skill][key]['values'];
 			      }
-			    } 
-				else {
-			      skillBuild[skill][key] = skills[skill][key]['values'];
 			    }
-			  }
+		      }
 		    }
 		  }
 		}
@@ -210,8 +210,39 @@
 	container.append(markup);
   }
   
-  function processBonuses(bonusData) {
+  function processBonuses(bonusData, levels, skillType, fullBuild, bonusScales, heroLevel) {
     console.log(bonusData);
-	return bonusData;
+	for (var bonus in bonusData) {
+	bonusBuild[bonus] = {};
+	  for (var key in bonusData[bonus]) {
+		bonusBuild[bonus][key] = {};
+		if (bonuses[bonus].hasOwnProperty(key)) {
+		  if (bonuses[bonus][key].hasOwnProperty('values')) {
+		    if (bonuses[bonus][key]['values'].hasOwnProperty(0)) {
+			  if (bonuses[bonus][key]['values'][0].hasOwnProperty('value')) {
+			    if (bonusScales.hasOwnProperty(key)) {
+				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
+				  if (key == 'field_scaling') {
+				    bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) * parseFloat(fullBuild[bonuses[bonus]['field_scaling_stat']['values']]);
+				  } else {
+				  //cases for each bonus type so we scale by the correct level for level scaling
+				    if (skillType == 'Passive') {
+				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
+				    } else if (skillType == 'Skill 1') {
+				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
+				    } else if (skillType == 'Skill 2') {
+				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+				    } else {
+				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
+				    }
+			      }
+				}
+			  }
+			}
+		  }
+		}	
+	  }
+	}
+	return bonusBuild;
   }
 })(jQuery, Drupal);
