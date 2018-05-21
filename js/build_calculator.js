@@ -217,8 +217,8 @@
 	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
 	  markup += '</div><div class="bonuses"><h4>Additional Effects</h4>';
-	  for (var bonus in skillBuild[skill][bonuses]) {
-	    markup += '<div class="bonus-description">' + skillBuild[skill][bonuses][bonus]['body'][0]['value'] + '></div>';
+	  for (var bonus in skillBuild[skill]['bonuses']) {
+	    markup += '<div class="bonus-description">' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '></div>';
 	  }
 	  markup += '</div>'
     }
