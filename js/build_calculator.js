@@ -224,7 +224,6 @@
   
   function processBonuses(bonusData, levels, skillType, fullBuild, bonusScales, heroLevel) {
 	var bonusBuild = {};
-    console.log(bonusData);
 	for (var bonus in bonusData) {
 	bonusBuild[bonus] = {};
 	  for (var key in bonusData[bonus]) {
