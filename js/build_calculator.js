@@ -136,8 +136,8 @@
 		}
 	  }
 	  //stragglers with weird structure
-	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['title'];
-	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['title'];
+	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['termname'];
+	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['termname'];
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	  //generate final output by adding attribute scaled value to level scaled value last
 	  skillBuild[skill]['final_value'] = parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1']);
@@ -209,13 +209,17 @@
     var markup = '<div id="skills-final">';
 	for (var skill in skillBuild) {
 	  markup += '<div class="skill-title"><h3>' + skillBuild[skill]['field_skill_type'][0]['value'] + ' - ' + skillBuild[skill]['title'] + '</h3></div>';
-	  markup += '<div class="skill-description>' + skillBuild[skill]['body']['value'] + '</div>';
+	  markup += '<div class="skill-description>' + skillBuild[skill]['body'][0]['value'] + '</div>';
 	  markup += '<div class="skill-stats>';
 	  markup += '<div class="skill-scaling">Scaling Value: ' + skillBaseData[skill]['field_scaling']['values'][0]['value'] + '</div>';
 	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skillBuild[skill]['field_scaling_stat'] + '</div>'; 
 	  markup += '<div class="skill-cooldown">Cooldown: ' + skillBuild[skill]['field_cooldown'] + '</div>';
 	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
+	  markup += '</div><div class="bonuses"><h4>Additional Effects</h4>';
+	  for (var bonus in skillBuild[skill][bonuses]) {
+	    markup += '<div class="bonus-description">' + skillBuild[skill][bonuses][bonus]['body'][0]['value'] + '></div>';
+	  }
 	  markup += '</div>'
     }
 	markup += '</div>'

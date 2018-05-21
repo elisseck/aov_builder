@@ -204,14 +204,12 @@ function aov_builder_query_skills_and_bonuses() {
 	  if ($key == 'field_scaling_stat') {
 	    $statTarget = $node->get('field_scaling_stat')->getValue()[0]['target_id'];
 		if ($statTerms[$statTarget]) {
-			dpm($statTerms[$statTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['values'] = strip_tags($statTerms[$statTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['termname'] = $statTerms[$statTarget]->getName();
 		}
 	  } else if ($key == 'field_output_type') {
 	    $outputTarget = $node->get('field_output_type')->getValue()[0]['target_id'];
 		if ($outputTerms[$outputTarget]) {
-			dpm($outputTerms[$outputTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['values'] = strip_tags($outputTerms[$outputTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['termname'] = $outputTerms[$outputTarget]->getName();
 	    } else {
