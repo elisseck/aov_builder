@@ -107,6 +107,10 @@
 		    if (skills[skill][key]['values'].hasOwnProperty(0)) {
 			  if (skills[skill][key]['values'][0].hasOwnProperty('value')) {
 			    if (skillScales.hasOwnProperty(key)) {
+				  //deal with each skills bonuses here - should separate this out and return the correct value
+				  if (key == 'bonuses') {
+					skillBuild[skill][key] = processBonuses(skills[skill][key]);
+				  }
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling') {
 				    skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
@@ -204,5 +208,10 @@
 	markup += (JSON.stringify(skillBuild))
 	markup += '</div>'
 	container.append(markup);
+  }
+  
+  function processBonuses(bonusData) {
+    console.log(bonusData);
+	return bonusData;
   }
 })(jQuery, Drupal);
