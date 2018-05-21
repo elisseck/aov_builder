@@ -219,7 +219,7 @@
 	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
 	  markup += '</div>';
-	  if (skillBuild[skill]['bonuses'][bonus]) {
+	  if (skillBuild[skill]['bonuses']) {
 		markup += '<div class="bonuses"><h4>Additional Effects</h4>';
 	    for (var bonus in skillBuild[skill]['bonuses']) {
 		  if (skillBuild[skill]['bonuses'][bonus]['body'].hasOwnProperty(0)) {
