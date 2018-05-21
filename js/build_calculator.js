@@ -209,7 +209,9 @@
     var markup = '<div id="skills-final">';
 	for (var skill in skillBuild) {
 	  markup += '<div class="skill-title"><h3>' + skillBuild[skill]['field_skill_type'][0]['value'] + ' - ' + skillBuild[skill]['title'] + '</h3></div>';
-	  markup += '<div class="skill-description>' + skillBuild[skill]['body'][0]['value'] + '</div>';
+	  if (skillBuild[skill]['body'].hasOwnProperty(0)) {
+	    markup += '<div class="skill-description>' + skillBuild[skill]['body'][0]['value'] + '</div>';
+	  }
 	  markup += '<div class="skill-stats>';
 	  markup += '<div class="skill-scaling">Scaling Value: ' + skillBaseData[skill]['field_scaling']['values'][0]['value'] + '</div>';
 	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skillBuild[skill]['field_scaling_stat'] + '</div>'; 
