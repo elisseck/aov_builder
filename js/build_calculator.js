@@ -217,24 +217,24 @@
 	bonusBuild[bonus] = {};
 	  for (var key in bonusData[bonus]) {
 		bonusBuild[bonus][key] = {};
-		if (bonuses[bonus].hasOwnProperty(key)) {
-		  if (bonuses[bonus][key].hasOwnProperty('values')) {
-		    if (bonuses[bonus][key]['values'].hasOwnProperty(0)) {
-			  if (bonuses[bonus][key]['values'][0].hasOwnProperty('value')) {
+		if (bonusData[bonus].hasOwnProperty(key)) {
+		  if (bonusData[bonus][key].hasOwnProperty('values')) {
+		    if (bonusData[bonus][key]['values'].hasOwnProperty(0)) {
+			  if (bonusData[bonus][key]['values'][0].hasOwnProperty('value')) {
 			    if (bonusScales.hasOwnProperty(key)) {
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling') {
-				    bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) * parseFloat(fullBuild[bonuses[bonus]['field_scaling_stat']['values']]);
+				    bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) * parseFloat(fullBuild[bonusData[bonus]['field_scaling_stat']['values']]);
 				  } else {
 				  //cases for each bonus type so we scale by the correct level for level scaling
 				    if (skillType == 'Passive') {
-				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
+				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
 				    } else if (skillType == 'Skill 1') {
-				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
+				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[0]));
 				    } else if (skillType == 'Skill 2') {
-				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
+				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[1]));
 				    } else {
-				      bonusBuild[bonus][key] = parseFloat(bonuses[bonus][key]['values'][0]['value']) + (parseFloat(bonuses[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
+				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(levels[2]));
 				    }
 			      }
 				}
