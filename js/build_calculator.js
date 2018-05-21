@@ -61,7 +61,7 @@
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	//build skill grid
-	var appended = appendToSkillContainer(skillContainer, skillBuild);
+	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
 	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	for (var data in fullBuild) {
 	  if (fullBuild.hasOwnProperty(data)) {
@@ -205,16 +205,16 @@
     return fullBuild;
   }
 
-  function appendToSkillContainer(container, skillBuild) {
+  function appendToSkillContainer(container, skillBuild, skillBaseData) {
     var markup = '<div id="skills-final">';
 	for (var skill in skillBuild) {
 	  markup += '<div class="skill-title"><h3>' + skillBuild[skill]['field_skill_type'][0]['value'] + ' - ' + skillBuild[skill]['title'] + '</h3></div>';
 	  markup += '<div class="skill-description>' + skillBuild[skill]['body']['value'] + '</div>';
 	  markup += '<div class="skill-stats>';
-	  markup += '<div class="skill-scaling">Scaling Value: ' + skillBuild[skill]['field_scaling'] + '</div>';
+	  markup += '<div class="skill-scaling">Scaling Value: ' + skillBaseData[skill]['field_scaling']['values'][0]['value'] + '</div>';
 	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skillBuild[skill]['field_scaling_stat'] + '</div>'; 
 	  markup += '<div class="skill-cooldown">Cooldown: ' + skillBuild[skill]['field_cooldown'] + '</div>';
-	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['field_level_1'] + '</div>';
+	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
 	  markup += '</div>'
     }
