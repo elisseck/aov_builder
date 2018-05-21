@@ -204,7 +204,7 @@
   }
 
   function appendToSkillContainer(container, skillBuild) {
-    var markup = '<div id="skills-final">'
+    var markup = '<div id="skills-final">';
 	for (var skill in skillBuild) {
 	  markup += '<div class="skill-title"><h3>' skill['field_skill_type'][0]['value'] + ' - ' + skill['title'] + '</h3></div>';
 	  markup += '<div class="skill-description>' + skill['body'][0]['value'].text() + '</div>';
