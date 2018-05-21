@@ -113,7 +113,7 @@
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				    if (key == 'field_scaling' && skills[skill].hasOwnProperty('field_scaling_stat')) {
 				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
-				    } else {
+				    } else if (key !== 'field_scaling_stat') {
 				    //cases for each skill type so we scale by the correct level for level scaling
 				      if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
 				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
@@ -225,7 +225,7 @@
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling' && bonusData[bonus].hasOwnProperty('field_scaling_stat')) {
 				    bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) * parseFloat(fullBuild[bonusData[bonus]['field_scaling_stat']['values']]);
-				  } else {
+				  } else if (key !== 'field_scaling_stat') {
 				  //cases for each bonus type so we scale by the correct level for level scaling
 				    if (skillType == 'Passive') {
 				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
