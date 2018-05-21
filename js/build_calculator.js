@@ -136,8 +136,8 @@
 		}
 	  }
 	  //stragglers with weird structure
-	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['values']['title'];
-	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['values']['title'];
+	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['title'];
+	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['title'];
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	  //generate final output by adding attribute scaled value to level scaled value last
 	  skillBuild[skill]['final_value'] = parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1']);

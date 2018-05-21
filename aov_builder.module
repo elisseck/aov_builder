@@ -206,14 +206,14 @@ function aov_builder_query_skills_and_bonuses() {
 		if ($statTerms[$statTarget]) {
 			dpm($statTerms[$statTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['values'] = strip_tags($statTerms[$statTarget]->get('description')->value);
-		  //$data[$heroID][$nid][$key]['values']['title'] = $statTerms[$statTarget]->getName();
+		  $data[$heroID][$nid][$key]['title'] = $statTerms[$statTarget]->getName();
 		}
 	  } else if ($key == 'field_output_type') {
 	    $outputTarget = $node->get('field_output_type')->getValue()[0]['target_id'];
 		if ($outputTerms[$outputTarget]) {
 			dpm($outputTerms[$outputTarget]->get('description')->value);
 		  $data[$heroID][$nid][$key]['values'] = strip_tags($outputTerms[$outputTarget]->get('description')->value);
-		  //$data[$heroID][$nid][$key]['values']['title'] = $outputTerms[$outputTarget]->getName();
+		  $data[$heroID][$nid][$key]['title'] = $outputTerms[$outputTarget]->getName();
 	    } else {
 		  $data[$heroID][$nid][$key]['values'] = "N/A";
 		}
@@ -231,12 +231,12 @@ function aov_builder_query_skills_and_bonuses() {
 			if ($bKey == 'field_scaling_stat') {
 			  if ($statTerms[$bStatTarget]) {
 			    $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $statTerms[$bStatTarget]->get('description')->value;
-				//$data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values']['title'] = $statTerms[$bStatTarget]->getName();
+				$data[$heroID][$nid]['bonuses'][$bNid][$bKey]['title'] = $statTerms[$bStatTarget]->getName();
 			  }
 			} else if ($bKey == 'field_output_type') {
 			  if ($outputTerms[$bOutputTarget]) {
 			    $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $outputTerms[$bOutputTarget]->get('description')->value;
-				//$data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values']['title'] = $outputTerms[$bOutputTarget]->getName();
+				$data[$heroID][$nid]['bonuses'][$bNid][$bKey]['title'] = $outputTerms[$bOutputTarget]->getName();
 			  }
 			} else {
 			  $data[$heroID][$nid]['bonuses'][$bNid][$bKey]['values'] = $bNode->get($bKey)->getValue();
