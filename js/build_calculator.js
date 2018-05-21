@@ -113,7 +113,7 @@
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				    if (key == 'field_scaling' && skills[skill].hasOwnProperty('field_scaling_stat')) {
 				      skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) * parseFloat(fullBuild[skills[skill]['field_scaling_stat']['values']]);
-				    } else if (key !== 'field_scaling_stat') {
+				    } else if (key !== 'field_scaling') {
 				    //cases for each skill type so we scale by the correct level for level scaling
 				      if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
 				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
@@ -136,8 +136,8 @@
 		}
 	  }
 	  //stragglers with weird structure
-	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['values'];
-	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['values'];
+	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['values']['title'];
+	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['values']['title'];
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	}
 	return skillBuild;
@@ -205,7 +205,17 @@
 
   function appendToSkillContainer(container, skillBuild) {
     var markup = '<div id="skills-final">'
-	markup += (JSON.stringify(skillBuild))
+	for (var skill in skillBuild) {
+	  markup += '<div class="skill-title"><h3>' skill['field_skill_type'][0]['value'] + ' - ' + skill['title'] + '</h3></div>';
+	  markup += '<div class="skill-description>' + skill['body'][0]['value'].text() + '</div>';
+	  markup += '<div class="skill-stats>';
+	  markup += '<div class="skill-scaling">Scaling Value: ' + skill['field_scaling'] + '</div>';
+	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skill['field_scaling_stat'] + '</div>'; 
+	  markup += '<div class="skill-cooldown">Cooldown: ' + skill['field_cooldown'] + '</div>';
+	  markup += '<div class="skill-output-value">Output Value: ' + skill['field_level_1'] + '</div>';
+	  markup += '<div class="skill-output-type">Output Type: ' + skill['field_output_type'] + '</div>';
+	  markup += '</div>'
+    }
 	markup += '</div>'
 	container.append(markup);
   }
@@ -225,7 +235,7 @@
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling' && bonusData[bonus].hasOwnProperty('field_scaling_stat')) {
 				    bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) * parseFloat(fullBuild[bonusData[bonus]['field_scaling_stat']['values']]);
-				  } else if (key !== 'field_scaling_stat') {
+				  } else if (key !== 'field_scaling') {
 				  //cases for each bonus type so we scale by the correct level for level scaling
 				    if (skillType == 'Passive') {
 				      bonusBuild[bonus][key] = parseFloat(bonusData[bonus][key]['values'][0]['value']) + (parseFloat(bonusData[bonus][bonusScales[key]]['values'][0]['value']) * parseFloat(heroLevel));
