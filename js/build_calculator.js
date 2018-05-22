@@ -187,6 +187,7 @@
   }
 
   function addArcana(arcana, selectedArcana, fullBuild) {
+	var arcanaBuild = {};
     var selected = selectedArcana.split(',');
 	var len = selected.length;
 	for (var j = 0; j < len; j++) {
@@ -195,14 +196,28 @@
 		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
 		    if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key][0]['value'])/100));
+			  arcanaBuild["field_movement_speed"] = (parseFloat(arcana[selected[j]][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
+			  arcanaBuild[key] = parseFloat(arcana[selected[j]][key][0]['value']);
 			}
 		  }
 		}
 	  }
 	}
+	arcanaContainer = $(".arcana_build");
+	appendToArcanaContainer(arcanaContainer, arcanaBuild);
     return fullBuild;
+  }
+  
+  function appendToArcanaContainer(container, arcanaBuild) {
+	var markup = '<div id="arcana-final">';
+	for (var key in arcanaBuild) {
+	  markup += '<div id=arcana-' + arcana + '>' + key + ': '+ arcanaBuild[key] + '</div>'
+	}
+	markup += '</div>'
+	container.empty();
+	container.append(markup);
   }
 
   function appendToSkillContainer(container, skillBuild, skillBaseData) {
