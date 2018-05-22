@@ -213,14 +213,16 @@
 	for (var j = 0; j < len; j++) {
       if (arcana.hasOwnProperty(selected[j])) {
 	    for (var key in arcana[selected[j]]) {
-		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
-		    if (key == "field_movement_speed_percent") {
-			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key][0]['value'])/100));
-			  arcanaBuild["field_movement_speed"] += (parseFloat(arcana[selected[j]][key][0]['value'])/100);
-			} else if (fullBuild.hasOwnProperty(key)) {
-		      fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
-			  arcanaBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
-			}
+		  if (arcana[selected[j]][key].hasOwnProperty('values') {
+		    if (arcana[selected[j]][key]['values'].hasOwnProperty(0)) {
+		      if (key == "field_movement_speed_percent") {
+			    fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100));
+			    arcanaBuild["field_movement_speed"] += (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100);
+			  } else if (fullBuild.hasOwnProperty(key)) {
+		        fullBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);
+			    arcanaBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);
+			  }
+		    }
 		  }
 		}
 	  }
@@ -231,9 +233,30 @@
   }
   
   function appendToArcanaContainer(container, arcanaBuild) {
+	var arcanaKeys = {
+	  "field_ability_power": 'Ability Power',
+      "field_armor": 'Armor',
+      "field_attack_damage": 'Attack Damage',
+      "field_attack_speed": 'Attack Speed',
+      "field_cdr": 'CDR',
+      "field_crit_chance": 'Crit Chance',
+      "field_flat_pen_ad": 'Flat Pen AD',
+      "field_flat_pen_ap": 'Flat Pen AP',
+      "field_hp": 'HP',
+      "field_hp_regen_5_seconds": 'HP Regen / 5 Seconds',
+      "field_life_steal": 'Life Steal',
+      "field_magic_defense": 'Magic Defense',
+      "field_magic_life_steal": 'Magic Life Steal',
+      "field_mana": 'Mana',
+      "field_mana_regen_5_seconds": 'Mana Regen / 5 Seconds',
+      "field_movement_speed": 'Movement Speed',
+      "field_percent_pen_ad": 'Percent Pen AD',
+      "field_percent_pen_ap": 'Percent Pen AP',
+	  "field_critical_damage": 'Critical Damage',
+	};
 	var markup = '<div id="arcana-final">';
 	for (var key in arcanaBuild) {
-	  markup += '<div id=arcana-' + key + '>' + key + ': '+ arcanaBuild[key] + '</div>'
+	  markup += '<div id=arcana-' + key + '>' + arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
 	}
 	markup += '</div>'
 	container.empty();
