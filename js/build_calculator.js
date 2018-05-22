@@ -281,7 +281,7 @@
 		markup += '<div class="bonuses"><h4>Additional Effects</h4>';
 	    for (var bonus in skillBuild[skill]['bonuses']) {
 		  if (skillBuild[skill]['bonuses'][bonus]['body'].hasOwnProperty(0)) {
-	        markup += '<div class="bonus-description">' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '</div>';
+	        markup += '<div class="bonus-description"><strong>' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '</strong></div>';
 		  }
 		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling'].hasOwnProperty('values')) {
 		    markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
