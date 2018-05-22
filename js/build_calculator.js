@@ -254,7 +254,7 @@
       "field_percent_pen_ap": 'Percent Pen AP',
 	  "field_critical_damage": 'Critical Damage',
 	};
-	var markup = '<div id="arcana-final">';
+	var markup = '<div id="arcana-final"><h3>Arcana Stats</h3>';
 	for (var key in arcanaBuild) {
 	  markup += '<div id=arcana-' + key + '>' + arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
 	}
