@@ -283,8 +283,12 @@
 		  if (skillBuild[skill]['bonuses'][bonus]['body'].hasOwnProperty(0)) {
 	        markup += '<div class="bonus-description">' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '</div>';
 		  }
-		  markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
-		  markup += '<div class="bonus-scaling-stat">Scaling Stat: ' + skillBuild[skill]['bonuses'][bonus]['field_scaling_stat'] + '</div>';
+		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling']['values'].hasOwnProperty(0)) {
+		    markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
+		  }
+		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling_stat']) {
+		    markup += '<div class="bonus-scaling-stat">Scaling Stat: ' + skillBuild[skill]['bonuses'][bonus]['field_scaling_stat'] + '</div>';
+		  }
 		  markup += '<div class="bonus-output-value">Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
 		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
@@ -334,7 +338,12 @@
 	    bonusBuild[bonus]['field_scaling_stat'] = bonusData[bonus]['field_scaling_stat']['termname'];
 	  }
 	  bonusBuild[bonus]['field_output_type'] = bonusData[bonus]['field_output_type']['termname'];
-	  bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_level_1']);
+	  if (bonusBuild[bonus].hasOwnProperty('field_bonus_damage_level_1')) {
+	    bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
+	  }
+	  else {
+		bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']);
+	  }
 	}
 	return bonusBuild;
   }
