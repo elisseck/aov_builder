@@ -282,11 +282,11 @@
 	    for (var bonus in skillBuild[skill]['bonuses']) {
 		  if (skillBuild[skill]['bonuses'][bonus]['body'].hasOwnProperty(0)) {
 	        markup += '<div class="bonus-description">' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '</div>';
-			markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
-			markup += '<div class="bonus-scaling-stat">Scaling Stat: ' + skillBuild[skill]['bonuses'][bonus]['field_scaling_stat'] + '</div>';
-			markup += '<div class="bonus-output-value">Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
-			markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 		  }
+		  markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
+		  markup += '<div class="bonus-scaling-stat">Scaling Stat: ' + skillBuild[skill]['bonuses'][bonus]['field_scaling_stat'] + '</div>';
+		  markup += '<div class="bonus-output-value">Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
+		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
 		markup += '</div>';
       }
