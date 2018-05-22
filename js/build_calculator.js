@@ -196,7 +196,7 @@
 		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
 		    if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key][0]['value'])/100));
-			  arcanaBuild["field_movement_speed"] = (parseFloat(arcana[selected[j]][key][0]['value'])/100));
+			  arcanaBuild["field_movement_speed"] = (parseFloat(arcana[selected[j]][key][0]['value'])/100);
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
 			  arcanaBuild[key] = parseFloat(arcana[selected[j]][key][0]['value']);
