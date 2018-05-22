@@ -283,7 +283,7 @@
 		  if (skillBuild[skill]['bonuses'][bonus]['body'].hasOwnProperty(0)) {
 	        markup += '<div class="bonus-description">' + skillBuild[skill]['bonuses'][bonus]['body'][0]['value'] + '</div>';
 		  }
-		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling']['values'].hasOwnProperty(0)) {
+		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling'].hasOwnProperty('values')) {
 		    markup += '<div class="bonus-scaling">Scaling Value: ' + skillBaseData[skill]['bonuses'][bonus]['field_scaling']['values'][0]['value'] + '</div>';
 		  }
 		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling_stat']) {
