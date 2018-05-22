@@ -233,7 +233,7 @@
   function appendToArcanaContainer(container, arcanaBuild) {
 	var markup = '<div id="arcana-final">';
 	for (var key in arcanaBuild) {
-	  markup += '<div id=arcana-' + arcana + '>' + key + ': '+ arcanaBuild[key] + '</div>'
+	  markup += '<div id=arcana-' + key + '>' + key + ': '+ arcanaBuild[key] + '</div>'
 	}
 	markup += '</div>'
 	container.empty();
