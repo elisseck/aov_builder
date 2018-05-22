@@ -187,7 +187,27 @@
   }
 
   function addArcana(arcana, selectedArcana, fullBuild) {
-	var arcanaBuild = {};
+	var arcanaBuild = {
+	  "field_ability_power": 0,
+      "field_armor": 0,
+      "field_attack_damage": 0,
+      "field_attack_speed": 0,
+      "field_cdr": 0,
+      "field_crit_chance": 0,
+      "field_flat_pen_ad": 0,
+      "field_flat_pen_ap": 0,
+      "field_hp": 0,
+      "field_hp_regen_5_seconds": 0,
+      "field_life_steal": 0,
+      "field_magic_defense": 0,
+      "field_magic_life_steal": 0,
+      "field_mana": 0,
+      "field_mana_regen_5_seconds": 0,
+      "field_movement_speed": 0,
+      "field_percent_pen_ad": 0,
+      "field_percent_pen_ap": 0,
+	  "field_critical_damage": 0,
+	};
     var selected = selectedArcana.split(',');
 	var len = selected.length;
 	for (var j = 0; j < len; j++) {
@@ -196,10 +216,10 @@
 		  if (arcana[selected[j]][key].hasOwnProperty(0)) {
 		    if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key][0]['value'])/100));
-			  arcanaBuild["field_movement_speed"] = (parseFloat(arcana[selected[j]][key][0]['value'])/100);
+			  arcanaBuild["field_movement_speed"] += (parseFloat(arcana[selected[j]][key][0]['value'])/100);
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
-			  arcanaBuild[key] = parseFloat(arcana[selected[j]][key][0]['value']);
+			  arcanaBuild[key] += parseFloat(arcana[selected[j]][key][0]['value']);
 			}
 		  }
 		}
