@@ -338,11 +338,15 @@
 	    bonusBuild[bonus]['field_scaling_stat'] = bonusData[bonus]['field_scaling_stat']['termname'];
 	  }
 	  bonusBuild[bonus]['field_output_type'] = bonusData[bonus]['field_output_type']['termname'];
-	  if (bonusBuild[bonus].hasOwnProperty('field_bonus_damage_level_1')) {
-	    bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
+	  if (bonusBuild[bonus].hasOwnProperty('field_scaling')) {
+		if (bonusBuild[bonus]['field_scaling']) {
+	      bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
+		} else {
+		  bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
+		}
 	  }
 	  else {
-		bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']);
+		bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
 	  }
 	}
 	return bonusBuild;
