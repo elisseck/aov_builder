@@ -272,8 +272,8 @@
 		  }
 		}	
 	  }
-	  bonusBuild[bonus]['field_scaling_stat'] = bonuses[bonus]['field_scaling_stat']['termname'];
-	  bonusBuild[bonus]['field_output_type'] = bonuses[bonus]['field_output_type']['termname'];
+	  bonusBuild[bonus]['field_scaling_stat'] = bonusData[bonus]['field_scaling_stat']['termname'];
+	  bonusBuild[bonus]['field_output_type'] = bonusData[bonus]['field_output_type']['termname'];
 	  bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_level_1']);
 	}
 	return bonusBuild;
