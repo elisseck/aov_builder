@@ -27,15 +27,6 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   }
 }
 
-function aov_builder_webform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
-    if ($element['#webform_id'] === 'build_calculator--custom_tag') {
-        $element['#element_validate'][] = array(
-            'Drupal\aov_builder\Validate\buildTitles',
-            'validateBuildTitle'
-        );
-    }
-}
-
 function aov_builder_query_heroes() {
   $data = array();
   $heroKeys = array(
@@ -321,25 +312,25 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
 	  $form['elements']['arcana']['flexbox']['red_level_25']['#value'],
 	  $form['elements']['arcana']['flexbox']['red_level_28']['#value'],
 	],
-    'field_ability_power' => $data['field_ability_power'],
-    'field_armor' => $data['field_armor'],
-    'field_attack_damage' => $data['field_attack_damage'],
-    'field_attack_speed' => $data['field_attack_speed'],
-    'field_cdr' => $data['field_cdr'],
-    'field_crit_chance' => $data['field_crit_chance'],
-    'field_critical_damage' => $data['field_critical_damage'],
-    'field_flat_pen_ad' => $data['field_flat_pen_ad'],
-    'field_flat_pen_ap' => $data['field_flat_pen_ap'],
-    'field_hp' => $data['field_hp'],
-    'field_hp_regen_5_seconds' => $data['field_hp_regen_5_seconds'],
-    'field_life_steal' => $data['field_life_steal'],
-    'field_magic_defense' => $data['field_magic_defense'],
-    'field_magic_life_steal' => $data['field_magic_life_steal'],
-    'field_mana' => $data['field_mana'],
-    'field_mana_regen_5_seconds' => $data['field_mana_regen_5_seconds'],
-    'field_movement_speed' => $data['field_movement_speed'],
-    'field_percent_pen_ad' => $data['field_percent_pen_ad'],
-    'field_percent_pen_ap' => $data['field_percent_pen_ap'],
+    'field_ability_power' => $data->'field_ability_power',
+    'field_armor' => $data->'field_armor',
+    'field_attack_damage' => $data->'field_attack_damage',
+    'field_attack_speed' => $data->'field_attack_speed',
+    'field_cdr' => $data->'field_cdr',
+    'field_crit_chance' => $data->'field_crit_chance',
+    'field_critical_damage' => $data->'field_critical_damage',
+    'field_flat_pen_ad' => $data->'field_flat_pen_ad',
+    'field_flat_pen_ap' => $data->'field_flat_pen_ap',
+    'field_hp' => $data->'field_hp',
+    'field_hp_regen_5_seconds' => $data->'field_hp_regen_5_seconds',
+    'field_life_steal' => $data->'field_life_steal',
+    'field_magic_defense' => $data->'field_magic_defense',
+    'field_magic_life_steal' => $data->'field_magic_life_steal',
+    'field_mana' => $data->'field_mana',
+    'field_mana_regen_5_seconds' => $data->'field_mana_regen_5_seconds',
+    'field_movement_speed' => $data->'field_movement_speed',
+    'field_percent_pen_ad' => $data->'field_percent_pen_ad',
+    'field_percent_pen_ap' => $data->'field_percent_pen_ap',
   ]);
   $node->save();
 }
