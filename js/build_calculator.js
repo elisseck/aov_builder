@@ -7,13 +7,18 @@
         });
 	  });
 	  var blacklist = /\b(shit|piss|cunt|cock|fuck|fucker|fucking|shitty|bitch|dick|nigger|nigga|dicks|cocks|cunts|shitting)\b/; /* many more banned words to be added... */
-      $('#edit-custom-tag').validator.addMethod("badwordcheck", function(value) {
+      $.validator.addMethod("badwordcheck", function(value) {
         return !blacklist.test(value.toLowerCase());
-      }, "Please remove inappropriate language before submitting.");
+      }, "Please remove inappropriate language from your tag before submitting.");
     }
   };
 
   function generateBuild(settings) {
+	$('#edit-custom-tag').validate({
+      rules : {
+        edit-custom-tag : { badwordcheck : true }
+      }
+    });
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
 	  "field_ability_power": 0,
