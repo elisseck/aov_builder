@@ -265,7 +265,7 @@ function aov_builder_query_skills_and_bonuses() {
 function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   $uid = \Drupal::currentUser()->id();
   $data = json_decode($form['elements']['full_build_hidden']['#value']);
-  $heroNode = \Drupal\node\Entity\Node::load($id)
+  $heroNode = \Drupal\node\Entity\Node::load($id);
   $title = $heroNode->getTitle() . ' - ' . $form['elements']['custom_tag']['#value'];
   $node = Node::create([
     'type' => 'build',
