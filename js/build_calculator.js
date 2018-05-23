@@ -14,9 +14,11 @@
   };
 
   function generateBuild(settings) {
-	$('#edit-custom-tag').validate({
+	$('#webform-submission-build-calculator-add-form').validate({
       rules : {
-        edit-custom-tag : { badwordcheck : true }
+		custom_tag : {
+          badwordcheck : true 
+	    }
       }
     });
 	//initialize build stats as numbers and grab our selected values
