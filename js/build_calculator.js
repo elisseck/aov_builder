@@ -6,6 +6,10 @@
           generateBuild(settings);
         });
 	  });
+	  var blacklist = /\b(shit|piss|cunt|cock|fuck|fucker|fucking|shitty|bitch|dick|nigger|nigga|dicks|cocks|cunts|shitting)\b/; /* many more banned words to be added... */
+      $('#edit-custom-tag').validator.addMethod("badwordcheck", function(value) {
+        return !blacklist.test(value.toLowerCase());
+      }, "Please remove inappropriate language before submitting.");
     }
   };
 
