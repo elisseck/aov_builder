@@ -6,21 +6,10 @@
           generateBuild(settings);
         });
 	  });
-	  var blacklist = /\b(shit|piss|cunt|cock|fuck|fucker|fucking|shitty|bitch|dick|nigger|nigga|dicks|cocks|cunts|shitting)\b/; /* many more banned words to be added... */
-      $.validator.addMethod("badwordcheck", function(value) {
-        return !blacklist.test(value.toLowerCase());
-      }, "Please remove inappropriate language from your tag before submitting.");
     }
   };
 
   function generateBuild(settings) {
-	$('#webform-submission-build-calculator-add-form').validate({
-      rules : {
-		custom_tag : {
-          badwordcheck : true 
-	    }
-      }
-    });
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
 	  "field_ability_power": 0,
