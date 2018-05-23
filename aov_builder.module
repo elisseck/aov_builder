@@ -27,6 +27,15 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   }
 }
 
+function aov_builder_webform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
+    if ($element['#webform_id'] === 'build_calculator--custom_tag') {
+        $element['#element_validate'][] = array(
+            'Drupal\aov_builder\Validate\buildTitles',
+            'validateBuildTitle'
+        );
+    }
+}
+
 function aov_builder_query_heroes() {
   $data = array();
   $heroKeys = array(
@@ -254,37 +263,83 @@ function aov_builder_query_skills_and_bonuses() {
 }
 
 function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
-	dpm($form);
-  /*$node = Node::create([
+  $uid = \Drupal::currentUser()->id();
+  $data = json_decode($form['elements']['full_build_hidden']['#value']);
+  $heroNode = \Drupal\node\Entity\Node::load($id)
+  $title = $heroNode->getTitle() . ' - ' . $form['elements']['custom_tag']['#value'];
+  $node = Node::create([
     'type' => 'build',
-	'author' => ,
-	
-    'field_hero' => ,	
-	'field_hero_level' => ,	
-	'field_items' => ,	
-	'field_green_arcana' => ,
-    'field_purple_arcana' => ,
-    'field_red_arcana' => ,
-	
-    'field_ability_power' => ,
-    'field_armor' => ,
-    'field_attack_damage' => ,
-    'field_attack_speed' => ,
-    'field_cdr' => ,
-    'field_crit_chance' => ,
-    'field_critical_damage' => ,
-    'field_flat_pen_ad' => ,
-    'field_flat_pen_ap' => ,
-    'field_hp' => ,
-    'field_hp_regen_5_seconds' => ,
-    'field_life_steal' => ,
-    'field_magic_defense' => ,
-    'field_magic_life_steal' => ,
-    'field_mana' => ,
-    'field_mana_regen_5_seconds' => ,
-    'field_movement_speed' => ,
-    'field_percent_pen_ad' => ,
-    'field_percent_pen_ap' => ,
+	'title' => $title,
+	'author' => $uid,
+    'field_hero' => [
+	  $form['elements']['hero']['#value'],
+	],
+	'field_hero_level' => [
+	  $form['elements']['level']['#value'],
+	],	
+	'field_items' => [
+	  $form['elements']['flexbox_00']['item_1']['#value'],
+	  $form['elements']['flexbox_00']['item_2']['#value'],
+	  $form['elements']['flexbox_00']['item_3']['#value'],
+	  $form['elements']['flexbox_00']['item_4']['#value'],
+	  $form['elements']['flexbox_00']['item_5']['#value'],
+	  $form['elements']['flexbox_00']['item_6']['#value'],
+	],
+	'field_green_arcana' => [
+	  $form['elements']['arcana']['flexbox_2']['green_level_1']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_4']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_7']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_10']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_13']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_16']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_19']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_22']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_25']['#value'],
+	  $form['elements']['arcana']['flexbox_2']['green_level_28']['#value'],
+	],
+    'field_purple_arcana' => [
+	  $form['elements']['arcana']['flexbox_03']['purple_level_1']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_4']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_7']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_10']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_13']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_16']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_19']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_22']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_25']['#value'],
+	  $form['elements']['arcana']['flexbox_03']['purple_level_28']['#value'],
+	],
+    'field_red_arcana' => [
+	  $form['elements']['arcana']['flexbox']['red_level_1']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_4']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_7']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_10']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_13']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_16']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_19']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_22']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_25']['#value'],
+	  $form['elements']['arcana']['flexbox']['red_level_28']['#value'],
+	],
+    'field_ability_power' => $data['field_ability_power'],
+    'field_armor' => $data['field_armor'],
+    'field_attack_damage' => $data['field_attack_damage'],
+    'field_attack_speed' => $data['field_attack_speed'],
+    'field_cdr' => $data['field_cdr'],
+    'field_crit_chance' => $data['field_crit_chance'],
+    'field_critical_damage' => $data['field_critical_damage'],
+    'field_flat_pen_ad' => $data['field_flat_pen_ad'],
+    'field_flat_pen_ap' => $data['field_flat_pen_ap'],
+    'field_hp' => $data['field_hp'],
+    'field_hp_regen_5_seconds' => $data['field_hp_regen_5_seconds'],
+    'field_life_steal' => $data['field_life_steal'],
+    'field_magic_defense' => $data['field_magic_defense'],
+    'field_magic_life_steal' => $data['field_magic_life_steal'],
+    'field_mana' => $data['field_mana'],
+    'field_mana_regen_5_seconds' => $data['field_mana_regen_5_seconds'],
+    'field_movement_speed' => $data['field_movement_speed'],
+    'field_percent_pen_ad' => $data['field_percent_pen_ad'],
+    'field_percent_pen_ap' => $data['field_percent_pen_ap'],
   ]);
-  $node->save();*/
+  $node->save();
 }
