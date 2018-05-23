@@ -1,5 +1,6 @@
 <?php
 
+use \Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -17,6 +18,11 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['library'][] = 'aov_builder/build_calculator';
+	foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
+      }
+    }
 	return $form;
   }
 }
@@ -245,4 +251,40 @@ function aov_builder_query_skills_and_bonuses() {
 	}
   }
   return $data;
+}
+
+function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
+	dpm($form);
+  /*$node = Node::create([
+    'type' => 'build',
+	'author' => ,
+	
+    'field_hero' => ,	
+	'field_hero_level' => ,	
+	'field_items' => ,	
+	'field_green_arcana' => ,
+    'field_purple_arcana' => ,
+    'field_red_arcana' => ,
+	
+    'field_ability_power' => ,
+    'field_armor' => ,
+    'field_attack_damage' => ,
+    'field_attack_speed' => ,
+    'field_cdr' => ,
+    'field_crit_chance' => ,
+    'field_critical_damage' => ,
+    'field_flat_pen_ad' => ,
+    'field_flat_pen_ap' => ,
+    'field_hp' => ,
+    'field_hp_regen_5_seconds' => ,
+    'field_life_steal' => ,
+    'field_magic_defense' => ,
+    'field_magic_life_steal' => ,
+    'field_mana' => ,
+    'field_mana_regen_5_seconds' => ,
+    'field_movement_speed' => ,
+    'field_percent_pen_ad' => ,
+    'field_percent_pen_ap' => ,
+  ]);
+  $node->save();*/
 }
