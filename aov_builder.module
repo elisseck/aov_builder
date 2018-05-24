@@ -2,6 +2,7 @@
 
 use \Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Implements hook_form_alter().
@@ -337,4 +338,8 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
     'field_percent_pen_ap' => $data->field_percent_pen_ap,
   ]);
   $node->save();
+  $path = '/form/build-comparison';
+  $response = new RedirectResponse($path);
+  $response->send();
+  return;
 }
