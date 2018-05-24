@@ -14,6 +14,10 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$itemData = aov_builder_query_items();
 	$arcanaData = aov_builder_query_arcana();
 	$skillAndBonusData = aov_builder_query_skills_and_bonuses();
+	$heroParam = $_GET['hero'];
+	if ($heroParam) {
+	  $form['elements']['hero']['#value'] = $heroParam;
+	}
 	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
 	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
