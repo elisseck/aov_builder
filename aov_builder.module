@@ -29,7 +29,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       }
     }
 	return $form;
-  } else if ($form['#form_id'] == 'webform-submission-build-comparison-add-form') {
+  } else if ($form['#form_id'] == 'webform_submission_build_comparison_add_form') {
 	$buildOne = $_GET['build'];
 	if ($buildOne) {
 	  $form['elements']['build_1']['#value'] = $buildOne;
