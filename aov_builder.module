@@ -1,8 +1,9 @@
 <?php
 
-use \Drupal\node\Entity\Node;
+use Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\aov_builder\Form\BuildComparison;
 
 /**
  * Implements hook_form_alter().

@@ -1,6 +1,6 @@
 <?php
 
-namespace \Drupal\aov_builder\Form\BuildComparison;
+namespace Drupal\aov_builder\Form\BuildComparison;
 
 use Drupal\Core\Form\FormStateInterface;
 
