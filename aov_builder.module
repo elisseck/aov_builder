@@ -46,6 +46,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	);
 	/*$buildData = aov_builder_load_build($buildOne);
 	$heroData = aov_builder_query_heroes($params = array('hero' => $build['field_hero']->getValue()[0]['target_id']);*/
+	return $form;
   }
 }
 
