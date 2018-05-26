@@ -392,7 +392,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-	  ->condition('nid', $form_state->getValue('edit-build-2'));
+	  ->condition('nid', $form_state->getValue('edit-build-2')[0]['target_id']);
     $nid = $buildQuery->execute();
     $build = entity_load('node', $nid);
 dpm($build);
