@@ -397,7 +397,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 
     $elem = array(
       '#type' => 'textfield',
-	  '#size' => '60',
+	  '#size' => '600',
 	  '#disabled' => TRUE,
       '#value' => serialize($build),
       '#attributes' => array(
