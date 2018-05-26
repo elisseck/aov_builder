@@ -36,7 +36,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	  $form['elements']['build_1']['#value'] = $buildOne;
 	}
 	$form['elements']['build_2']['#ajax'] = array(
-	  'callback' => array('aov_callbacks', 'Drupal\aov_builder\Form\BuildComparison::loadBuild',
+	  'callback' => array('aov_callbacks', 'loadBuild'),
       'event' => 'change',
       'wrapper' => 'edit-build-2-output',
       'progress' => array(
