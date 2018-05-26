@@ -396,9 +396,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $build = entity_load('node', $nid);
 
     $elem = array(
-      '#type' => 'item',
-      '#size' => '60',
-      '#disabled' => TRUE,
+      '#type' => 'hidden',
       '#value' => 'Hello World!',
       '#attributes' => array(
         'id' => array('edit-build-2-output'),
