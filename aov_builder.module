@@ -399,7 +399,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       '#type' => 'textfield',
 	  '#size' => '60',
 	  '#disabled' => TRUE,
-      '#value' => 'Hello World!',
+      '#value' => serialize($build),
       '#attributes' => array(
         'id' => array('edit-build-2-output'),
       ),
