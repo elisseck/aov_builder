@@ -18,7 +18,7 @@ class aov_callbacks {
       '#type' => 'textfield',
       '#size' => '60',
       '#disabled' => TRUE,
-      '#value' => serialize($build),
+      '#value' => 'Hello World!',
       '#attributes' => array(
         'id' => array('edit-build-2-output'),
       ),
