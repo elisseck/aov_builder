@@ -36,7 +36,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	  $form['elements']['build_1']['#value'] = $buildOne;
 	}
 	$form['elements']['build_2']['#ajax'] = array(
-	  'callback' => array('aov_callbacks', 'loadBuild'),
+	  'callback' => 'aov_builder_loadBuild',
       'event' => 'change',
       'wrapper' => 'edit-build-2-output',
       'progress' => array(
@@ -369,7 +369,7 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   return;
 }
 
-function aov_builder_load_build($buildID) {
+/*function aov_builder_load_build($buildID) {
   $buildQuery = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'build')
@@ -385,4 +385,25 @@ function aov_builder_load_build($buildID) {
   $arcanaIDs = array_push($arcanaIDs, $build['field_red_arcana']->getValue());
   $arcana = entity_load_multiple('node', $arcanaIDs);
   
-}
+}*/
+
+function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
+    $buildQuery = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'build')
+	  ->condition('id', $form_state->getValue('edit-build-2'));
+    $nid = $buildQuery->execute();
+    $build = entity_load('node', $nid);
+
+    $elem = array(
+      '#type' => 'textfield',
+      '#size' => '60',
+      '#disabled' => TRUE,
+      '#value' => 'Hello World!',
+      '#attributes' => array(
+        'id' => array('edit-build-2-output'),
+      ),
+    );
+
+    return ['#markup' => \Drupal::service('renderer')->render($elem)];
+  }
