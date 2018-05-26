@@ -4,23 +4,26 @@ namespace Drupal\aov_builder\Form\BuildComparison;
 
 use Drupal\Core\Form\FormStateInterface;
 
-public static function loadBuild(array &$form, FormStateInterface $form_state) {
-  $buildQuery = \Drupal::entityQuery('node')
-    ->condition('status', 1)
-    ->condition('type', 'build')
-	->condition('id', $form_state->getValue('edit-build-2'));
-  $nid = $buildQuery->execute();
-  $build = entity_load('node', $nid);
+class aov_callbacks {
 
-  $elem = array(
-    '#type' => 'textfield',
-    '#size' => '60',
-    '#disabled' => TRUE,
-    '#value' => serialize($build),
-    '#attributes' => [
-      'id' => ['edit-build-2-output'],
-    ],
-  );
+  public static function loadBuild(array &$form, FormStateInterface $form_state) {
+    $buildQuery = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'build')
+	  ->condition('id', $form_state->getValue('edit-build-2'));
+    $nid = $buildQuery->execute();
+    $build = entity_load('node', $nid);
 
-  return ['#markup' => \Drupal::service('renderer')->render($elem)];
+    $elem = array(
+      '#type' => 'textfield',
+      '#size' => '60',
+      '#disabled' => TRUE,
+      '#value' => serialize($build),
+      '#attributes' => array(
+        'id' => array('edit-build-2-output'),
+      ),
+    );
+
+    return ['#markup' => \Drupal::service('renderer')->render($elem)];
+  }
 }
