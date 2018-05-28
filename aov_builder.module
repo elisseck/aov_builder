@@ -112,7 +112,7 @@ function aov_builder_query_heroes($params = NULL) {
     ->condition('status', 1)
     ->condition('type', 'hero');
   if (isset($params['hero'])) {
-    $query->condition('id', $params['hero']);
+    $query->condition('nid', $params['hero']);
   }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
@@ -127,7 +127,7 @@ function aov_builder_query_heroes($params = NULL) {
   return $data;
 }
 
-function aov_builder_query_items() {
+function aov_builder_query_items($params = NULL) {
   $data = array();
   $itemKeys = array(
   "field_ability_power",
@@ -156,6 +156,9 @@ function aov_builder_query_items() {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'item');
+  if (isset($params['items'])) {
+    $query->condition('nid', $params['items'], 'IN');
+  }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
   foreach ($nodes as $node) {
@@ -167,7 +170,7 @@ function aov_builder_query_items() {
   return $data;
 }
 
-function aov_builder_query_arcana() {
+function aov_builder_query_arcana($params = NULL) {
   $data = array();
   $arcanaKeys = array(
   "field_ability_power",
@@ -191,6 +194,9 @@ function aov_builder_query_arcana() {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'arcana');
+  if (isset($params['aracana'])) {
+    $query->condition('nid', $params, 'IN');
+  }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
   foreach ($nodes as $node) {
@@ -202,7 +208,7 @@ function aov_builder_query_arcana() {
   return $data;
 }
 
-function aov_builder_query_skills_and_bonuses() {
+function aov_builder_query_skills_and_bonuses($params = NULL) {
   $data = array();
   //get skills
   $skillKeys = array(
@@ -395,24 +401,6 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   return;
 }
 
-/*function aov_builder_load_build($buildID) {
-  $buildQuery = \Drupal::entityQuery('node')
-    ->condition('status', 1)
-    ->condition('type', 'build')
-	->condition('id', $buildID);
-  $nid = $buildQuery->execute();
-  $build = entity_load('node', $nid);
-  //get allowed items
-  $itemIDs = $build['field_items']->getValue();
-  $items = entity_load_multiple('node', $itemIDs);
-  //get allowed arcana
-  $arcanaIDs = $build['field_green_arcana']->getValue();
-  $arcanaIDs = array_push($arcanaIDs, $build['field_purple_arcana']->getValue());
-  $arcanaIDs = array_push($arcanaIDs, $build['field_red_arcana']->getValue());
-  $arcana = entity_load_multiple('node', $arcanaIDs);
-  
-}*/
-
 function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	$triggerElement = $form_state->getTriggeringElement()['#name'];
     $buildQuery = \Drupal::entityQuery('node')
@@ -421,6 +409,21 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       ->condition('nid', $form_state->getValue($triggerElement));
     $nid = $buildQuery->execute();
     $build = node_load(array_shift($nid));
+	$heroData = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	$arr = array();
+	foreach ($build->field_items->getValue() as $item) {
+	  array_push($arr, $item['target_id']);
+	}
+	$itemData = aov_builder_query_items(array('items' => $arr));
+	$arr = array();
+	foreach ($build->field_arcana->getValue() as $arcana) {
+	  array_push($arr, $arcana['target_id']);
+	}
+	$arcanaData = aov_builder_query_arcana(array('arcana' => $arr));
+    $form['#attached']['drupalSettings']['heroData'] = $heroData;
+	$form['#attached']['drupalSettings']['itemData'] = $itemData;
+	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
+    dpm($form);
     $buildArray = array(
 	//'field_hero' => 'Hero',
 	//'field_items' => 'Items', 
