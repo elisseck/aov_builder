@@ -38,12 +38,21 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	$form['elements']['build_2']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadBuild',
       'event' => 'change',
-      'wrapper' => 'edit-build-2-output',
+      'wrapper' => 'ajax-placeholder',
       'progress' => array(
         'type' => 'throbber',
         'message' => t('Loading Build...'),
       ),
 	);
+	// Add placeholder for Ajax response markup
+    $form['ajax_response'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => t('Placeholder for ajax response'),
+      '#attributes' => array(
+        'id' => array('ajax_placeholder'),
+      ),
+    );
 	/*$buildData = aov_builder_load_build($buildOne);
 	$heroData = aov_builder_query_heroes($params = array('hero' => $build['field_hero']->getValue()[0]['target_id']);*/
 	return $form;
@@ -388,15 +397,16 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
 }*/
 
 function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
-	dpm($form_state->getValue('edit-build-2'));
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
 	  ->condition('nid', $form_state->getValue('edit-build-2')[0]['target_id']);
     $nid = $buildQuery->execute();
+	dpm($nid);
     $build = entity_load('node', $nid);
-dpm($build);
-    $elem = array(
+	dpm($build);
+
+    /*$elem = array(
       '#type' => 'textfield',
 	  '#size' => '600',
 	  '#disabled' => TRUE,
@@ -404,7 +414,11 @@ dpm($build);
       '#attributes' => array(
         'id' => array('edit-build-2-output'),
       ),
-    );
+    );*/
 
-    return ['#markup' => \Drupal::service('renderer')->render($elem)];
+    // Add an Ajax response to avoid error 
+    $response = [
+      '#markup' => '<div>Hello World</div>',
+    ];
+    return $response;
   }
