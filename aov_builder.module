@@ -415,14 +415,14 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
         'id' => array('edit-build-2-output'),
       ),
     );*/
-    $selector = '#ajax_placeholder';
+
     // Add an Ajax response to avoid error 
-    $content = [
+    $response = [
       '#markup' => '<div>Hello World</div>',
+	  '#attributes' => array(
+	    'id' => array('ajax_placeholder'),
+	  ),
     ];
-	
-	$response->addCommand(new InvokeCommand($selector, 'removeClass', ['spinner-loading']));
-    $response->addCommand(new HtmlCommand($selector, $content));
-	
+
     return $response;
   }
