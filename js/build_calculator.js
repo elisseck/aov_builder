@@ -255,8 +255,15 @@
 	  "field_critical_damage": 'Critical Damage',
 	};
 	var markup = '<div id="arcana-final"><h3>Arcana Stats</h3>';
+	var count = 0;
 	for (var key in arcanaBuild) {
+	  if (count % 5 === 0) {
+		markup += '<div class="arcana-grouping">';
+	  }
 	  markup += '<div id=arcana-' + key + '>' + arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
+	  if (count % 5 === 0) {
+		markup += '</div>';
+	  }
 	}
 	markup += '</div>'
 	container.empty();
