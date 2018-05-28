@@ -266,7 +266,11 @@
   function appendToSkillContainer(container, skillBuild, skillBaseData) {
     var markup = '';
 	for (var skill in skillBuild) {
-	  markup += '<div class="skills-final">';
+	  var passive = '';
+	  if (skillBuild[skill]['field_skill_type'][0]['value'] == 'Passive') {
+	    passive = '-passive';
+	  }
+	  markup += '<div class="skills-final' + passive + '">';
 	  markup += '<div class="skill-title"><h3>' + skillBuild[skill]['field_skill_type'][0]['value'] + ' - ' + skillBuild[skill]['title'] + '</h3></div>';
 	  if (skillBuild[skill]['body'].hasOwnProperty(0)) {
 	    markup += '<div class="skill-description">' + skillBuild[skill]['body'][0]['value'] + '</div>';
