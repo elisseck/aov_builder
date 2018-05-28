@@ -33,7 +33,6 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     }
 	return $form;
   } else if ($form['#form_id'] == 'webform_submission_build_comparison_add_form') {
-	$form['#attached']['library'][] = 'aov_builder/build_comparison';
 	if (isset($_GET['build'])) {
 	  $form['elements']['build_1']['#value'] = $_GET['build'];
 	}
@@ -72,6 +71,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
         'id' => array('ajax_placeholder_build_2'),
       ),
     );
+	$form['#attached']['library'][] = 'aov_builder/build_comparison';
 	return $form;
   }
 }
