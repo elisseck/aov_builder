@@ -80,6 +80,7 @@
 	  }
 	  num ++;
 	}
+	buildContainer.append(markup);
   }
 
   function getBaseStats(hero, fullBuild) {
