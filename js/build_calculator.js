@@ -75,7 +75,7 @@
 		}
 		markup += "<div><strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
 	  }
-	  if (num % 5 === 0) {
+	  if (num % 5 === 4) {
         markup += '</div>';
 	  }
 	  num ++;
@@ -270,7 +270,7 @@
 		markup += '<div class="arcana-grouping">';
 	  }
 	  markup += '<div id=arcana-' + key + '>' + arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
-	  if (count % 5 === 0) {
+	  if (count % 5 === 4) {
 		markup += '</div>';
 	  }
 	  count ++;
