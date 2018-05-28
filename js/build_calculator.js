@@ -73,7 +73,7 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		markup += "<div><strong>" + label + ":</strong> " + fullBuild[data] + "</div>" );
+		markup += "<div><strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
 	  }
 	  if (num % 5 === 0) {
         markup += '</div>';
