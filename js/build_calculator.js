@@ -62,15 +62,23 @@
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	//build skill grid
 	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
-	buildContainer.append("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
+	var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
+	var num = 0;
 	for (var data in fullBuild) {
+	  if (num % 5 === 0) {
+        markup += '<div class="hero-grouping">';
+	  }
 	  if (fullBuild.hasOwnProperty(data)) {
 		var label = "";
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		buildContainer.append( "<p><strong>" + label + ":</strong> " + fullBuild[data] + "</p>" );
+		markup += "<div><strong>" + label + ":</strong> " + fullBuild[data] + "</div>" );
 	  }
+	  if (num % 5 === 0) {
+        markup += '</div>';
+	  }
+	  num ++;
 	}
   }
 
@@ -264,6 +272,7 @@
 	  if (count % 5 === 0) {
 		markup += '</div>';
 	  }
+	  count ++;
 	}
 	markup += '</div>'
 	container.empty();
