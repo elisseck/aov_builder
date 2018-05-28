@@ -411,10 +411,41 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  ->condition('nid', $form_state->getValue('build_2'));
     $nid = $buildQuery->execute();
     $build = entity_load('node', $nid);
-
+    $buildArray = array(
+	'field_hero' => 'Hero',
+	'field_hero_level' => 'Level',
+	'field_items' => 'Items', 
+	'field_green_arcana' => 'Green Arcana',
+    'field_purple_arcana' => 'Purple Arcana',
+    'field_red_arcana' => 'Red Arcana',
+    'field_ability_power' => 'Ability Power',
+    'field_armor' => 'Armor',
+    'field_attack_damage' => 'Attack Damage',
+    'field_attack_speed' => 'Attack Speed',
+    'field_cdr' => 'CDR',
+    'field_crit_chance' => 'Crit Chance',
+    'field_critical_damage' => 'Crit Damage',
+    'field_flat_pen_ad' => 'Flat Pen AD',
+    'field_flat_pen_ap' => 'Flat Pen AP',
+    'field_hp' => 'HP',
+    'field_hp_regen_5_seconds' => 'HP Regen / 5 Seconds',
+    'field_life_steal' => 'Life Steal',
+    'field_magic_defense' => 'Magic Defense',
+    'field_magic_life_steal' => 'Magic Life Steal',
+    'field_mana' => 'Mana',
+    'field_mana_regen_5_seconds' => 'Mana Regen / 5 Seconds',
+    'field_movement_speed' => 'Movement Speed',
+    'field_percent_pen_ad' => 'Percent Pen AD',
+    'field_percent_pen_ap' => 'Percent Pen AP',
+	);
+	$markup = '<div id="build2_values">';
+	foreach ($buildArray as $key => $label) {
+	  $markup .= '<div id="build2_' . $key . '">' . $label . ': ' . $build->get($key)->getValue() . '</div>';
+	}
+	$markup .= '</div>';
     // Add an Ajax response
     $content = [
-      '#markup' => '<div>' . $form_state->getValue('build_2') . '</div>',
+      '#markup' => $markup,
 	  '#attributes' => array(
 	    'id' => array('ajax_placeholder_1'),
 	  ),
