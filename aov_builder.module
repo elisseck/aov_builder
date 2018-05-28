@@ -33,9 +33,8 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     }
 	return $form;
   } else if ($form['#form_id'] == 'webform_submission_build_comparison_add_form') {
-	$buildOne = $_GET['build'];
-	if ($buildOne) {
-	  $form['elements']['build_1']['#value'] = $buildOne;
+	if (isset($_GET['build'])) {
+	  $form['elements']['build_1']['#value'] = $_GET['build'];
 	}
 	$form['elements']['build_2']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadBuild',
@@ -408,7 +407,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-	  ->condition('nid', $form_state->getValue('build_2'));
+	  ->condition('entity_id', $form_state->getValue('build_2'));
     $nid = $buildQuery->execute();
     $build = entity_load('node', $nid);
     $buildArray = array(
