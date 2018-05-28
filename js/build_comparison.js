@@ -1,7 +1,8 @@
 (function ($, Drupal) {
   Drupal.behaviors.build_comparison = {
     attach: function (context, settings) {
-      $("#edit-build-1").one('change');
+	  var param = urlParams.get('build');
+      $("#edit-build-1").val(param).trigger('change');
     }
   };
 })(jQuery, Drupal);
