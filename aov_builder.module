@@ -415,8 +415,9 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  array_push($arr, $item['target_id']);
 	}
 	$itemData = aov_builder_query_items(array('items' => $arr));
+	$allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
 	$arr = array();
-	foreach ($build->field_arcana->getValue() as $arcana) {
+	foreach ($allArcana as $arcana) {
 	  array_push($arr, $arcana['target_id']);
 	}
 	$arcanaData = aov_builder_query_arcana(array('arcana' => $arr));
