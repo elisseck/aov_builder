@@ -416,11 +416,11 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	}
 	$itemData = aov_builder_query_items(array('items' => $arr));
 	$allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
-	$arr = array();
+	$arcanaArr = array();
 	foreach ($allArcana as $arcana) {
-	  array_push($arr, $arcana['target_id']);
+	  array_push($arcanaArr, $arcana['target_id']);
 	}
-	$arcanaData = aov_builder_query_arcana(array('arcana' => $arr));
+	$arcanaData = aov_builder_query_arcana(array('arcana' => $arcanaArr));
     $form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
