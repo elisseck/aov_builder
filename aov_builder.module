@@ -4,6 +4,8 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\aov_builder\Form\BuildComparison;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 
 /**
  * Implements hook_form_alter().
@@ -417,12 +419,13 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     );*/
 
     // Add an Ajax response to avoid error 
-    $response = [
+    $content = [
       '#markup' => '<div>Hello World</div>',
 	  '#attributes' => array(
 	    'id' => array('ajax_placeholder'),
 	  ),
     ];
-
+    $response = new AjaxResponse();
+	$response->addCommand(new HtmlCommand('#ajax_placeholder', $content));
     return $response;
   }
