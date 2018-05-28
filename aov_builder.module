@@ -406,7 +406,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 
     // Add an Ajax response
     $content = [
-      '#markup' => '<div>' . $form_state->getValue('edit-build-2') . '</div>',
+      '#markup' => '<div>' . $form_state->getValue('build_2') . '</div>',
 	  '#attributes' => array(
 	    'id' => array('ajax_placeholder'),
 	  ),
