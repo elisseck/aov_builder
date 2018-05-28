@@ -6,3 +6,12 @@ build_calculator:
     - core/jquery
     - core/jquery.once
     - core/drupalSettings
+
+build_comparison:
+  version: 1.x
+  js:
+    js/build_comparison.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
