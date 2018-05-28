@@ -47,12 +47,20 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       ),
 	);
 	// Add placeholder for Ajax response markup
-    $form['ajax_response'] = array(
+    $form['ajax_response_1'] = array(
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#value' => t(' '),
       '#attributes' => array(
-        'id' => array('ajax_placeholder'),
+        'id' => array('ajax_placeholder_1'),
+      ),
+    );
+	$form['ajax_response_2'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => t(' '),
+      '#attributes' => array(
+        'id' => array('ajax_placeholder_2'),
       ),
     );
 	return $form;
@@ -292,14 +300,8 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   $uid = \Drupal::currentUser()->id();
   $data = json_decode($form['elements']['full_build_hidden']['#value']);
   $heroNode = \Drupal\node\Entity\Node::load($form['elements']['hero']['#value']);
-  $tag = $form['elements']['custom_tag']['#value'];
-  if ($tag == "") {
-    $tag = $heroNode->id();
-  }
-  $title = $heroNode->getTitle() . ' - ' . $tag;
   $node = Node::create([
     'type' => 'build',
-	'title' => $title,
 	'author' => $uid,
     'field_hero' => [
 	  $form['elements']['hero']['#value'],
@@ -371,8 +373,14 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
     'field_percent_pen_ad' => $data->field_percent_pen_ad,
     'field_percent_pen_ap' => $data->field_percent_pen_ap,
   ]);
+  $tag = $form['elements']['custom_tag']['#value'];
+  if ($tag == "") {
+    $tag = $node->id();
+  }
+  $title = $heroNode->getTitle() . ' - ' . $tag;
+  $node->setTitle($title);
   $node->save();
-  $path = '/form/build-comparison';
+  $path = '/form/build-comparison?build=' . $node->id();
   $response = new RedirectResponse($path);
   $response->send();
   return;
@@ -397,21 +405,21 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
 }*/
 
 function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
-    /*$buildQuery = \Drupal::entityQuery('node')
+    $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-	  ->condition('nid', $form_state->getValue('edit-build-2')[0]['target_id']);
+	  ->condition('nid', $form_state->getValue('build_2'));
     $nid = $buildQuery->execute();
-    $build = entity_load('node', $nid);*/
+    $build = entity_load('node', $nid);
 
     // Add an Ajax response
     $content = [
       '#markup' => '<div>' . $form_state->getValue('build_2') . '</div>',
 	  '#attributes' => array(
-	    'id' => array('ajax_placeholder'),
+	    'id' => array('ajax_placeholder_1'),
 	  ),
     ];
     $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder', $content));
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_1', $content));
     return $response;
   }
