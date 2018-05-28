@@ -45,13 +45,22 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
         'message' => t('Loading Build...'),
       ),
 	);
+	$form['elements']['build_1']['#ajax'] = array(
+	  'callback' => 'aov_builder_loadBuild',
+      'event' => 'change',
+      'wrapper' => 'ajax-placeholder',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => t('Loading Build...'),
+      ),
+	);
 	// Add placeholder for Ajax response markup
     $form['ajax_response_1'] = array(
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#value' => t(' '),
       '#attributes' => array(
-        'id' => array('ajax_placeholder_1'),
+        'id' => array('ajax_placeholder_build_1'),
       ),
     );
 	$form['ajax_response_2'] = array(
@@ -59,7 +68,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       '#tag' => 'div',
       '#value' => t(' '),
       '#attributes' => array(
-        'id' => array('ajax_placeholder_2'),
+        'id' => array('ajax_placeholder_build_2'),
       ),
     );
 	return $form;
@@ -403,20 +412,21 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   
 }*/
 
-function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
+function aov_builder_loadBuild(array &$form, FormStateInterface $form_state, $number) {
+	$triggerElement = $form_state['#input']['_triggering_element_name'];
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-	  ->condition('entity_id', $form_state->getValue('build_2'));
+      ->condition('nid', $form_state->getValue($triggerElement));
     $nid = $buildQuery->execute();
-    $build = entity_load('node', $nid);
+    $build = node_load(array_shift($nid));
     $buildArray = array(
-	'field_hero' => 'Hero',
+	//'field_hero' => 'Hero',
+	//'field_items' => 'Items', 
+	//'field_green_arcana' => 'Green Arcana',
+    //'field_purple_arcana' => 'Purple Arcana',
+    //'field_red_arcana' => 'Red Arcana',
 	'field_hero_level' => 'Level',
-	'field_items' => 'Items', 
-	'field_green_arcana' => 'Green Arcana',
-    'field_purple_arcana' => 'Purple Arcana',
-    'field_red_arcana' => 'Red Arcana',
     'field_ability_power' => 'Ability Power',
     'field_armor' => 'Armor',
     'field_attack_damage' => 'Attack Damage',
@@ -437,19 +447,19 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     'field_percent_pen_ad' => 'Percent Pen AD',
     'field_percent_pen_ap' => 'Percent Pen AP',
 	);
-	$markup = '<div id="build2_values">';
+	$markup = '<div id="' . $triggerElement . '_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="build2_' . $key . '">' . $label . ': ' . $build->get($key)->getValue() . '</div>';
+	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $build->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
     $content = [
       '#markup' => $markup,
 	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_1'),
+	    'id' => array('ajax_placeholder_' . $triggerElement),
 	  ),
     ];
     $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_1', $content));
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
     return $response;
   }
