@@ -424,7 +424,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
-    dpm($form);
     $buildArray = array(
 	//'field_hero' => 'Hero',
 	//'field_items' => 'Items', 
