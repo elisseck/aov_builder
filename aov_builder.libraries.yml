@@ -15,3 +15,12 @@ build_comparison:
     - core/jquery
     - core/jquery.once
     - core/drupalSettings
+
+damage_calculator:
+  version: 1.x
+  js:
+    js/damage_calculator.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
