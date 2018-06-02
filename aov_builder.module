@@ -84,11 +84,11 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
   //Damage Calculator Form
   else if ($form['#form-id'] == 'webform_submission_damage_calculator_add_form') {
     if (isset($_GET['build'])) {
-	  $form['elements']['build_1']['#value'] = $_GET['build'];
-	}
-	$form['#attached']['library'][] = 'aov_builder/damage_calculator';
+      $form['elements']['build_1']['#value'] = $_GET['build'];
+    }
+    $form['#attached']['library'][] = 'aov_builder/damage_calculator';
+	return $form;
   }
-  return $form;
 }
 
 function aov_builder_query_heroes($params = NULL) {
