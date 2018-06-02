@@ -72,6 +72,11 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       ),
     );
 	$form['#attached']['library'][] = 'aov_builder/build_comparison';
+	foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = 'aov_builder_submit_comparison';
+      }
+    }
 	return $form;
   }
 }
@@ -466,4 +471,16 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
 	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
     return $response;
+  }
+  
+  function aov_builder_submit_comparison(array $form, FormStateInterface $form_state) {
+	if ($form_state->getValue('build_to_continue_with_') == 1) {
+      $buildID = $form_state->getValue('build_1');
+	} else {
+      $buildID = $form_state->getValue('build_2');
+	}
+    $path = '/form/damage-calculator?build=' . $buildID;
+    $response = new RedirectResponse($path);
+    $response->send();
+    return;
   }
