@@ -11,7 +11,7 @@ use Drupal\Core\Ajax\HtmlCommand;
  * Implements hook_form_alter().
  */
 function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Adding custom validation for the welcome page type field.
+  //Build Calculator Form
   if ($form['#form_id']== 'webform_submission_build_calculator_add_form') {
 	$heroData = aov_builder_query_heroes();
 	$itemData = aov_builder_query_items();
@@ -32,7 +32,9 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       }
     }
 	return $form;
-  } else if ($form['#form_id'] == 'webform_submission_build_comparison_add_form') {
+  }
+  //Build Comparison Form
+  else if ($form['#form_id'] == 'webform_submission_build_comparison_add_form') {
 	if (isset($_GET['build'])) {
 	  $form['elements']['build_1']['#value'] = $_GET['build'];
 	}
@@ -78,12 +80,15 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       }
     }
 	return $form;
-  } else if ($form['#form-id'] == 'webform_submission_damage_calculator_add_form') {
+  }
+  //Damage Calculator Form
+  else if ($form['#form-id'] == 'webform_submission_damage_calculator_add_form') {
     if (isset($_GET['build'])) {
 	  $form['elements']['build_1']['#value'] = $_GET['build'];
 	}
 	$form['#attached']['library'][] = 'aov_builder/damage_calculator';
   }
+  return $form;
 }
 
 function aov_builder_query_heroes($params = NULL) {
