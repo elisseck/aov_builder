@@ -82,7 +82,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	return $form;
   }
   //Damage Calculator Form
-  else if ($form['#form-id'] == 'webform_submission_damage_calculator_add_form') {
+  else if ($form['#form_id'] == 'webform_submission_damage_calculator_add_form') {
     if (isset($_GET['build'])) {
       $form['elements']['build_1']['#value'] = $_GET['build'];
     }
