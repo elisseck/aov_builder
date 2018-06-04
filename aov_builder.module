@@ -86,6 +86,41 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     if (isset($_GET['build'])) {
       $form['elements']['build_1']['#value'] = $_GET['build'];
     }
+	$form['elements']['build_2']['#ajax'] = array(
+	  'callback' => 'aov_builder_loadBuild',
+      'event' => 'change',
+      'wrapper' => 'ajax-placeholder',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => t('Loading Build...'),
+      ),
+	);
+	$form['elements']['build_1']['#ajax'] = array(
+	  'callback' => 'aov_builder_loadBuild',
+      'event' => 'change',
+      'wrapper' => 'ajax-placeholder',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => t('Loading Build...'),
+      ),
+	);
+	// Add placeholder for Ajax response markup
+    $form['ajax_response_1'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => t(' '),
+      '#attributes' => array(
+        'id' => array('ajax_placeholder_build_1'),
+      ),
+    );
+	$form['ajax_response_2'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => t(' '),
+      '#attributes' => array(
+        'id' => array('ajax_placeholder_build_2'),
+      ),
+    );
     $form['#attached']['library'][] = 'aov_builder/damage_calculator';
 	return $form;
   }
