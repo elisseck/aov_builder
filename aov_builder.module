@@ -539,9 +539,9 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	}
     //Only query build 2 if it's filled, otherwise we'll have "issues"
 	if ($form_state->getValue('build_2')) {
-      $filled = array('build_1', 'build_2');
+      $filled = array($form_state->getValue('build_1'), $form_state->getValue('build_2'));
 	} else {
-      $filled = array('build_1');
+      $filled = array($form_state->getValue('build_1'));
 	}
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
