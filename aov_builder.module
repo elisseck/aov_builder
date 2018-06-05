@@ -532,6 +532,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
 	$triggerElement = $form_state->getTriggeringElement()['#name'];
+	dpm($triggerElement);
 	if ($triggerElement = 'build_1') {
       $offset = 0;
 	} else {
