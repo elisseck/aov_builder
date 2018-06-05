@@ -531,17 +531,12 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   }
   
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
-	$triggerElement = $form_state->getTriggeringElement()['#name'];
-	dpm($triggerElement);
-	if ($triggerElement = 'build_1') {
-      $offset = 0;
-	} else {
-      $offset = 1;
-	}
     //Only query build 2 if it's filled, otherwise we'll have "issues"
 	if ($form_state->getValue('build_2')) {
+	  $offset = 1;
       $filled = array($form_state->getValue('build_1'), $form_state->getValue('build_2'));
 	} else {
+      $offset = 0;
       $filled = array($form_state->getValue('build_1'));
 	}
     $buildQuery = \Drupal::entityQuery('node')
@@ -611,19 +606,19 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	'Opponent HP' => '',
 	'Time to Kill' => '',
 	);
-	$markup = '<div id="' . $triggerElement . '_values">';
+	$markup = '<div id="build_1_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$nids[$nidsKeys[$offset]]]->$key->getValue()[0]['value'] . '</div>';
+	  $markup .= '<div id="build_1' . $key . '">' . $label . ': ' . $builds[$nids[$nidsKeys[$offset]]]->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
     $content = [
       '#markup' => $markup,
 	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_' . $triggerElement),
+	    'id' => array('ajax_placeholder_build_1'),
 	  ),
     ];
     $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_build_1', $content));
     return $response;
   }
