@@ -87,7 +87,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       $form['elements']['build_1']['#value'] = $_GET['build'];
     }
 	$form['elements']['build_2']['#ajax'] = array(
-	  'callback' => 'aov_builder_loadBuild',
+	  'callback' => 'aov_builder_loadDamageCalculatorBuild',
       'event' => 'change',
       'wrapper' => 'ajax-placeholder',
       'progress' => array(
@@ -96,7 +96,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       ),
 	);
 	$form['elements']['build_1']['#ajax'] = array(
-	  'callback' => 'aov_builder_loadBuild',
+	  'callback' => 'aov_builder_loadDamageCalculatorBuild',
       'event' => 'change',
       'wrapper' => 'ajax-placeholder',
       'progress' => array(
@@ -528,4 +528,100 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $response = new RedirectResponse($path);
     $response->send();
     return;
+  }
+  
+  function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
+	$triggerElement = $form_state->getTriggeringElement()['#name'];
+	if ($triggerElement = 'build_1') {
+      $offset = 0;
+	} else {
+      $offset = 1;
+	}
+    //Only query build 2 if it's filled, otherwise we'll have "issues"
+	if ($form_state->getValue('build_2')) {
+      $filled = array('build_1', 'build_2');
+	} else {
+      $filled = array('build_1');
+	}
+    $buildQuery = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'build')
+      ->condition('nid', $filled, 'IN');
+    $nids = $buildQuery->execute();
+	//load both builds
+    $builds = node_load_multiple($nids);
+	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
+	foreach ($builds as $build) {
+	  $heroData[$build] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	  $arr = array();
+	  foreach ($build->field_items->getValue() as $item) {
+	    array_push($arr, $item['target_id']);
+	  }
+	  $itemData[$build] = aov_builder_query_items(array('items' => $arr));
+	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
+	  $arcanaArr = array();
+	  foreach ($allArcana as $arcana) {
+	    array_push($arcanaArr, $arcana['target_id']);
+	  }
+	  $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
+	}
+    $form['#attached']['drupalSettings']['heroData'] = $heroData;
+    $form['#attached']['drupalSettings']['itemData'] = $itemData;
+    $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
+	//Array of value keys + labels for build markup
+    $buildArray = array(
+	//'field_hero' => 'Hero',
+	//'field_items' => 'Items', 
+	//'field_green_arcana' => 'Green Arcana',
+    //'field_purple_arcana' => 'Purple Arcana',
+    //'field_red_arcana' => 'Red Arcana',
+	'field_hero_level' => 'Level',
+    'field_ability_power' => 'Ability Power',
+    'field_armor' => 'Armor',
+    'field_attack_damage' => 'Attack Damage',
+    'field_attack_speed' => 'Attack Speed',
+    'field_cdr' => 'CDR',
+    'field_crit_chance' => 'Crit Chance',
+    'field_critical_damage' => 'Crit Damage',
+    'field_flat_pen_ad' => 'Flat Pen AD',
+    'field_flat_pen_ap' => 'Flat Pen AP',
+    'field_hp' => 'HP',
+    'field_hp_regen_5_seconds' => 'HP Regen / 5 Seconds',
+    'field_life_steal' => 'Life Steal',
+    'field_magic_defense' => 'Magic Defense',
+    'field_magic_life_steal' => 'Magic Life Steal',
+    'field_mana' => 'Mana',
+    'field_mana_regen_5_seconds' => 'Mana Regen / 5 Seconds',
+    'field_movement_speed' => 'Movement Speed',
+    'field_percent_pen_ad' => 'Percent Pen AD',
+    'field_percent_pen_ap' => 'Percent Pen AP',
+	);
+	//Array of value keys + labels for damage calculator markup
+	$calcArray = array(
+	'AD' => '',
+	'Pierce' => '',
+	'Percent Pierce' => '',
+	'Armor' => '',
+	'Armor Post Pen' => '',
+	'Damage Reduced' => '',
+	'Percent Reduction' => '',
+	'Damage Output' => '',
+	'Opponent HP' => '',
+	'Time to Kill' => '',
+	);
+	$markup = '<div id="' . $triggerElement . '_values">';
+	foreach ($buildArray as $key => $label) {
+	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$offset]->$key->getValue()[0]['value'] . '</div>';
+	}
+	$markup .= '</div>';
+    // Add an Ajax response
+    $content = [
+      '#markup' => $markup,
+	  '#attributes' => array(
+	    'id' => array('ajax_placeholder_' . $triggerElement),
+	  ),
+    ];
+    $response = new AjaxResponse();
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
+    return $response;
   }
