@@ -548,6 +548,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       ->condition('type', 'build')
       ->condition('nid', $filled, 'IN');
     $nids = $buildQuery->execute();
+	dpm($nids);
 	//load both builds
     $builds = node_load_multiple($nids);
 	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
