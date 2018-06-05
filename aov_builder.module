@@ -118,7 +118,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       '#tag' => 'div',
       '#value' => t(' '),
       '#attributes' => array(
-        'id' => array('ajax_placeholder_build_1'),
+        'id' => array('ajax_placeholder_build_2'),
       ),
     );
     $form['#attached']['library'][] = 'aov_builder/damage_calculator';
@@ -533,10 +533,10 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
     //Only query build 2 if it's filled, otherwise we'll have "issues"
 	if ($form_state->getValue('build_2')) {
-	  $offset = 1;
+	  $offset = intval($form_state->getValue('build_2')) + 1;
       $filled = array($form_state->getValue('build_1'), $form_state->getValue('build_2'));
 	} else {
-      $offset = 0;
+      $offset = intval($form_state->getValue('build_1')) + 1;
       $filled = array($form_state->getValue('build_1'));
 	}
 	dpm($form_state->getValue('build_1'));
@@ -612,7 +612,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	);
 	$markup = '<div id="build_1_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="build_1' . $key . '">' . $label . ': ' . $builds[$nids[$nidsKeys[$offset]]]->$key->getValue()[0]['value'] . '</div>';
+	  $markup .= '<div id="build_1' . $key . '">' . $label . ': ' . $builds[$nids[$offset]]->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
