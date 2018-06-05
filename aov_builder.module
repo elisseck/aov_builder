@@ -533,9 +533,9 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
 	$triggerElement = $form_state->getTriggeringElement()['#name'];
 	if ($triggerElement = 'build_1') {
-      $offset = 0;
-	} else {
       $offset = 1;
+	} else {
+      $offset = 2;
 	}
     //Only query build 2 if it's filled, otherwise we'll have "issues"
 	if ($form_state->getValue('build_2')) {
@@ -548,7 +548,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       ->condition('type', 'build')
       ->condition('nid', $filled, 'IN');
     $nids = $buildQuery->execute();
-	dpm($nids);
 	//load both builds
     $builds = node_load_multiple($nids);
 	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
