@@ -533,9 +533,9 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
 	$triggerElement = $form_state->getTriggeringElement()['#name'];
 	if ($triggerElement = 'build_1') {
-      $offset = 1;
+      $offset = 0;
 	} else {
-      $offset = 2;
+      $offset = 1;
 	}
     //Only query build 2 if it's filled, otherwise we'll have "issues"
 	if ($form_state->getValue('build_2')) {
@@ -548,6 +548,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       ->condition('type', 'build')
       ->condition('nid', $filled, 'IN');
     $nids = $buildQuery->execute();
+	$nidsKeys = array_keys($nids);
 	//load both builds
     $builds = node_load_multiple($nids);
 	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
@@ -611,7 +612,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	);
 	$markup = '<div id="' . $triggerElement . '_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$nids[$offset]]->$key->getValue()[0]['value'] . '</div>';
+	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$nids[$nidsKeys[$offset]]]->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
