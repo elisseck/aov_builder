@@ -118,7 +118,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       '#tag' => 'div',
       '#value' => t(' '),
       '#attributes' => array(
-        'id' => array('ajax_placeholder_build_2'),
+        'id' => array('ajax_placeholder_build_1'),
       ),
     );
     $form['#attached']['library'][] = 'aov_builder/damage_calculator';
