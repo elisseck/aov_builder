@@ -531,45 +531,28 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   }
   
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
-    //Only query build 2 if it's filled, otherwise we'll have "issues"
-	if ($form_state->getValue('build_2')) {
-	  $offset = intval($form_state->getValue('build_2')) + 1;
-      $filled = array($form_state->getValue('build_1'), $form_state->getValue('build_2'));
-	} else {
-      $offset = intval($form_state->getValue('build_1')) + 1;
-      $filled = array($form_state->getValue('build_1'));
-	}
-	dpm($form_state->getValue('build_1'));
-	dpm($form_state->getValue('build_2'));
+    $triggerElement = $form_state->getTriggeringElement()['#name'];
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-      ->condition('nid', $filled, 'IN');
-    $nids = $buildQuery->execute();
-	dpm($nids);
-	$nidsKeys = array_keys($nids);
-	dpm($nidsKeys);
-	//load both builds
-    $builds = node_load_multiple($nids);
-	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
-	foreach ($builds as $build) {
-	  $heroData[$build] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
-	  $arr = array();
-	  foreach ($build->field_items->getValue() as $item) {
-	    array_push($arr, $item['target_id']);
-	  }
-	  $itemData[$build] = aov_builder_query_items(array('items' => $arr));
-	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
-	  $arcanaArr = array();
-	  foreach ($allArcana as $arcana) {
-	    array_push($arcanaArr, $arcana['target_id']);
-	  }
-	  $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
+      ->condition('nid', $form_state->getValue($triggerElement));
+    $nid = $buildQuery->execute();
+    $build = node_load(array_shift($nid));
+	$heroData = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	$arr = array();
+	foreach ($build->field_items->getValue() as $item) {
+	  array_push($arr, $item['target_id']);
 	}
+	$itemData = aov_builder_query_items(array('items' => $arr));
+	$allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
+	$arcanaArr = array();
+	foreach ($allArcana as $arcana) {
+	  array_push($arcanaArr, $arcana['target_id']);
+	}
+	$arcanaData = aov_builder_query_arcana(array('arcana' => $arcanaArr));
     $form['#attached']['drupalSettings']['heroData'] = $heroData;
-    $form['#attached']['drupalSettings']['itemData'] = $itemData;
-    $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
-	//Array of value keys + labels for build markup
+	$form['#attached']['drupalSettings']['itemData'] = $itemData;
+	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
     $buildArray = array(
 	//'field_hero' => 'Hero',
 	//'field_items' => 'Items', 
@@ -597,32 +580,19 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     'field_percent_pen_ad' => 'Percent Pen AD',
     'field_percent_pen_ap' => 'Percent Pen AP',
 	);
-	//Array of value keys + labels for damage calculator markup
-	$calcArray = array(
-	'AD' => '',
-	'Pierce' => '',
-	'Percent Pierce' => '',
-	'Armor' => '',
-	'Armor Post Pen' => '',
-	'Damage Reduced' => '',
-	'Percent Reduction' => '',
-	'Damage Output' => '',
-	'Opponent HP' => '',
-	'Time to Kill' => '',
-	);
-	$markup = '<div id="build_1_values">';
+	$markup = '<div id="' . $triggerElement . '_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="build_1' . $key . '">' . $label . ': ' . $builds[$nids[$offset]]->$key->getValue()[0]['value'] . '</div>';
+	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $build->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
     $content = [
       '#markup' => $markup,
 	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_build_1'),
+	    'id' => array('ajax_placeholder_' . $triggerElement),
 	  ),
     ];
     $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_build_1', $content));
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
     return $response;
   }
