@@ -539,12 +539,16 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       $offset = 0;
       $filled = array($form_state->getValue('build_1'));
 	}
+	dpm($form_state->getValue('build_1'));
+	dpm($form_state->getValue('build_2'));
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
       ->condition('nid', $filled, 'IN');
     $nids = $buildQuery->execute();
+	dpm($nids);
 	$nidsKeys = array_keys($nids);
+	dpm($nidsKeys);
 	//load both builds
     $builds = node_load_multiple($nids);
 	//loop over the builds and load the other entities we need (On this form, this is mostly just to get the nice images to display since none of this is dynamic)
