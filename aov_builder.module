@@ -34,7 +34,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     $form['elements']['hero']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadData',
       'event' => 'change',
-      'wrapper' => 'ajax-placeholder',
+      //'wrapper' => 'ajax-placeholder',
       'progress' => array(
         'type' => 'throbber',
         'message' => t('Loading Build...'),
