@@ -36,6 +36,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
         $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
       }
     }
+	$form['#attached']['library'][] = 'aov_builder/build_calculator';
 	return $form;
   }
   //Build Comparison Form
@@ -672,5 +673,4 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
     $form['#attached']['drupalSettings']['heroData'] = $heroData;
     $form['#attached']['drupalSettings']['itemData'] = $itemData;
-    $form['#attached']['library'][] = 'aov_builder/build_calculator';
   }
