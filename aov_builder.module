@@ -677,5 +677,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $heroData = aov_builder_query_heroes(array('hero' => $hero));
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
     $form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
-    $form['#attached']['drupalSettings']['heroData'] = $heroData;
+    $form['#attached']['drupalSettings']['heroData'] = $heroData;$response = new AjaxResponse();
+	return $form['#attached'];
   }
