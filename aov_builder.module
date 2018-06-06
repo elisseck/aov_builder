@@ -686,6 +686,8 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
 	$response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder', array($form['#attached']['drupalSettings']['heroData'], $form['#attached']['drupalSettings']['skillAndBonusData'])));
+	$response->addCommand(new SettingsCommand([
+      'something' => 'somesetting',
+    ], TRUE));
     return $response;
   }
