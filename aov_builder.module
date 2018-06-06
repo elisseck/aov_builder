@@ -29,7 +29,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     $form['elements']['hero']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadData',
       'event' => 'change',
-      'wrapper' => 'ajax-placeholder',
+      //'wrapper' => 'ajax-placeholder',
       'progress' => array(
         'type' => 'throbber',
         'message' => t('Loading Build...'),
@@ -684,10 +684,10 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	//re-generate hero, skill, and bonus data. Item and Arcana data do not need to be changed
     $heroData = aov_builder_query_heroes(array('hero' => $hero));
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
-    //$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
-    //$form['#attached']['drupalSettings']['heroData'] = $heroData;
-	//return $form['#attached'];
 	$response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder', 'AJAX Response'));
+	$response->addCommand(new SettingsCommand([
+	  'heroData' => $heroData,
+      'skillAndBonusData' => $skillAndBonusData,
+    ], TRUE));
 	return $response;
   }
