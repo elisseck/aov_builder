@@ -13,19 +13,24 @@ use Drupal\Core\Ajax\HtmlCommand;
 function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   //Build Calculator Form
   if ($form['#form_id']== 'webform_submission_build_calculator_add_form') {
-	$heroData = aov_builder_query_heroes();
-	$itemData = aov_builder_query_items();
-	$arcanaData = aov_builder_query_arcana();
-	$skillAndBonusData = aov_builder_query_skills_and_bonuses();
-	$heroParam = $_GET['hero'];
-	if ($heroParam) {
-	  $form['elements']['hero']['#value'] = $heroParam;
-	}
-	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
-	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
-	$form['#attached']['drupalSettings']['heroData'] = $heroData;
-	$form['#attached']['drupalSettings']['itemData'] = $itemData;
-	$form['#attached']['library'][] = 'aov_builder/build_calculator';
+    //Get hero param and ajax callback for data to pass to JS
+    if (isset($_GET['hero'])) {
+      $heroParam = $_GET['hero'];
+    }
+    else {
+    //Set a default value so the form doesn't take 100 years to load
+      $heroParam = '227';
+    }
+    $form['elements']['hero']['#value'] = $heroParam;
+    $form['elements']['hero']['#ajax'] = array(
+	  'callback' => 'aov_builder_loadData',
+      'event' => 'change',
+      'wrapper' => 'ajax-placeholder',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => t('Loading Build...'),
+      ),
+	);
 	foreach (array_keys($form['actions']) as $action) {
       if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
         $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
@@ -102,6 +107,15 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       'progress' => array(
         'type' => 'throbber',
         'message' => t('Loading Build...'),
+      ),
+	);
+	$form['elements']['skill']['#ajax'] = array(
+	  'callback' => 'aov_builder_loadSkillData',
+      'event' => 'change',
+      'wrapper' => 'ajax-placeholder',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => t('Loading Skill...'),
       ),
 	);
 	// Add placeholder for Ajax response markup
@@ -293,6 +307,9 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
   $skillQuery = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'skill');
+  if (isset($params['hero'])) {
+    $query->condition('field_hero', $params['hero']);
+  }
   $skillNids = $skillQuery->execute();
   $skillNodes = entity_load_multiple('node', $skillNids);
 
@@ -309,7 +326,8 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
   );
   $bonusQuery = \Drupal::entityQuery('node')
     ->condition('status', 1)
-    ->condition('type', 'bonus');
+    ->condition('type', 'bonus')
+	->condition('field_skill_reference', $skillNids, 'IN');
   $bonusNids = $bonusQuery->execute();
   $bonusNodes = entity_load_multiple('node', $bonusNids);
 
@@ -332,27 +350,37 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
 	$data[$heroID][$nid]['title']['values'] = $node->getTitle();
 	foreach ($skillKeys as $key) {
 	  if ($key == 'field_scaling_stat') {
-	    $statTarget = $node->get('field_scaling_stat')->getValue()[0]['target_id'];
-		if ($statTerms[$statTarget]) {
-		  $data[$heroID][$nid][$key]['values'] = strip_tags($statTerms[$statTarget]->get('description')->value);
-		  $data[$heroID][$nid][$key]['termname'] = $statTerms[$statTarget]->getName();
+		if ($node->get('field_scaling_stat')->getValue()) {
+	      $statTarget = $node->get('field_scaling_stat')->getValue()[0]['target_id'];
+		  if ($statTerms[$statTarget]) {
+		    $data[$heroID][$nid][$key]['values'] = strip_tags($statTerms[$statTarget]->get('description')->value);
+		    $data[$heroID][$nid][$key]['termname'] = $statTerms[$statTarget]->getName();
+		  }
 		}
 	  } else if ($key == 'field_output_type') {
-	    $outputTarget = $node->get('field_output_type')->getValue()[0]['target_id'];
-		if ($outputTerms[$outputTarget]) {
-		  $data[$heroID][$nid][$key]['values'] = strip_tags($outputTerms[$outputTarget]->get('description')->value);
-		  $data[$heroID][$nid][$key]['termname'] = $outputTerms[$outputTarget]->getName();
-	    } else {
-		  $data[$heroID][$nid][$key]['values'] = "N/A";
+		if ($node->get('field_output_type')->getValue()) {
+	      $outputTarget = $node->get('field_output_type')->getValue()[0]['target_id'];
+		  if ($outputTerms[$outputTarget]) {
+		    $data[$heroID][$nid][$key]['values'] = strip_tags($outputTerms[$outputTarget]->get('description')->value);
+		    $data[$heroID][$nid][$key]['termname'] = $outputTerms[$outputTarget]->getName();
+	      } else {
+		    $data[$heroID][$nid][$key]['values'] = "N/A";
+		  }
 		}
 	  }
 	  else {
 		$data[$heroID][$nid][$key]['values'] = $node->get($key)->getValue();
 	  }
 	  foreach ($bonusNodes as $bNode) {
-	    $skillID = $bNode->get('field_skill_reference')->getValue()[0]['target_id'];
-		$bStatTarget = $bNode->get('field_scaling_stat')->getValue()[0]['target_id'];
-		$bOutputTarget = $bNode->get('field_output_type')->getValue()[0]['target_id'];
+		if ($bNode->get('field_skill_reference')->getValue()) {
+	      $skillID = $bNode->get('field_skill_reference')->getValue()[0]['target_id'];
+		}
+		if ($bNode->get('field_scaling_stat')->getValue()) {
+		  $bStatTarget = $bNode->get('field_scaling_stat')->getValue()[0]['target_id'];
+		}
+		if ($bNode->get('field_output_type')->getValue()) {
+		  $bOutputTarget = $bNode->get('field_output_type')->getValue()[0]['target_id'];
+		}
 	    $bNid = $bNode->id();
 		if ($skillID == $nid) {
 	      foreach ($bonusKeys as $bKey) {
@@ -616,9 +644,33 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	//add another command to response here for fourth ajax panel
     return $response;
   }
-  
+
   function aov_builder_loadSkillData(array &$form, FormStateInterface $form_state) {
 	if ($form_state->getValue('skill')) {
 	  $skill = aov_builder_query_skills_and_bonuses($form_state->getValue('skill'));
     }
+	$markup = '<div id="skill_values">';
+	$markup .= '</div>';
+	$content = [
+      '#markup' => $markup,
+	  '#attributes' => array(
+	    'id' => array('ajax_placeholder_skill'),
+	  ),
+    ];
+    $response = new AjaxResponse();
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_skill', $content));
+	return $response;
+  }
+  
+  function aov_builder_loadData(array &$form, FormStateInterface $form_state) {
+    $hero = $form_state->getValue('hero');
+    $heroData = aov_builder_query_heroes(array('hero' => $hero));
+    $itemData = aov_builder_query_items();
+    $arcanaData = aov_builder_query_arcana();
+    $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
+    $form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
+    $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
+    $form['#attached']['drupalSettings']['heroData'] = $heroData;
+    $form['#attached']['drupalSettings']['itemData'] = $itemData;
+    $form['#attached']['library'][] = 'aov_builder/build_calculator';
   }
