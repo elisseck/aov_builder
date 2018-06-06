@@ -317,7 +317,7 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
     ->condition('status', 1)
     ->condition('type', 'skill');
   if (isset($params['hero'])) {
-    $query->condition('field_hero', $params['hero']);
+    $skillQuery->condition('field_hero', $params['hero']);
   }
   $skillNids = $skillQuery->execute();
   $skillNodes = entity_load_multiple('node', $skillNids);
