@@ -17,12 +17,12 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     //Get hero param and ajax callback for data to pass to JS
     if (isset($_GET['hero'])) {
       $heroParam = $_GET['hero'];
+	  $form['elements']['hero']['#value'] = $heroParam;
     }
     else {
     //Set a default value so the form doesn't take 100 years to load
       $heroParam = '227';
     }
-    $form['elements']['hero']['#value'] = $heroParam;
 	$heroData = aov_builder_query_heroes(array('hero' => $heroParam));
     $itemData = aov_builder_query_items();
     $arcanaData = aov_builder_query_arcana();
@@ -684,8 +684,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	//re-generate hero, skill, and bonus data. Item and Arcana data do not need to be changed
     $heroData = aov_builder_query_heroes(array('hero' => $hero));
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
-	$form['#attached']['drupalSettings']['heroData'] = $heroData;
-	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
 	$response = new AjaxResponse();
 	$response->addCommand(new SettingsCommand([
       'heroData' => $heroData,
