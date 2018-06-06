@@ -17,7 +17,8 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     //Get hero param and ajax callback for data to pass to JS
     if (isset($_GET['hero'])) {
       $heroParam = $_GET['hero'];
-	  $form['elements']['hero']['#value'] = $heroParam;
+	  //$form['elements']['hero']['#value'] = $heroParam;
+	  $form['elements']['hero']['#default_value'] = $heroParam;
     }
     else {
     //Set a default value so the form doesn't take 100 years to load
