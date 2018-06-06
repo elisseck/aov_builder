@@ -26,11 +26,6 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     $itemData = aov_builder_query_items();
     $arcanaData = aov_builder_query_arcana();
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $heroParam));
-    $form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
-    $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
-    $form['#attached']['drupalSettings']['heroData'] = $heroData;
-    $form['#attached']['drupalSettings']['itemData'] = $itemData;
-	$form['#attached']['library'][] = 'aov_builder/build_calculator';
     $form['elements']['hero']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadData',
       'event' => 'change',
@@ -53,6 +48,11 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
         $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
       }
     }
+	$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
+    $form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
+    $form['#attached']['drupalSettings']['heroData'] = $heroData;
+    $form['#attached']['drupalSettings']['itemData'] = $itemData;
+	$form['#attached']['library'][] = 'aov_builder/build_calculator';
 	return $form;
   }
   //Build Comparison Form
