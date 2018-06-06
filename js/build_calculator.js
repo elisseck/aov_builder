@@ -65,7 +65,9 @@
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	//build skill grid
 	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
-	var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
+	if (settings.heroData.hasOwnProperty(selectedHero)) {
+	  var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
+	}
 	var num = 0;
 	for (var data in fullBuild) {
 	  if (num % 5 === 0) {
