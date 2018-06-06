@@ -158,7 +158,8 @@
   }
 
   function scaleByLevel(hero, selectedLevel, fullBuild) {
-	var levelScales = {
+    if (hero) {
+	  var levelScales = {
 		"field_hp": "field_hp_per_level",
 		"field_mana": "field_mana_per_level",
 		"field_armor": "field_armor_per_level",
@@ -168,15 +169,16 @@
 		"field_magic_defense": "field_md_per_level",
 		"field_mana_regen_5_seconds": "field_mana5_per_level",
 		"field_hp_regen_5_seconds": "field_hp5_per_level",
-	}
-	for (var key in levelScales) {
-      if (levelScales.hasOwnProperty(key)) {
-		if (hero[key]['values'].hasOwnProperty(0) && hero[levelScales[key]]['values'].hasOwnProperty(0)) {
-          fullBuild[key] += (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
-		}
+	  }
+	  for (var key in levelScales) {
+        if (levelScales.hasOwnProperty(key)) {
+		  if (hero[key]['values'].hasOwnProperty(0) && hero[levelScales[key]]['values'].hasOwnProperty(0)) {
+            fullBuild[key] += (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
+		  }
+        }
       }
-    }
-	return fullBuild;
+	  return fullBuild;
+	}
   }
 
   function addItems(items, selectedItems, fullBuild) {
