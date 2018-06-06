@@ -13,6 +13,7 @@
     var param = urlParams.get('hero');
     $("#edit-hero").val(param).trigger('change');
   });
+  $.noConflict();
 
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
