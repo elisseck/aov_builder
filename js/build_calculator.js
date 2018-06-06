@@ -8,12 +8,7 @@
 	  });
     }
   };
-  $(document).ready(function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var param = urlParams.get('hero');
-    $("#edit-hero").val(param).trigger('change');
-  });
-
+  
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
