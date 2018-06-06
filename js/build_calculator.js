@@ -50,6 +50,8 @@
     }).get().join(',');
 	//get base stats
 	console.log(settings);
+	console.log(settings.heroData);
+	console.log(selectedHero);
 	fullBuild = getBaseStats(settings.heroData[selectedHero], fullBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);

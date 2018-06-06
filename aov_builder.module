@@ -34,6 +34,14 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
         'message' => t('Loading Build...'),
       ),
 	);
+	$form['ajax_response'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => t(' '),
+      '#attributes' => array(
+        'id' => array('ajax_placeholder'),
+      ),
+    );
 	foreach (array_keys($form['actions']) as $action) {
       if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
         $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
