@@ -676,7 +676,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	//re-generate hero, skill, and bonus data. Item and Arcana data do not need to be changed
     $heroData = aov_builder_query_heroes(array('hero' => $hero));
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
-    $form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
-    $form['#attached']['drupalSettings']['heroData'] = $heroData;
-	return $form['#attached'];
+    //$form['#attached']['drupalSettings']['skillAndBonusData'] = $skillAndBonusData;
+    //$form['#attached']['drupalSettings']['heroData'] = $heroData;
+	//return $form['#attached'];
   }
