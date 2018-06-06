@@ -29,20 +29,11 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
     $form['elements']['hero']['#ajax'] = array(
 	  'callback' => 'aov_builder_loadData',
       'event' => 'change',
-      //'wrapper' => 'ajax-placeholder',
       'progress' => array(
         'type' => 'throbber',
         'message' => t('Loading Build...'),
       ),
 	);
-	$form['ajax_response'] = array(
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#value' => t(' '),
-      '#attributes' => array(
-        'id' => array('ajax_placeholder'),
-      ),
-    );
 	foreach (array_keys($form['actions']) as $action) {
       if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
         $form['actions'][$action]['#submit'][] = 'aov_builder_submit_build';
@@ -686,8 +677,8 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $skillAndBonusData = aov_builder_query_skills_and_bonuses(array('hero' => $hero));
 	$response = new AjaxResponse();
 	$response->addCommand(new SettingsCommand([
-	  'heroData' => $heroData,
-      'skillAndBonusData' => $skillAndBonusData,
+	  'heroData' => json_encode($heroData),
+      'skillAndBonusData' => json_encode($skillAndBonusData),
     ], TRUE));
 	return $response;
   }
