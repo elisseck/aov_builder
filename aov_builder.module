@@ -682,7 +682,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	if ($triggerElement == 'skill') {
 	  //Generate markup for skill choice
 	  $skillMarkup = '<div id="skill_data">';
-      $skillMarkup .= json_encode($skillData[$selectedSkill]);
+      $skillMarkup .= json_encode($skillData);
 	  $skillMarkup .= '</div>';
 
 	  $skillContent = [
