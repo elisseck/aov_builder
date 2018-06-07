@@ -612,7 +612,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	$heroes = array();
 	$arr = array();
 	$arcanaArr = array();
-	foreach $builds as $build {
+	foreach ($builds as $build) {
       array_push($heroes, $build->field_hero->getValue()[0]['target_id']);
 	  //get item IDs from the builds
 	  foreach ($build->field_items->getValue() as $item) {
