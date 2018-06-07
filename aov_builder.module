@@ -697,7 +697,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  //Do Calculations for output values
 	  if ($skill['field_skill_type']['values'][0]['value'] == 'Passive') {
         //Output = (Level 1 Value + (Level * (Per Level - 1)) + (Scaling * Build Scaling Stat)
-        $skillArray['Output'] = ($skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damange_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$skill['field_scaling_stat']['values']->getValue()[0]['value']);
+        $skillArray['Output'] = ($skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$skill['field_scaling_stat']['values']->getValue());
 		$skillArray['Cooldown'] = $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1));
 	  } 
 	  else {
