@@ -128,7 +128,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
       ),
 	);
 	$form['elements']['skill']['#ajax'] = array(
-	  'callback' => 'aov_builder_loadSkillData',
+	  'callback' => 'aov_builder_loadDamageCalculatorBuild',
       'event' => 'change',
       'wrapper' => 'ajax-placeholder',
       'progress' => array(
@@ -635,55 +635,65 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 
 	//load all of the arcana in (this is just for images and may be unnessecary, arcana stats are baked into the build saves already)
 	$arcanaData = aov_builder_query_arcana(array('arcana' => $arcanaArr));
-
-    $buildArray = array(
-	'field_hero_level' => 'Level',
-    'field_ability_power' => 'Ability Power',
-    'field_armor' => 'Armor',
-    'field_attack_damage' => 'Attack Damage',
-    'field_attack_speed' => 'Attack Speed',
-    'field_cdr' => 'CDR',
-    'field_crit_chance' => 'Crit Chance',
-    'field_critical_damage' => 'Crit Damage',
-    'field_flat_pen_ad' => 'Flat Pen AD',
-    'field_flat_pen_ap' => 'Flat Pen AP',
-    'field_hp' => 'HP',
-    'field_hp_regen_5_seconds' => 'HP Regen / 5 Seconds',
-    'field_life_steal' => 'Life Steal',
-    'field_magic_defense' => 'Magic Defense',
-    'field_magic_life_steal' => 'Magic Life Steal',
-    'field_mana' => 'Mana',
-    'field_mana_regen_5_seconds' => 'Mana Regen / 5 Seconds',
-    'field_movement_speed' => 'Movement Speed',
-    'field_percent_pen_ad' => 'Percent Pen AD',
-    'field_percent_pen_ap' => 'Percent Pen AP',
-	);
-	//Generate markup for build data
-	$markup = '<div id="' . $triggerElement . '_values">';
-	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$triggerElementValue]->$key->getValue()[0]['value'] . '</div>';
+    
+	//Begin generating our AJAX response
+    $response = new AjaxResponse();
+	
+	//if we changed the hero...
+	if ($triggerElement == 'build_1' || $triggerElement == 'build_2') {
+      $buildArray = array(
+	  'field_hero_level' => 'Level',
+      'field_ability_power' => 'Ability Power',
+      'field_armor' => 'Armor',
+      'field_attack_damage' => 'Attack Damage',
+      'field_attack_speed' => 'Attack Speed',
+      'field_cdr' => 'CDR',
+      'field_crit_chance' => 'Crit Chance',
+      'field_critical_damage' => 'Crit Damage',
+      'field_flat_pen_ad' => 'Flat Pen AD',
+      'field_flat_pen_ap' => 'Flat Pen AP',
+      'field_hp' => 'HP',
+      'field_hp_regen_5_seconds' => 'HP Regen / 5 Seconds',
+      'field_life_steal' => 'Life Steal',
+      'field_magic_defense' => 'Magic Defense',
+      'field_magic_life_steal' => 'Magic Life Steal',
+      'field_mana' => 'Mana',
+      'field_mana_regen_5_seconds' => 'Mana Regen / 5 Seconds',
+      'field_movement_speed' => 'Movement Speed',
+      'field_percent_pen_ad' => 'Percent Pen AD',
+      'field_percent_pen_ap' => 'Percent Pen AP',
+	  );
+	  //Generate markup for build data
+	  $markup = '<div id="' . $triggerElement . '_values">';
+	  foreach ($buildArray as $key => $label) {
+	    $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$triggerElementValue]->$key->getValue()[0]['value'] . '</div>';
+	  }
+	  $markup .= '</div>';
+      // Add an Ajax response
+      $content = [
+        '#markup' => $markup,
+	    '#attributes' => array(
+	      'id' => array('ajax_placeholder_' . $triggerElement),
+	    ),
+      ];
+      $response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
 	}
-	$markup .= '</div>';
-    // Add an Ajax response
-    $content = [
-      '#markup' => $markup,
-	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_' . $triggerElement),
-	  ),
-    ];
 	
-	//Generate markup for skill choice
-	$skillMarkup = '<div id="skill_data">';
-    $skillMarkup .= json_encode($skillData[$selectedSkill]);
-	$skillMarkup .= '</div>';
-	
-	$skillContent = [
-      '#markup' => $skillMarkup,
-	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_skill'),
-	  ),
-    ];
-	
+	if ($triggerElement == 'skill') {
+	  //Generate markup for skill choice
+	  $skillMarkup = '<div id="skill_data">';
+      $skillMarkup .= json_encode($skillData[$selectedSkill]);
+	  $skillMarkup .= '</div>';
+
+	  $skillContent = [
+        '#markup' => $skillMarkup,
+	    '#attributes' => array(
+	      'id' => array('ajax_placeholder_skill'),
+	    ),
+      ];
+	  $response->addCommand(new HtmlCommand('#ajax_placeholder_skill', $skillContent));
+	}
+
 	//Generate markup for damage calculation
 	$damageMarkup = '<div id="damage_data">';
 	$damageMarkup .= 'Hello World';
@@ -695,34 +705,11 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	    'id' => array('ajax_placeholder_damage_calculator'),
 	  ),
     ];
-	
-	//Generate AJAX response
-    $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
-	//add another command to response here for third ajax panel
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_skill', $skillContent));
-	//add another command to response here for fourth ajax panel
+
 	$response->addCommand(new HtmlCommand('#ajax_placeholder_damage_calculator', $damageContent));
     return $response;
   }
 
-  function aov_builder_loadSkillData(array &$form, FormStateInterface $form_state) {
-	if ($form_state->getValue('skill')) {
-	  $skill = aov_builder_query_skills_and_bonuses($form_state->getValue('skill'));
-    }
-	$markup = '<div id="skill_values">';
-	$markup .= '</div>';
-	$content = [
-      '#markup' => $markup,
-	  '#attributes' => array(
-	    'id' => array('ajax_placeholder_skill'),
-	  ),
-    ];
-    $response = new AjaxResponse();
-	$response->addCommand(new HtmlCommand('#ajax_placeholder_skill', $content));
-	return $response;
-  }
-  
   function aov_builder_loadData(array &$form, FormStateInterface $form_state) {
     $hero = $form_state->getValue('hero');
 	//re-generate hero, skill, and bonus data. Item and Arcana data do not need to be changed
