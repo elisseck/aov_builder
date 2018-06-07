@@ -173,7 +173,7 @@ function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id
 	return $form;
   }
 }
-
+//optional @params takes an array of IDs to query. Defaults to all results.
 function aov_builder_query_heroes($params = NULL) {
   $data = array();
   $heroKeys = array(
@@ -210,7 +210,7 @@ function aov_builder_query_heroes($params = NULL) {
     ->condition('status', 1)
     ->condition('type', 'hero');
   if (isset($params['hero'])) {
-    $query->condition('nid', $params['hero']);
+    $query->condition('nid', $params['hero'], 'IN');
   }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
@@ -224,7 +224,7 @@ function aov_builder_query_heroes($params = NULL) {
   }
   return $data;
 }
-
+//optional @params takes an array of IDs to query. Defaults to all results.
 function aov_builder_query_items($params = NULL) {
   $data = array();
   $itemKeys = array(
@@ -267,7 +267,7 @@ function aov_builder_query_items($params = NULL) {
   }
   return $data;
 }
-
+//optional @params takes an array of IDs to query. Defaults to all results.
 function aov_builder_query_arcana($params = NULL) {
   $data = array();
   $arcanaKeys = array(
@@ -293,7 +293,7 @@ function aov_builder_query_arcana($params = NULL) {
     ->condition('status', 1)
     ->condition('type', 'arcana');
   if (isset($params['aracana'])) {
-    $query->condition('nid', $params, 'IN');
+    $query->condition('nid', $params['arcana'], 'IN');
   }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
@@ -305,7 +305,7 @@ function aov_builder_query_arcana($params = NULL) {
   }
   return $data;
 }
-
+//optional @params takes an array of IDs to query. Defaults to all results.
 function aov_builder_query_skills_and_bonuses($params = NULL) {
   $data = array();
   //get skills
@@ -326,7 +326,7 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
     ->condition('status', 1)
     ->condition('type', 'skill');
   if (isset($params['hero'])) {
-    $skillQuery->condition('field_hero', $params['hero']);
+    $skillQuery->condition('field_hero', $params['hero'], 'IN');
   }
   $skillNids = $skillQuery->execute();
   $skillNodes = entity_load_multiple('node', $skillNids);
@@ -499,9 +499,12 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
     'field_movement_speed' => $data->field_movement_speed,
     'field_percent_pen_ad' => $data->field_percent_pen_ad,
     'field_percent_pen_ap' => $data->field_percent_pen_ap,
+	'field_skill_1_level' => $form['elements']['skills']['flexbox_04']['skill_1_level']['#value'],
+	'field_skill_2_level' => $form['elements']['skills']['flexbox_04']['skill_2_level']['#value'],
+	'field_ultimate_level' => $form['elements']['skills']['flexbox_04']['ultimate_level']['#value'],
   ]);
   $tag = $form['elements']['custom_tag']['#value'];
-  if ($tag == "") {
+  if (!$tag) {
     $tag = $node->id();
   }
   $title = $heroNode->getTitle() . ' - ' . $tag;
@@ -593,36 +596,47 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
   }
   
   function aov_builder_loadDamageCalculatorBuild(array &$form, FormStateInterface $form_state) {
-    $triggerElement = $form_state->getTriggeringElement()['#name'];
+	$trigger = $form_state->getTriggeringElement();
+    $triggerElement = $trigger['#name'];
+	$triggerElementValue = $trigger['#value'];
+	$selectedSkill = $form_state->getValue('skill');
 	//load both builds either way on this form, since we need to compare
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
-      ->condition('nid', array($form_state->getValue('build_1'), $form_state->getvalue('build_2')), 'IN');
+      ->condition('nid', array($form_state->getValue('build_1'), $form_state->getValue('build_2')), 'IN');
     $nids = $buildQuery->execute();
 	//load both builds either way on this form, since we need to compare
     $builds = node_load_multiple($nids);
-	$heroData = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	//get hero IDs from the builds
+	$heroes = array();
 	$arr = array();
-	foreach ($build->field_items->getValue() as $item) {
-	  array_push($arr, $item['target_id']);
-	}
-	$itemData = aov_builder_query_items(array('items' => $arr));
-	$allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
 	$arcanaArr = array();
-	foreach ($allArcana as $arcana) {
-	  array_push($arcanaArr, $arcana['target_id']);
+	foreach $builds as $build {
+      array_push($heroes, $build->field_hero->getValue()[0]['target_id']);
+	  //get item IDs from the builds
+	  foreach ($build->field_items->getValue() as $item) {
+        array_push($arr, $item['target_id']);
+	  }
+	  //get arcana IDs from the builds
+	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
+	  foreach ($allArcana as $arcana) {
+	    array_push($arcanaArr, $arcana['target_id']);
+	  }
 	}
+	//load hero data for both heroes
+	$heroOneData = aov_builder_query_heroes(array('hero' => $heroes));
+
+	//load skill data for both heroes
+	$skillData = aov_builder_query_skills_and_bonuses(array('hero' => $heroes));
+
+	//load all of the items in (this is just for images and later combos, item stats are baked into the build saves already)
+	$itemData = aov_builder_query_items(array('items' => $arr));
+
+	//load all of the arcana in (this is just for images and may be unnessecary, arcana stats are baked into the build saves already)
 	$arcanaData = aov_builder_query_arcana(array('arcana' => $arcanaArr));
-    $form['#attached']['drupalSettings']['heroData'] = $heroData;
-	$form['#attached']['drupalSettings']['itemData'] = $itemData;
-	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
+
     $buildArray = array(
-	//'field_hero' => 'Hero',
-	//'field_items' => 'Items', 
-	//'field_green_arcana' => 'Green Arcana',
-    //'field_purple_arcana' => 'Purple Arcana',
-    //'field_red_arcana' => 'Red Arcana',
 	'field_hero_level' => 'Level',
     'field_ability_power' => 'Ability Power',
     'field_armor' => 'Armor',
@@ -644,9 +658,10 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     'field_percent_pen_ad' => 'Percent Pen AD',
     'field_percent_pen_ap' => 'Percent Pen AP',
 	);
+	//Generate markup for build data
 	$markup = '<div id="' . $triggerElement . '_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $build->$key->getValue()[0]['value'] . '</div>';
+	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$triggerElementValue]->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
@@ -656,10 +671,24 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	    'id' => array('ajax_placeholder_' . $triggerElement),
 	  ),
     ];
+	
+	//Generate markup for skill choice
+	$skillMarkup = '<div id="skill_data">';
+    $skillMarkup .= json_encode($skillData[$selectedSkill]);
+	$skillMarkup .= '</div>';
+	
+	//Generate markup for damage calculation
+	$damageMarkup = '<div id="damage_data">';
+	
+	$damageMarkup .= '</div>';
+	
+	//Generate AJAX response
     $response = new AjaxResponse();
 	$response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
 	//add another command to response here for third ajax panel
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_skill', $skillContent));
 	//add another command to response here for fourth ajax panel
+	$response->addCommand(new HtmlCommand('#ajax_placeholder_damage_calculator', $damageContent));
     return $response;
   }
 
