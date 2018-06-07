@@ -710,6 +710,19 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		}
 		$skillArray['Cooldown'] = $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1));
 	  }
+	  switch ($skill['field_output_type']['termname']) {
+		  case 'Physical Damage':
+		    $skillArray['Final Physical Output'] += $skillArray['Output'];
+		  break;
+		  case 'Magic Damage':
+		    $skillArray['Final Magic Output'] += $skillArray['Output'];
+		  break;
+		  case 'True Damage':
+		    $skillArray['Final True Damage'] += $skillArray['Output'];
+		  break;
+		  default:
+		  break;
+		}
 	  //Add Bonus Values
 	  foreach ($skill['bonuses'] as $key => $value) {
 		$bonusScaler = $skill['bonuses'][$key]['field_scaling_stat']['values'];
@@ -724,14 +737,28 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		  if (isset($builds[$form_state->getValue('build_1')]->$bonusScaler)) {
             $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue()[0]['value'] - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue()[0]['value']);
 	      }
-		} 
+		}
 	    else {
           //Output = (Level 1 Value + (Level * (Per Level - 1)) + (Scaling * Build Scaling Stat)
 		  if (isset($builds[$form_state->getValue('build_1')]->$bonusScaler)) {
             $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue()[0]['value']);
 	      }
 		}
+		switch ($skill['bonuses'][$key]['field_output_type']['termname']) {
+		  case 'Physical Damage':
+		    $skillArray['Final Physical Output'] += $bonusArray[$key]['Output'];
+		  break;
+		  case 'Magic Damage':
+		    $skillArray['Final Magic Output'] += $bonusArray[$key]['Output'];
+		  break;
+		  case 'True Damage':
+		    $skillArray['Final True Damage'] += $bonusArray[$key]['Output'];
+		  break;
+		  default:
+		  break;
+		}
 	  }
+
 	  //Generate markup for skill choice
 	  $skillMarkup = '<div id="skill_data">';
 	  foreach ($skillArray as $key => $value) {
@@ -759,7 +786,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  $attackingHero = $builds[$form_state->getValue('build_1')];
 	  $defendingHero = $builds[$form_state->getValue('build_2')];
 	  $damageArray = array(
-        "AD" => $attackingHero->field_attack_damage->getValue()[0]['value'],
         "AD Pierce" => $attackingHero->field_flat_pen_ad->getValue()[0]['value'],
         "AD Pierce (%)" => $attackingHero->field_percent_pen_ad->getValue()[0]['value'],
         "AP" => $attackingHero->field_ability_power->getValue()[0]['value'],
@@ -769,12 +795,21 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
         "MD Value" => $defendingHero->field_magic_defense->getValue()[0]['value'],
         "Defender Health" => $defendingHero->field_hp->getValue()[0]['value'],
 	    );
+	  if ($skill) {
+		$damageArray['AD'] = $skillArray['Final Physical Output'];
+		$damageArray['AP'] = $skillArray['Final Magic Output'];
+		$damageArray['True Damage'] = isset($skillArray['True Damage']) || $skillArray['True Damage'] = 0;
+	  }
+	  else {
+        $damageArray['AD'] = $attackingHero->field_attack_damage->getValue()[0]['value'];
+		$damageArray['AP'] = $attackingHero->field_ability_power->getValue()[0]['value'];
+		$damageArray['True Damage'] = 'Auto Attack True Damage is currently broken';
+	  }
 	  $damageArray['Armor Post Pen'] = $damageArray['Armor Value'] - $damageArray['AD Pierce'] - ($damageArray['AD Pierce (%)'] * $damageArray['Armor Value']);
 	  $damageArray['MD Post Pen'] = $damageArray['MD Value'] - $damageArray['AP Pierce'] - ($damageArray['AP Pierce (%)'] * $damageArray['MD Value']);
 	  $damageArray['Percent Reduction'] = $damageArray['Armor Value'] / ($damageArray['Armor Value'] + 600);
 	  $damageArray['AD Reduced'] = $damageArray['AD'] * $damageArray['Percent Reduction'];
 	  $damageArray['AP Reduced'] = $damageArray['AP'] * $damageArray['Percent Reduction'];
-	  $damageArray['True Damage'] = 'True Damage Goes Here';
 	  $damageArray['Damage Output'] = ($damageArray['AD'] - $damageArray['AD Reduced']) + ($damageArray['AP'] - $damageArray['AP Reduced']) + $damageArray['True Damage'];
 	  if ($skill) {
         $damageArray['DPS'] = $damageArray['Damage Output'] / $skillArray['Cooldown'];
