@@ -666,7 +666,15 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  //Generate markup for build data
 	  $markup = '<div id="' . $triggerElement . '_values">';
 	  foreach ($buildArray as $key => $label) {
+		$i = 0;
+		if ($i % 10 == 0) {
+		  $markup .='<div class="break">';
+		}
 	    $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $builds[$triggerElementValue]->$key->getValue()[0]['value'] . '</div>';
+		if ($i % 10 == 0) {
+		  $markup .='</div>';
+		}
+		$i++;
 	  }
 	  $markup .= '</div>';
       // Add an Ajax response
@@ -766,9 +774,11 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  }
 	  $skillmarkup .= '<div id="bonus_data"><h3>Additional Effects</h3>';
 		foreach ($bonusArray as $bonus) {
+		  $skillMarkup .='<div class="bonus-break">';
           foreach ($bonus as $key => $value) {
             $skillMarkup .= '<div>' . $key . ': ' . $value . '</div>';
 		  }
+		  $skillMarkup .= '</div>';
 		}
 	  $skillMarkup .= '</div></div>';
 
@@ -805,7 +815,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		$damageArray['AP'] = $attackingHero->field_ability_power->getValue()[0]['value'];
 		$damageArray['True Damage'] = 'Auto Attack True Damage is currently broken';
 	  }
-	  $damageArray['Armor Post Pen'] = $damageArray['Armor Value'] - $damageArray['AD Pierce'] - ($damageArray['AD Pierce (%)'] * $damageArray['Armor Value']);
+	  $damageArray['Armor Post Pen'] = ($damageArray['Armor Value'] - $damageArray['AD Pierce']) - (($damageArray['Armor Value'] - $damageArray['AD Pierce']) - (($damageArray['AD Pierce (%)']/100) * $damageArray['Armor Value']));
 	  $damageArray['MD Post Pen'] = $damageArray['MD Value'] - $damageArray['AP Pierce'] - ($damageArray['AP Pierce (%)'] * $damageArray['MD Value']);
 	  $damageArray['Percent Reduction'] = $damageArray['Armor Value'] / ($damageArray['Armor Value'] + 600);
 	  $damageArray['AD Reduced'] = $damageArray['AD'] * $damageArray['Percent Reduction'];
@@ -821,7 +831,15 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 
 	  $damageMarkup = '<div id="damage_data">';
 	  foreach ($damageArray as $key => $value) {
+		$i = 0;
+		if ($i % 10 == 0) {
+		  $damageMarkup .='<div class="break">';
+		}
 	    $damageMarkup .= '<div>' . $key . ': ' . $value . '</div>';
+		if ($i % 10 == 0) {
+		  $damageMarkup .='</div>';
+		}
+		$i++
 	  }
 	  $damageMarkup .= '</div>';
 
