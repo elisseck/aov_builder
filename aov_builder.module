@@ -755,10 +755,41 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	}
 
 	//Generate markup for damage calculation
+	$attackingHero = $builds[$form_state->getValue('build_1')];
+	$defendingHero = $builds[$form_state->getValue('build_2')];
+	$damageArray = array(
+      "AD" => $attackingHero->field_attack_damage->getValue()[0]['value'],
+      "AD Pierce" => $attackingHero->field_flat_pen_ad->getValue()[0]['value'],
+      "AD Pierce (%)" => $attackingHero->field_percent_pen_ad->getValue()[0]['value'],
+      "AP" => $attackingHero->field_ability_power->getValue()[0]['value'],
+      "AP Pierce" => $attackingHero->field_flat_pen_ap->getValue()[0]['value'],
+      "AP Pierce (%)" => $attackingHero->field_percent_pen_ap->getValue()[0]['value'],
+      "Armor Value" => $defendingHero->field_armor->getValue()[0]['value'],
+      "MD Value" => $defendingHero->field_magic_defense->getValue()[0]['value'],
+      "Defender Health" => $defendingHero->field_hp->getValue()[0]['value'],
+      "Time to Kill (Seconds)" => ,
+	  );
+	$damageArray['Armor Post Pen'] = $damageArray['Armor Value'] - $damageArray['AD Pierce'] - ($damageArray['AD Pierce (%)'] * $damageArray['Armor Value']);
+	$damageArray['MD Post Pen'] = $damageArray['MD Value'] - $damageArray['AP Pierce'] - ($damageArray['AP Pierce (%)'] * $damageArray['MD Value']);
+	$damageArray['Percent Reduction'] = $damageArray['Armor Value'] / ($damageArray['Armor Value'] + 600);
+	$damageArray['AD Reduced'] = $damageArray['AD'] * $damageArray['Percent Reduction'];
+	$damageArray['AP Reduced'] = $damageArray['AP'] * $damageArray['Percent Reduction'];
+	$damageArray['True Damage'] = 'True Damage Goes Here';
+	$damageArray['Damage Output'] = ($damageArray['AD'] - $damageArray['AD Reduced']) + ($damageArray['AP'] - $damageArray['AP Reduced']) + $damageArray['True Damage'];
+	if ($skill) {
+      $damageArray['DPS'] = $damageArray['Damage Output'] / $skillArray['Cooldown'];
+	}
+    else {
+      $damageArray['DPS'] = $damageArray['Damage Output'] / (1 + ($attackingHero->field_attack_speed->getValue()[0]['value']/100));
+	}
+	$damageArray['Time to Kill (Seconds)'] = $damageArray['Defender Health'] / $damageArray['DPS'];
+
 	$damageMarkup = '<div id="damage_data">';
-	$damageMarkup .= 'Hello World';
+	foreach ($damageArray as $key => $value) {
+	  $damageMarkup .= '<div>' . $key . ': ' . $value . '</div>';
+	}
 	$damageMarkup .= '</div>';
-	
+
 	$damageContent = [
       '#markup' => $damageMarkup,
 	  '#attributes' => array(
