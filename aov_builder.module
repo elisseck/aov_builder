@@ -839,7 +839,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		if ($i % 10 == 0) {
 		  $damageMarkup .='</div>';
 		}
-		$i++
+		$i++;
 	  }
 	  $damageMarkup .= '</div>';
 
