@@ -677,10 +677,24 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $skillMarkup .= json_encode($skillData[$selectedSkill]);
 	$skillMarkup .= '</div>';
 	
+	$skillContent = [
+      '#markup' => $skillMarkup,
+	  '#attributes' => array(
+	    'id' => array('ajax_placeholder_skill'),
+	  ),
+    ];
+	
 	//Generate markup for damage calculation
 	$damageMarkup = '<div id="damage_data">';
-	
+	$damageMarkup .= 'Hello World';
 	$damageMarkup .= '</div>';
+	
+	$damageContent = [
+      '#markup' => $damageMarkup,
+	  '#attributes' => array(
+	    'id' => array('ajax_placeholder_damage_calculator'),
+	  ),
+    ];
 	
 	//Generate AJAX response
     $response = new AjaxResponse();
