@@ -678,12 +678,37 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
       ];
       $response->addCommand(new HtmlCommand('#ajax_placeholder_' . $triggerElement, $content));
 	}
-	
+	//If we changed the skill...
 	if ($triggerElement == 'skill') {
+	  $skill = $skillData[$builds[$form_state->getValue('build_1')]->field_hero->getValue()[0]['target_id']][$selectedSkill];
+	  $typeKeys = array(
+	    'Passive' => 'field_hero_level',
+	    'Skill 1' => 'field_skill_2_level',
+	    'Skill 2' => 'field_skill_2_level',
+	    'Ultimate' => 'field_ultimate_level',
+	  );
+      $skillArray = array(
+	    "Title" => $skill['title']['values'],
+		"Skill Type" => $skill['field_skill_type']['values'][0]['value'],
+		"Description" => $skill['body']['values'],
+		"Scaling Value" => $skill['field_scaling_value']['values'][0]['value'],
+        "Scaling Stat" => $skill['field_scaling_stat']['termname'],
+	    "Cooldown" => $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * $skill,
+	    "Output" => "field_skill_damage_per_level",
+		"Output Type" => $skill['field_output_type']['termname'],
+	  );
+	  if ($skill['field_skill_type']['values'][0]['value'] == 'Passive') {
+        $skillArray['Output'] = $skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damange_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1));
+		$skillArray['Cooldown'] = $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1));
+	  } 
+	  else {
+        $skillArray['Output'] = $skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1));
+		$skillArray['Cooldown'] = $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1));
+	  }
 	  //Generate markup for skill choice
 	  $skillMarkup = '<div id="skill_data">';
-	  foreach ($skillData[$builds[$form_state->getValue('build_1')]->field_hero->getValue()[0]['target_id']][$selectedSkill] as $key => $value) {
-        $skillMarkup .= '<div>' . $key . ': ' . $value['values'][0]['value'] . '</div>';
+	  foreach ($skillArray as $key => $value) {
+        $skillMarkup .= '<div>' . $key . ': ' . $value . '</div>';
 	  }
 	  $skillMarkup .= '</div>';
 
