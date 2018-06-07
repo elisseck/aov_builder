@@ -682,8 +682,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	if ($triggerElement == 'skill') {
 	  //Generate markup for skill choice
 	  $skillMarkup = '<div id="skill_data">';
-	  var_dump($builds);
-	  $skillMarkup .= $builds;
+	  $skillMarkup .= print_r($builds);
 	  $skillMarkup .= $builds[$form_state->getValue('build_1')]->field_hero->getValue()[0]['value'];
 	  foreach ($skillData[$builds[$form_state->getValue('build_1')]->field_hero->getValue()[0]['value']][$selectedSkill] as $key => $value) {
         $skillMarkup .= '<div>' . $key . ': ' . $value . '</div>';
