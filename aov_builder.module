@@ -698,7 +698,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  //Do Calculations for output values
 	  if ($skill['field_skill_type']['values'][0]['value'] == 'Passive') {
         //Output = (Level 1 Value + (Level * (Per Level - 1)) + (Scaling * Build Scaling Stat)
-        $skillArray['Output'] = ($skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$scaler->getValue());
+        $skillArray['Output'] = ($skill['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$scaler->getValue()[0]['value']);
 		$skillArray['Cooldown'] = $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1));
 	  } 
 	  else {
@@ -717,11 +717,11 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	    );
 		if ($skill['field_skill_type']['values'][0]['value'] == 'Passive') {
 		  //Output = (Level 1 Value + (Level * (Per Level - 1)) + (Scaling * Build Scaling Stat)
-          $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue());
+          $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($builds[$form_state->getValue('build_1')]->field_hero_level->getValue() - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue()[0]['value']);
 	    } 
 	    else {
           //Output = (Level 1 Value + (Level * (Per Level - 1)) + (Scaling * Build Scaling Stat)
-          $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue());
+          $bonusArray[$key]['Output'] = ($skill['bonuses'][$key]['field_level_1']['values'][0]['value'] + ($skill['field_skill_damage_per_level']['values'][0]['value'] * ($skill[$typeKeys[$skill['field_skill_type']['values'][0]['value']]]['values'][0]['value'] - 1))) + ($skill['bonuses'][$key]['field_scaling']['values'][0]['value'] * $builds[$form_state->getValue('build_1')]->$bonusScaler->getValue()[0]['value']);
 	    }
 	  }
 	  //Generate markup for skill choice
