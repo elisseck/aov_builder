@@ -693,8 +693,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		"Description" => $skill['body']['values'],
 		"Scaling Value" => $skill['field_scaling_value']['values'][0]['value'],
         "Scaling Stat" => $skill['field_scaling_stat']['termname'],
-	    "Cooldown" => $skill['field_cooldown']['values'][0]['value'] - ($skill['field_cooldown_per_level']['values'][0]['value'] * $skill,
-	    "Output" => "field_skill_damage_per_level",
 		"Output Type" => $skill['field_output_type']['termname'],
 	  );
 	  if ($skill['field_skill_type']['values'][0]['value'] == 'Passive') {
