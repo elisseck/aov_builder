@@ -732,7 +732,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  $skillMarkup = '<div id="skill_data">';
 	  foreach ($skillArray as $key => $value) {
         $skillMarkup .= '<div>' . $key . ': ' . $value . '</div>';
-		$skillmarkup .= '<div id="bonus_data"><h3>Additional Effects</h3>';
+		$skillMarkup .= '<div id="bonus_data"><h3>Additional Effects</h3>';
 		foreach ($bonusArray as $bonus) {
           foreach ($bonus as $key => $value) {
             $skillMarkup .= '<div>' . $key . ': ' . $value . '</div>';
