@@ -85,14 +85,12 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		if (oldFullBuild.hasOwnProperty(data)) {
-          if (parseFloat(fullBuild[data]) > parseFloat(window.oldFullBuild[data])) {
-            markup += '<div id="' +  data  + '" class="data-up">';
-		  } else if (parseFloat(fullBuild[data]) < parseFloat(window.oldFullBuild[data])) {
-            markup += '<div id="' +  data  + '" class="data-down">';
-		  } else {
-            markup += '<div id="' +  data  + '">';
-		  }
+        if (parseFloat(fullBuild[data]) > parseFloat(oldFullBuild[data])) {
+          markup += '<div id="' +  data  + '" class="data-up">';
+		} else if (parseFloat(fullBuild[data]) < parseFloat(oldFullBuild[data])) {
+          markup += '<div id="' +  data  + '" class="data-down">';
+		} else {
+          markup += '<div id="' +  data  + '">';
 		}
 		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
 	  }
