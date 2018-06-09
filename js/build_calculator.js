@@ -60,7 +60,7 @@
 	  if ($(buildContainer[0].childNodes[c])[0].className == 'hero-grouping') {
 	    for (var d in $(buildContainer[0].childNodes[c])[0].childNodes) {
 		  if ($(buildContainer[0].childNodes[c])[0].childNodes[d].hasOwnProperty(0)) {
-	        console.log($(buildContainer[0].childNodes[c])[0].childNodes[d])[0]);
+	        console.log($(buildContainer[0].childNodes[c])[0].childNodes[d][0]);
 		  }
 	    }
 	  }
