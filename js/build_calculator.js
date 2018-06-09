@@ -393,7 +393,7 @@
 		  markup += 'Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
 		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
-		markup += '</div>';
+		markup += '</div></div>';
       }
 	  markup += '</div>';
 	}
