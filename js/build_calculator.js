@@ -60,9 +60,9 @@
 	console.log(children);
 	var oldFullBuild = {};
 	for (var child in children) {
-      oldFullBuild[child.id] = parseFloat(child.text());
-	  console.log(child.id);
-	  console.log(child.text());
+      oldFullBuild[$(child).id] = parseFloat($(child).text());
+	  console.log($(child).id);
+	  console.log($(child).text());
 	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	console.log(buildContainer);
