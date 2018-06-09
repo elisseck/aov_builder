@@ -13,7 +13,7 @@
     var param = urlParams.get('build');
     $("#edit-build-1").val(param).trigger('change');
 	// select the target node
-    var target = $('#build_2_values');
+    var target = $('#ajax_placeholder_build_2');
     // create an observer instance
     var observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
