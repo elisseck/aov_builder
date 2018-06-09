@@ -65,9 +65,9 @@
         var c = children[child].childNodes;
 		console.log(c);
 		for (var node in c) {
-		  console.log(node.id);
-		  console.log(node.textContent);
-          oldFullBuild[node.id] = parseFloat(node.textContent.split(": ")[1]);
+		  console.log(children[child][c][node].id);
+		  console.log(children[child][c][node].textContent);
+          oldFullBuild[node.id] = parseFloat(children[child][c][node].textContent.split(": ")[1]);
 		}
 	  //}
 	  console.log(oldFullBuild);
