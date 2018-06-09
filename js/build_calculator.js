@@ -343,7 +343,7 @@
           var coolval = $('#' + skill + '-field-cooldown')[0].textContent.split(': ')[1];
           if (parseFloat(skillBuild[skill]['field_cooldown']) > parseFloat(coolval)) {
             markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown data-up">';
-		  } else if (parseFloat(skillBuild[skill]['field_cooldown'])) < parseFloat(coolval)) {
+		  } else if (parseFloat(skillBuild[skill]['field_cooldown']) < parseFloat(coolval)) {
             markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown data-down">';
 		  } else {
 			markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown">';
@@ -356,7 +356,7 @@
           var finalval = $('#' + skill + '-field-output-value')[0].textContent.split(': ')[1];
           if (parseFloat(skillBuild[skill]['final_value']) > parseFloat(finalval)) {
             markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value data-up">';
-		  } else if (parseFloat(skillBuild[skill]['final_value'])) < parseFloat(finalval)) {
+		  } else if (parseFloat(skillBuild[skill]['final_value']) < parseFloat(finalval)) {
             markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value data-down">';
 		  } else {
 			markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value">';
