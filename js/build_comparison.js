@@ -3,7 +3,7 @@
     attach: function (context, settings) {
 	  $("#edit-build-1").attr("disabled", true);
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
-	  $("#build_1_values, #build_2_values", context).once('build_comparison').each(function() {
+	  $("#edit-build-2", context).once('build_comparison').each(function() {
 	    $(this).change(function() {
           generateIndicators();
         });
