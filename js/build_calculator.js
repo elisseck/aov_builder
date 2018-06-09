@@ -87,6 +87,7 @@
 		} else if (parseFloat(fullBuild[data]) < parseFloat(oldFullBuild[data])) {
           markup += '<div id="' +  data  + '" class="data-down">';
 		} else {*/
+		  console.log($('#' + data));
           markup += '<div id="' +  data  + '">';
 		//}
 		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
