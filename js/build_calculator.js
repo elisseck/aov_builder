@@ -66,8 +66,6 @@
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
-	//build skill grid
-	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
 	if (settings.heroData.hasOwnProperty(selectedHero)) {
 	  var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
 	}
@@ -101,6 +99,8 @@
 	  num ++;
 	}
 	buildContainer.add(skillContainer).empty();
+	//build skill grid
+	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
 	buildContainer.append(markup);
   }
 
