@@ -75,7 +75,19 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		markup += "<div><strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
+		console.log(fullBuild[data]);
+		console.log(settings.oldFullBuild);
+		console.log(settings.oldFullBuild[data]);
+		if (settings.oldFullBuild.hasOwnProperty(data)) {
+          if (parseFloat(fullBuild[data]) > parseFloat(settings.oldFullBuild[data])) {
+            markup += '<div class="data-up">';
+		  } else if (parseFloat(fullBuild[data]) < parseFloat(settings.oldFullBuild[data])) {
+            markup += '<div class="data-down">';
+		  } else {
+            markup += '<div>';
+		  }
+		}
+		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
@@ -83,6 +95,8 @@
 	  num ++;
 	}
 	buildContainer.append(markup);
+	settings.oldFullBuild = fullBuild;
+	settings.oldSkillBuild = skillBuild;
   }
 
   function getBaseStats(hero, fullBuild) {
