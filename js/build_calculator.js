@@ -56,27 +56,7 @@
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
-	var children = buildContainer[0].childNodes;
-	console.log(children);
-	var oldFullBuild = {};
-	for (var child in children) {
-		console.log(children[child]);
-	  //if (child.className == 'hero-grouping') {
-        var c = children[child].childNodes;
-		console.log(c);
-		if (c) {
-		for (var node in c) {
-		  console.log(children[child][c][node].id);
-		  console.log(children[child][c][node].textContent);
-          oldFullBuild[node.id] = parseFloat(children[child][c][node].textContent.split(": ")[1]);
-		}
-		}
-	  //}
-	  console.log(oldFullBuild);
-	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
-	console.log(buildContainer);
-	console.log(skillContainer);
 	buildContainer.add(skillContainer).empty();
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
@@ -110,8 +90,6 @@
 	  num ++;
 	}
 	buildContainer.append(markup);
-	window.oldFullBuild = fullBuild;
-	window.oldSkillBuild = skillBuild;
   }
 
   function getBaseStats(hero, fullBuild) {
