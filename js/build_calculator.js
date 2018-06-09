@@ -60,9 +60,13 @@
 	console.log(children);
 	var oldFullBuild = {};
 	for (var child in children) {
-      oldFullBuild[$(child).id] = parseFloat($(child).text());
-	  console.log($(child).id);
-	  console.log($(child).text());
+	  if (child.className == 'hero-grouping') {
+        var c = child.childNodes;
+		for (var node in c) {
+          oldFullBuild[node.id] = parseFloat(node.textContent.split(": ")[1]);
+		}
+	  }
+	  console.log(oldFullBuild);
 	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	console.log(buildContainer);
