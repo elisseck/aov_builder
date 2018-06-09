@@ -540,11 +540,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
     $buildArray = array(
-	//'field_hero' => 'Hero',
-	//'field_items' => 'Items', 
-	//'field_green_arcana' => 'Green Arcana',
-    //'field_purple_arcana' => 'Purple Arcana',
-    //'field_red_arcana' => 'Red Arcana',
 	'field_hero_level' => 'Level',
     'field_ability_power' => 'Ability Power',
     'field_armor' => 'Armor',

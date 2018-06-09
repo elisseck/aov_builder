@@ -12,6 +12,14 @@
     var urlParams = new URLSearchParams(window.location.search);
     var param = urlParams.get('build');
     $("#edit-build-1").val(param).trigger('change');
+	// select the target node
+    var target = document.querySelector('#some-id');
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        console.log(mutation.type);
+      });    
+    });
   });
   
   function generateIndicators() {
