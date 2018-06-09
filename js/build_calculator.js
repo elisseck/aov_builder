@@ -63,6 +63,8 @@
 	  if (child.className == 'hero-grouping') {
         var c = child.childNodes;
 		for (var node in c) {
+		  console.log(node.id);
+		  console.log(node.textContent);
           oldFullBuild[node.id] = parseFloat(node.textContent.split(": ")[1]);
 		}
 	  }
