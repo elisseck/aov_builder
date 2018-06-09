@@ -62,6 +62,7 @@
 	for (var child in children) {
 	  //if (child.className == 'hero-grouping') {
         var c = child.childNodes;
+		console.log(c);
 		for (var node in c) {
 		  console.log(node.id);
 		  console.log(node.textContent);
