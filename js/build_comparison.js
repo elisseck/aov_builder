@@ -6,7 +6,6 @@
 	  $("#edit-build-2").change(function() {
           generateIndicators();
         });
-	  });
     }
   };
   $(document).ready(function() {
