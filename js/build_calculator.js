@@ -84,7 +84,7 @@
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
+		markup += "<strong>" + label + ":</strong> " + fullBuild[data].toFixed(2) + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
@@ -179,7 +179,7 @@
 	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['termname'];
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	  //generate final output by adding attribute scaled value to level scaled value last
-	  skillBuild[skill]['final_value'] = (parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1'])).toFixed(2);
+	  skillBuild[skill]['final_value'] = parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1']);
 	}
 	return skillBuild;
   }
@@ -441,10 +441,10 @@
 	  }
 	  bonusBuild[bonus]['field_output_type'] = bonusData[bonus]['field_output_type']['termname'];
 	  if (typeof bonusBuild[bonus]['field_scaling'] == 'number') {
-	    bonusBuild[bonus]['final_value'] = (parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1'])).toFixed(2);
+	    bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
 	  }
 	  else {
-		bonusBuild[bonus]['final_value'] = (parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1'])).toFixed(2);
+		bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
 	  }
 	}
 	return bonusBuild;
