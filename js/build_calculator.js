@@ -81,11 +81,19 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-        /*if (parseFloat(fullBuild[data]) > parseFloat(oldFullBuild[data])) {
-          markup += '<div id="' +  data  + '" class="data-up">';
-		} else if (parseFloat(fullBuild[data]) < parseFloat(oldFullBuild[data])) {
-          markup += '<div id="' +  data  + '" class="data-down">';
-		} else {*/
+		if ($('#' + data).hasOwnProperty(0)) {
+          var val = $('#' + data)[0].textContent.split(': ')[1];
+		  console.log(val);
+          if (parseFloat(fullBuild[data]) > parseFloat(val)) {
+            markup += '<div id="' +  data  + '" class="data-up">';
+		  } else if (parseFloat(fullBuild[data]) < parseFloat(val)) {
+            markup += '<div id="' +  data  + '" class="data-down">';
+		  } else {
+			markup += '<div id="' +  data  + '">';
+		  }
+		} else {
+		  markup += '<div id="' +  data  + '">';
+		}
 		  console.log(data);
 		  console.log($('#' + data));
           markup += '<div id="' +  data  + '">';
