@@ -58,8 +58,10 @@
 	var buildContainer = $(".full_build");
 	for (var c in buildContainer[0].childNodes) {
 	  console.log(buildContainer[0].childNodes[c]);
-	  for (var d in buildContainer[0].childNodes[c].childNodes) {
-	    console.log(buildContainer[0].childNodes[c].childNodes[d]);
+	  if ($(buildContainer[0].childNodes[c]).className == 'hero-grouping') {
+	    for (var d in buildContainer[0].childNodes[c].childNodes) {
+	      console.log(buildContainer[0].childNodes[c].childNodes[d]);
+	    }
 	  }
 	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
