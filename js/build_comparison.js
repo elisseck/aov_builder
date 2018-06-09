@@ -17,7 +17,7 @@
   });
   
   function generateIndicators() {
-	if ($('#build_1_values') && $('#build_2_values')) {
+	if ($('#build_1_values').hasOwnProperty(0) && $('#build_2_values').hasOwnProperty(0)) {
       var build1 = $('#build_1_values')[0].childNodes;
 	  var build2 = $('#build_2_values')[0].childNodes;
 	  for (var i; i < build1.length; i++) {
