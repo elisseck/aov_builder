@@ -60,6 +60,7 @@
 	console.log(children);
 	var oldFullBuild = {};
 	for (var child in children) {
+		console.log(child);
 	  //if (child.className == 'hero-grouping') {
         var c = child.childNodes;
 		console.log(c);
