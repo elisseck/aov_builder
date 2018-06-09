@@ -58,7 +58,7 @@
 	var buildContainer = $(".full_build");
 	for (var c in buildContainer[0].childNodes) {
 	  console.log(c);
-	  for var (d in c.childNodes) {
+	  for (var d in c.childNodes) {
 	    console.log(d);
 	  }
 	}
