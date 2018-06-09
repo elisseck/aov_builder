@@ -313,7 +313,7 @@
 		} else {
 		  markup += '<div id=arcana-' + key + '>';
 		}
-	  markup += arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
+	  markup += arcanaKeys[key] + ': '+ arcanaBuild[key].toFixed(2) + '</div>'
 	  if (count % 5 === 4) {
 		markup += '</div>';
 	  }
