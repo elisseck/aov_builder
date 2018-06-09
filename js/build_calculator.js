@@ -56,7 +56,7 @@
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
-	var children = buildContainer.childNodes;
+	var children = buildContainer[0].childNodes;
 	console.log(children);
 	var oldFullBuild = {};
 	for (var child in children) {
