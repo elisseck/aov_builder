@@ -140,27 +140,27 @@
 				    //cases for each skill type so we scale by the correct level for level scaling
 				      if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
 						if (key == 'field_cooldown') {
-						  skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(heroLevel) - 1))).toFixed(2);
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						} else {
-				          skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1))).toFixed(2);
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
 						if (key == 'field_cooldown') {
-						  skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[0]) - 1))).toFixed(2);
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[0]) - 1));
 						} else {
-				          skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[0]) - 1))).toFixed(2);
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[0]) - 1));
 						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 2') {
 						if (key == 'field_cooldown') {
-						  skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[1]) - 1))).toFixed(2);
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[1]) - 1));
 						} else {
-				          skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[1]) - 1))).toFixed(2);
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[1]) - 1));
 						}
 				      } else {
 						if (key == 'field_cooldown') {
-						  skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[2]) - 1))).toFixed(2);
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[2]) - 1));
 						} else {
-				          skillBuild[skill][key] = (parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[2]) - 1))).toFixed(2);
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[2]) - 1));
 						}
 				      }
 			        }
@@ -200,7 +200,7 @@
 	  for (var key in levelScales) {
         if (levelScales.hasOwnProperty(key)) {
 		  if (hero[key]['values'].hasOwnProperty(0) && hero[levelScales[key]]['values'].hasOwnProperty(0)) {
-            fullBuild[key] += ((parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value'])).toFixed(2);
+            fullBuild[key] += (parseInt(selectedLevel) - 1) * parseFloat(hero[levelScales[key]]['values'][0]['value']);
 		  }
         }
       }
@@ -216,9 +216,9 @@
 		for (var key in items[arr[i]]) {
 	      if (items[arr[i]][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
-			  fullBuild["field_movement_speed"] += ((fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100))).toFixed(2);
+			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
-		      fullBuild[key] += (parseFloat(items[arr[i]][key][0]['value'])).toFixed(2);
+		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
 			}
 		  }
 		}
@@ -257,11 +257,11 @@
 		  if (arcana[selected[j]][key].hasOwnProperty('values')) {
 		    if (arcana[selected[j]][key]['values'].hasOwnProperty(0)) {
 		      if (key == "field_movement_speed_percent") {
-			    fullBuild["field_movement_speed"] += ((fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100))).toFixed(2);
-			    arcanaBuild["field_movement_speed"] += ((parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100)).toFixed(2);
+			    fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100));
+			    arcanaBuild["field_movement_speed"] += (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100));
 			  } else if (fullBuild.hasOwnProperty(key)) {
-		        fullBuild[key] += (parseFloat(arcana[selected[j]][key]['values'][0]['value'])).toFixed(2);
-			    arcanaBuild[key] += (parseFloat(arcana[selected[j]][key]['values'][0]['value'])).toFixed(2);
+		        fullBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);
+			    arcanaBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);
 			  }
 		    }
 		  }
