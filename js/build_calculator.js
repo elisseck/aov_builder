@@ -83,7 +83,6 @@
 		}
 		if ($('#' + data).hasOwnProperty(0)) {
           var val = $('#' + data)[0].textContent.split(': ')[1];
-		  console.log(val);
           if (parseFloat(fullBuild[data]) > parseFloat(val)) {
             markup += '<div id="' +  data  + '" class="data-up">';
 		  } else if (parseFloat(fullBuild[data]) < parseFloat(val)) {
@@ -94,10 +93,6 @@
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		  console.log(data);
-		  console.log($('#' + data));
-          markup += '<div id="' +  data  + '">';
-		//}
 		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
 	  }
 	  if (num % 5 === 4) {
