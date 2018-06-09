@@ -17,6 +17,8 @@
   });
   
   function generateIndicators() {
+	console.log($('#build_1_values'));
+	console.log($('#build_1_values')[0].childNodes);
 	if ($('#build_1_values').hasOwnProperty(0) && $('#build_2_values').hasOwnProperty(0)) {
       var build1 = $('#build_1_values')[0].childNodes;
 	  var build2 = $('#build_2_values')[0].childNodes;
