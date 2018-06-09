@@ -60,9 +60,9 @@
 	console.log(children);
 	var oldFullBuild = {};
 	for (var child in children) {
-		console.log(child);
+		console.log(children[child]);
 	  //if (child.className == 'hero-grouping') {
-        var c = child.childNodes;
+        var c = children[child].childNodes;
 		console.log(c);
 		for (var node in c) {
 		  console.log(node.id);
