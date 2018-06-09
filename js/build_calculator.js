@@ -58,8 +58,8 @@
 	var buildContainer = $(".full_build");
 	for (var c in buildContainer[0].childNodes) {
 	  console.log(buildContainer[0].childNodes[c]);
-	  for (var d in buildContainer[0].childNodes[c]) {
-	    console.log(buildContainer[0].childNodes[c][d]);
+	  for (var d in buildContainer[0].childNodes[c].childNodes) {
+	    console.log(buildContainer[0].childNodes[c].childNodes[d]);
 	  }
 	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
