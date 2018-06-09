@@ -64,7 +64,6 @@
 	  }
 	}*/
 	var hiddenContainer = $('input[name="full_build_hidden"]');
-	buildContainer.add(skillContainer).empty();
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	//build skill grid
@@ -98,6 +97,7 @@
 	  }
 	  num ++;
 	}
+	buildContainer.add(skillContainer).empty();
 	buildContainer.append(markup);
   }
 
