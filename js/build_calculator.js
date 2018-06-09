@@ -56,6 +56,12 @@
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
+	for (var c in buildContainer[0].childNodes) {
+	  console.log(c);
+	  for var (d in c.childNodes) {
+	    console.log(d);
+	  }
+	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	buildContainer.add(skillContainer).empty();
 	hiddenContainer.val("");
