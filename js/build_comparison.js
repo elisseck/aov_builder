@@ -23,6 +23,8 @@
       var build1 = $('#build_1_values')[0].childNodes;
 	  var build2 = $('#build_2_values')[0].childNodes;
 	  for (var i; i < build1.length; i++) {
+		console.log(build1[i]);
+		console.log(build2[i]);
         if (build2[i]) {
          val1 = parseFloat(build1[i].textContent.split(': ')[1]);
 		 val2 = parseFloat(build2[i].textContent.split(': ')[1]);
