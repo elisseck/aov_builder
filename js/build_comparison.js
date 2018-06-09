@@ -3,8 +3,7 @@
     attach: function (context, settings) {
 	  $("#edit-build-1").attr("disabled", true);
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
-	  $("#edit-build-2", context).once('build_comparison').each(function() {
-	    $(this).change(function() {
+	  $("#edit-build-2").change(function() {
           generateIndicators();
         });
 	  });
@@ -20,7 +19,6 @@
 	console.log($('#build_1_values'));
 	console.log($('#build_1_values')[0].childNodes);
 	console.log($('#build_2_values'));
-	console.log($('#build_2_values')[0].childNodes);
 	if ($('#build_1_values').hasOwnProperty(0) && $('#build_2_values').hasOwnProperty(0)) {
       var build1 = $('#build_1_values')[0].childNodes;
 	  var build2 = $('#build_2_values')[0].childNodes;
