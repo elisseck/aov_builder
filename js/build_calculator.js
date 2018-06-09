@@ -56,6 +56,14 @@
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
+	var children = buildContainer.childNodes;
+	console.log(children);
+	var oldFullBuild = {};
+	for (var child in children) {
+      oldFullBuild[child.id] = parseFloat(child.val());
+	  console.log(child.id);
+	  console.log(child.val());
+	}
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	console.log(buildContainer);
 	console.log(skillContainer);
@@ -77,16 +85,13 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		console.log(fullBuild[data]);
-		console.log(window.oldFullBuild);
-		console.log(window.oldFullBuild[data]);
-		if (window.oldFullBuild.hasOwnProperty(data)) {
+		if (oldFullBuild.hasOwnProperty(data)) {
           if (parseFloat(fullBuild[data]) > parseFloat(window.oldFullBuild[data])) {
-            markup += '<div class="data-up">';
+            markup += '<div id=" + ' data ' + " class="data-up">';
 		  } else if (parseFloat(fullBuild[data]) < parseFloat(window.oldFullBuild[data])) {
-            markup += '<div class="data-down">';
+            markup += '<div id=" + ' data ' + " class="data-down">';
 		  } else {
-            markup += '<div>';
+            markup += '<div id=" + ' data ' + ">';
 		  }
 		}
 		markup += "<strong>" + label + ":</strong> " + fullBuild[data] + "</div>";
