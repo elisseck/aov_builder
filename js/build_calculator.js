@@ -57,8 +57,8 @@
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
 	var hiddenContainer = $('input[name="full_build_hidden"]');
-	console.log(buildContainer.val());
-	console.log(skillContainer.val());
+	console.log(buildContainer);
+	console.log(skillContainer);
 	buildContainer.add(skillContainer).empty();
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
