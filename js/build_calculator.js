@@ -64,10 +64,12 @@
 	  //if (child.className == 'hero-grouping') {
         var c = children[child].childNodes;
 		console.log(c);
+		if (c) {
 		for (var node in c) {
 		  console.log(children[child][c][node].id);
 		  console.log(children[child][c][node].textContent);
           oldFullBuild[node.id] = parseFloat(children[child][c][node].textContent.split(": ")[1]);
+		}
 		}
 	  //}
 	  console.log(oldFullBuild);
