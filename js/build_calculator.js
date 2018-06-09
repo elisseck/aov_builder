@@ -391,11 +391,11 @@
 		    markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value">';
 		  }
 		  markup += 'Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
-		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div></div>';
+		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
 		markup += '</div>';
       }
-	  markup += '</div>';
+	  markup += '</div></div>';
 	}
 	container.empty();
 	container.append(markup);
