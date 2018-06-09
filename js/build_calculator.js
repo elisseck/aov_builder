@@ -351,7 +351,7 @@
 		} else {
 		  markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown">';
 		}
-	  markup += 'Cooldown: ' + skillBuild[skill]['field_cooldown'] + '</div>';
+	  markup += 'Cooldown: ' + skillBuild[skill]['field_cooldown'].toFixed(2) + '</div>';
 	  if ($('#' + skill + '-field-output-value').hasOwnProperty(0)) {
           var finalval = $('#' + skill + '-field-output-value')[0].textContent.split(': ')[1];
           if (parseFloat(skillBuild[skill]['final_value']) > parseFloat(finalval)) {
