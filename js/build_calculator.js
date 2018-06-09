@@ -59,8 +59,8 @@
 	for (var c in buildContainer[0].childNodes) {
 	  console.log(buildContainer[0].childNodes[c]);
 	  if ($(buildContainer[0].childNodes[c]).className == 'hero-grouping') {
-	    for (var d in buildContainer[0].childNodes[c].childNodes) {
-	      console.log(buildContainer[0].childNodes[c].childNodes[d]);
+	    for (var d in $(buildContainer[0].childNodes[c]).childNodes) {
+	      console.log($(buildContainer[0].childNodes[c]).childNodes[d]);
 	    }
 	  }
 	}
