@@ -56,13 +56,6 @@
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	var skillContainer = $(".skill_build");
 	var buildContainer = $(".full_build");
-	/*for (var c in buildContainer[0].childNodes) {
-	  if ($(buildContainer[0].childNodes[c])[0].className == 'hero-grouping') {
-	    for (var d in $(buildContainer[0].childNodes[c])[0].childNodes) {
-	      console.log($(buildContainer[0].childNodes[c])[0].childNodes[d]);
-	    }
-	  }
-	}*/
 	var hiddenContainer = $('input[name="full_build_hidden"]');
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));
@@ -98,7 +91,7 @@
 	  }
 	  num ++;
 	}
-	buildContainer.add(skillContainer).empty();
+	buildContainer.empty();
 	//build skill grid
 	var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);
 	buildContainer.append(markup);
@@ -146,13 +139,29 @@
 				    } else if (key !== 'field_scaling') {
 				    //cases for each skill type so we scale by the correct level for level scaling
 				      if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Passive') {
-				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+						if (key == 'field_cooldown') {
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+						} else {
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
-				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[0]) - 1));
+						if (key == 'field_cooldown') {
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[0]) - 1));
+						} else {
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[0]) - 1));
+						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 2') {
-				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[1]) - 1));
+						if (key == 'field_cooldown') {
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[1]) - 1));
+						} else {
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[1]) - 1));
+						}
 				      } else {
-				        skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[2]) - 1));
+						if (key == 'field_cooldown') {
+						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[2]) - 1));
+						} else {
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(levels[2]) - 1));
+						}
 				      }
 			        }
 			      }
@@ -292,7 +301,19 @@
 	  if (count % 5 === 0) {
 		markup += '<div class="arcana-grouping">';
 	  }
-	  markup += '<div id=arcana-' + key + '>' + arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
+	  if ($('#arcana-' + key).hasOwnProperty(0)) {
+          var val = $('#arcana-' + key)[0].textContent.split(': ')[1];
+          if (parseFloat(arcanaBuild[key]) > parseFloat(val)) {
+            markup += '<div id=arcana-' + key + '" class="data-up">';
+		  } else if (parseFloat(arcanaBuild[key]) < parseFloat(val)) {
+            markup += '<div id=arcana-' + key + '" class="data-down">';
+		  } else {
+			markup += '<div id=arcana-' + key + '>';
+		  }
+		} else {
+		  markup += '<div id=arcana-' + key + '>';
+		}
+	  markup += arcanaKeys[key] + ': '+ arcanaBuild[key] + '</div>'
 	  if (count % 5 === 4) {
 		markup += '</div>';
 	  }
@@ -315,11 +336,35 @@
 	  if (skillBuild[skill]['body'].hasOwnProperty(0)) {
 	    markup += '<div class="skill-description">' + skillBuild[skill]['body'][0]['value'] + '</div>';
 	  }
-	  markup += '<div class="skill-stats>';
+	  markup += '<div class="skill-stats">';
 	  markup += '<div class="skill-scaling">Scaling Value: ' + skillBaseData[skill]['field_scaling']['values'][0]['value'] + '</div>';
-	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skillBuild[skill]['field_scaling_stat'] + '</div>'; 
-	  markup += '<div class="skill-cooldown">Cooldown: ' + skillBuild[skill]['field_cooldown'] + '</div>';
-	  markup += '<div class="skill-output-value">Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
+	  markup += '<div class="skill-scaling-stat">Scaling Stat: ' + skillBuild[skill]['field_scaling_stat'] + '</div>';
+	  if ($('#' + skill + '-field-cooldown').hasOwnProperty(0)) {
+          var coolval = $('#' + skill + '-field-cooldown')[0].textContent.split(': ')[1];
+          if (parseFloat(skillBuild[skill]['field_cooldown']) > parseFloat(coolval)) {
+            markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown data-up">';
+		  } else if (parseFloat(skillBuild[skill]['field_cooldown'])) < parseFloat(coolval)) {
+            markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown data-down">';
+		  } else {
+			markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown">';
+		  }
+		} else {
+		  markup += '<div id="' + skill + '-field-cooldown" class="skill-cooldown">';
+		}
+	  markup += 'Cooldown: ' + skillBuild[skill]['field_cooldown'] + '</div>';
+	  if ($('#' + skill + '-field-output-value').hasOwnProperty(0)) {
+          var finalval = $('#' + skill + '-field-output-value')[0].textContent.split(': ')[1];
+          if (parseFloat(skillBuild[skill]['final_value']) > parseFloat(finalval)) {
+            markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value data-up">';
+		  } else if (parseFloat(skillBuild[skill]['final_value'])) < parseFloat(finalval)) {
+            markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value data-down">';
+		  } else {
+			markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value">';
+		  }
+		} else {
+		  markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value">';
+		}
+	  markup += 'Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
 	  if (skillBuild[skill]['bonuses']) {
 		markup += '<div class="bonuses"><h4>Additional Effects</h4>';
@@ -333,13 +378,26 @@
 		  if (skillBuild[skill]['bonuses'][bonus]['field_scaling_stat']) {
 		    markup += '<div class="bonus-scaling-stat">Scaling Stat: ' + skillBuild[skill]['bonuses'][bonus]['field_scaling_stat'] + '</div>';
 		  }
-		  markup += '<div class="bonus-output-value">Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
+		  if ($('#' + skill + '-' + bonus + '-field-output-value').hasOwnProperty(0)) {
+            var bonusfinalval = $('#' + skill + '-' + bonus + '-field-output-value')[0].textContent.split(': ')[1];
+            if (parseFloat(skillBuild[skill]['bonuses'][bonus]['final_value']) > parseFloat(bonusfinalval)) {
+              markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value data-up">';
+		    } else if (parseFloat(skillBuild[skill]['bonuses'][bonus]['final_value']) < parseFloat(bonusfinalval)) {
+              markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value data-down">';
+		    } else {
+			  markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value">';
+		    }
+		  } else {
+		    markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value">';
+		  }
+		  markup += 'Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
 		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
 		markup += '</div>';
       }
 	  markup += '</div>';
 	}
+	container.empty();
 	container.append(markup);
   }
   
