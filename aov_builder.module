@@ -510,7 +510,7 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
   $title = $heroNode->getTitle() . ' - ' . $tag;
   $node->setTitle($title);
   $node->save();
-  $path = '/form/build-comparison?build=' . $node->id();
+  $path = '/form/build-comparison?build=' . $node->id() . '&hero=' . $form['elements']['hero']['#value'];
   $response = new RedirectResponse($path);
   $response->send();
   return;
