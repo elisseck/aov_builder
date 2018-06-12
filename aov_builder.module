@@ -517,20 +517,31 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
 }
 
 function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
-	$triggerElement = $form_state->getTriggeringElement()['#name'];
+	/*$triggerElement = $form_state->getTriggeringElement()['#name'];
     $buildQuery = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'build')
       ->condition('nid', $form_state->getValue($triggerElement));
     $nid = $buildQuery->execute();
-    $build = node_load(array_shift($nid));
-	$heroData = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+    $build = node_load(array_shift($nid));*/
+	$trigger = $form_state->getTriggeringElement();
+    $triggerElement = $trigger['#name'];
+	$triggerElementValue = $trigger['#value'];
+	//load both builds either way on this form, since we need to compare
+    $buildQuery = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'build')
+      ->condition('nid', array($form_state->getValue('build_1'), $form_state->getValue('build_2')), 'IN');
+    $nids = $buildQuery->execute();
+	//load both builds either way on this form, since we need to compare
+    $builds = node_load_multiple($nids);
+	$heroData = aov_builder_query_heroes(array('hero' => $builds[$triggerElementValue]->field_hero->getValue()[0]['target_id']));
 	$arr = array();
-	foreach ($build->field_items->getValue() as $item) {
+	foreach ($builds[$triggerElementValue]->field_items->getValue() as $item) {
 	  array_push($arr, $item['target_id']);
 	}
 	$itemData = aov_builder_query_items(array('items' => $arr));
-	$allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
+	$allArcana = array_merge($builds[$triggerElementValue]->field_green_arcana->getValue(), $builds[$triggerElementValue]->field_red_arcana->getValue(), $builds[$triggerElementValue]->field_purple_arcana->getValue());
 	$arcanaArr = array();
 	foreach ($allArcana as $arcana) {
 	  array_push($arcanaArr, $arcana['target_id']);
@@ -563,7 +574,21 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	);
 	$markup = '<div id="' . $triggerElement . '_values">';
 	foreach ($buildArray as $key => $label) {
-	  $markup .= '<div id="' . $triggerElement . $key . '">' . $label . ': ' . $build->$key->getValue()[0]['value'] . '</div>';
+	  if ($triggerElement == 'build_2') {
+		$buildOneValue = $form_state->getValue('build_1');
+	    if($builds[$triggerElementValue]->$key->getValue()[0]['value'] > $builds[$buildOneValue]->$key->getValue()[0]['value']) {
+		  $markup .= '<div id="' . $triggerElement . $key . '" class="data-up">';
+		}
+		else if($builds[$triggerElementValue]->$key->getValue()[0]['value'] < $builds[$buildOneValue]->$key->getValue()[0]['value']) {
+		  $markup .= '<div id="' . $triggerElement . $key . '" class="data-down">';
+		} else {
+		  $markup .= '<div id="' . $triggerElement . $key . '">';
+		}
+	  }
+	  else {
+		$markup .= '<div id="' . $triggerElement . $key . '">';
+	  }
+	  $markup .= $label . ': ' . $builds[$triggerElementValue]->$key->getValue()[0]['value'] . '</div>';
 	}
 	$markup .= '</div>';
     // Add an Ajax response
