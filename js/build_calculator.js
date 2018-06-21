@@ -10,6 +10,7 @@
   };
   
   $(document).one('ready', function () {
+	  console.log('ready ran once!');
     $(window).on("resize", function (e) {
         checkScreenSize();
     });
