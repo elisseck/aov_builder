@@ -5,7 +5,7 @@
 	    $(this).change(function() {
           generateBuild(settings);
         });
-
+	  });
     $(window).on("resize", function (e) {
         checkScreenSize();
     });
@@ -18,8 +18,6 @@
         });
       }
     }
-  });
-	  });
     }
   };
 
