@@ -15,7 +15,7 @@
       var newWindowWidth = $(window).width();
       if (newWindowWidth < 768) {
 		$('#webform-submission-build-calculator-add-form').once('build_calculator').append('<input type="button" id="data-button" value="View Hero Data">').button();
-		$('#data-button').click(function() {
+		$('#data-button').once('build_calculator').click(function() {
           $('.full_build').slideToggle();
         });
       }
