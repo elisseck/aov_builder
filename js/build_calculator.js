@@ -5,12 +5,7 @@
 	    $(this).change(function() {
           generateBuild(settings);
         });
-	  });
-    }
-  };
-  
-  $(document).one('ready', function () {
-	  console.log('ready ran once!');
+
     $(window).on("resize", function (e) {
         checkScreenSize();
     });
@@ -24,6 +19,9 @@
       }
     }
   });
+	  });
+    }
+  };
 
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
