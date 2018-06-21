@@ -9,6 +9,21 @@
     }
   };
   
+  $(document).ready(function () {
+    $(window).on("resize", function (e) {
+        checkScreenSize();
+    });
+    checkScreenSize();
+    function checkScreenSize(){
+      var newWindowWidth = $(window).width();
+      if (newWindowWidth < 768) {
+		$('#webform-submission-build-calculator-add-form').append('<input type="button" id="data-button" value="View Hero Data">').button().click(function() {
+          $('.full_build').slideToggle();
+        });
+      }
+    }
+  });
+
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
@@ -440,7 +455,7 @@
 	    bonusBuild[bonus]['field_scaling_stat'] = bonusData[bonus]['field_scaling_stat']['termname'];
 	  }
 	  bonusBuild[bonus]['field_output_type'] = bonusData[bonus]['field_output_type']['termname'];
-	  if (typeof bonusBuild[bonus]['field_scaling'] == 'number') {
+	  if (typeof bonusBuild[bonus]['field_scaling'] == 'number' && bonusBuild[bonus]['field_scaling'] !== 0.00) {
 	    bonusBuild[bonus]['final_value'] = parseFloat(bonusBuild[bonus]['field_scaling']) + parseFloat(bonusBuild[bonus]['field_bonus_damage_level_1']);
 	  }
 	  else {
