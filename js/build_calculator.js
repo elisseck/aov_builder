@@ -6,6 +6,7 @@
           generateBuild(settings);
         });
 	  });
+
     $(window).on("resize", function (e) {
         checkScreenSize();
     });
@@ -13,7 +14,7 @@
     function checkScreenSize(){
       var newWindowWidth = $(window).width();
       if (newWindowWidth < 768) {
-		$('#webform-submission-build-calculator-add-form').append('<input type="button" id="data-button" value="View Hero Data">').button().click(function() {
+		$('#webform-submission-build-calculator-add-form').once('build_calculator').append('<input type="button" id="data-button" value="View Hero Data">').button().click(function() {
           $('.full_build').slideToggle();
         });
       }
