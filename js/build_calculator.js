@@ -14,6 +14,7 @@
     function checkScreenSize(){
       var newWindowWidth = $(window).width();
       if (newWindowWidth < 768) {
+		$('full_build').once('build_calculator').slideToggle();
 		$('#webform-submission-build-calculator-add-form').once('build_calculator').append('<input type="button" id="data-button" value="View Hero Data">').button().click(function() {
           $('.full_build').slideToggle();
         });
