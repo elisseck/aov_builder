@@ -98,7 +98,7 @@
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " - " fullBuild[data].toFixed(2) + "</div>";
+		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " - " + fullBuild[data].toFixed(2) + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
