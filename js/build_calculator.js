@@ -88,17 +88,21 @@
 		}
 		if ($('#' + data).hasOwnProperty(0)) {
           var val = $('#' + data)[0].textContent.split(': ')[1];
-          if (parseFloat(fullBuild[data]) > parseFloat(val)) {
-            markup += '<div id="' +  data  + '" class="data-up-last">';
-		  } else if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
-            markup += '<div id="' +  data  + '" class="data-up">';
+          if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
+            markup += '<div id="' +  data  + '" class="data-up';
+			  if (parseFloat(fullBuild[data]) > parseFloat(val)) {
+                markup += '-last>';
+		      } 
+			  else {
+				markup += '>';
+			  }
 		  } else {
 			markup += '<div id="' +  data  + '">';
 		  }
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " - " + fullBuild[data].toFixed(2) + "</div>";
+		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " -> " + fullBuild[data].toFixed(2) + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
