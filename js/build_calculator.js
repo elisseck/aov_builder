@@ -91,10 +91,10 @@
           if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
             markup += '<div id="' +  data  + '" class="data-up';
 			  if (parseFloat(fullBuild[data]) > parseFloat(val)) {
-                markup += '-last>';
-		      } 
+                markup += '-last">';
+		      }
 			  else {
-				markup += '>';
+				markup += '">';
 			  }
 		  } else {
 			markup += '<div id="' +  data  + '">';
