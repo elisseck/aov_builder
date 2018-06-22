@@ -75,7 +75,7 @@
 	hiddenContainer.val(JSON.stringify(fullBuild));
 	if (settings.heroData.hasOwnProperty(selectedHero)) {
 	  var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
-	  markup += '<div>Key: Base Value -> <span class="data-up">Improved Value</span> or <span class="data-up-last">Last Improved Value</span></div>';
+	  markup += '<div id="data-key">Key: Base Value -> <span class="data-up">Improved Value</span> or <span class="data-up-last">Last Improved Value</span></div>';
 	}
 	var num = 0;
 	for (var data in fullBuild) {
