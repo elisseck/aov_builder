@@ -98,7 +98,7 @@
 				markup += '">';
 			  }
 		  } else {
-			markup += '<div id="' +  data  + '">';
+			markup += '">';
 		  }
 		} else {
 		  markup += '<div id="' +  data  + '">';
