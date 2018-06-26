@@ -517,13 +517,6 @@ function aov_builder_submit_build(array $form, FormStateInterface $form_state) {
 }
 
 function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
-	/*$triggerElement = $form_state->getTriggeringElement()['#name'];
-    $buildQuery = \Drupal::entityQuery('node')
-      ->condition('status', 1)
-      ->condition('type', 'build')
-      ->condition('nid', $form_state->getValue($triggerElement));
-    $nid = $buildQuery->execute();
-    $build = node_load(array_shift($nid));*/
 	$trigger = $form_state->getTriggeringElement();
     $triggerElement = $trigger['#name'];
 	$triggerElementValue = $trigger['#value'];
@@ -577,7 +570,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  if ($triggerElement == 'build_2') {
 		$buildOneValue = $form_state->getValue('build_1');
 	    if($builds[$triggerElementValue]->$key->getValue()[0]['value'] > $builds[$buildOneValue]->$key->getValue()[0]['value']) {
-		  $markup .= '<div id="' . $triggerElement . $key . '" class="data-up">';
+		  $markup .= '<div id="' . $triggerElement . $key . '" class="data-up-latest">';
 		}
 		else if($builds[$triggerElementValue]->$key->getValue()[0]['value'] < $builds[$buildOneValue]->$key->getValue()[0]['value']) {
 		  $markup .= '<div id="' . $triggerElement . $key . '" class="data-down">';

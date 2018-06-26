@@ -5,21 +5,18 @@
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
     }
   };
-  $(document).ready(function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var param = urlParams.get('build');
-    $("#edit-build-1").val(param).trigger('change');
-	// select the target node
-    var target = $('#ajax_placeholder_build_2');
-    // create an observer instance
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        console.log(mutation.type);
-      });    
-    });
-  });
-  $( document ).ajaxComplete(function() {
-    console.log( "Triggered ajaxComplete handler." );
+  $(document).ajaxComplete(function() {
+    if ($('#ajax_placeholder_build_1').children().length > 0 && $('#ajax_placeholder_build_2').children().length > 0) {
+      $('#build_2_values').children().each(function() {
+        var id = $(this).id.split('build2')[1];
+		if ($(this).className == 'data-up-latest') {
+		  $('#build1' + id).attr("class", "data-down");
+		}
+		else if ($(this).className == 'data-down') {
+		  $('#build1' + id).attr("class", "data-up-latest");
+		}
+      });
+    }
   });
   
 
