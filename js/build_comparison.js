@@ -14,11 +14,11 @@
     if ($('#ajax_placeholder_build_1').children().length > 0 && $('#ajax_placeholder_build_2').children().length > 0) {
       $('#build_2_values').children().each(function() {
         var id = $(this).attr('id').split('build_2')[1];
-		if ($(this).attr('class') == 'data-up-latest') {
+		if ($(this).attr('class') == 'data-up-last') {
 		  $('#build_1' + id).attr("class", "data-down");
 		}
 		else if ($(this).attr('class') == 'data-down') {
-		  $('#build_1' + id).attr("class", "data-up-latest");
+		  $('#build_1' + id).attr("class", "data-up-last");
 		}
       });
     }
