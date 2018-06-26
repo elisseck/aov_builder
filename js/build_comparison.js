@@ -18,6 +18,9 @@
       });    
     });
   });
+  $( document ).ajaxComplete(function() {
+    console.log( "Triggered ajaxComplete handler." );
+  });
   
 
 })(jQuery, Drupal);
