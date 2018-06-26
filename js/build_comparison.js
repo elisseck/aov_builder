@@ -15,10 +15,10 @@
       $('#build_2_values').children().each(function() {
         var id = $(this).attr('id').split('build_2')[1];
 		if ($(this).attr('class') == 'data-up-latest') {
-		  $('#build1' + id).attr("class", "data-down");
+		  $('#build_1' + id).attr("class", "data-down");
 		}
 		else if ($(this).attr('class') == 'data-down') {
-		  $('#build1' + id).attr("class", "data-up-latest");
+		  $('#build_1' + id).attr("class", "data-up-latest");
 		}
       });
     }
