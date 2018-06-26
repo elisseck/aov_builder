@@ -13,13 +13,11 @@
   $(document).ajaxComplete(function() {
     if ($('#ajax_placeholder_build_1').children().length > 0 && $('#ajax_placeholder_build_2').children().length > 0) {
       $('#build_2_values').children().each(function() {
-        var id = $(this).attr('id').split('build2')[1];
-		console.log(id);
-		console.log($(this).className);
-		if ($(this).className == 'data-up-latest') {
+        var id = $(this).attr('id').split('build_2')[1];
+		if ($(this).attr('class') == 'data-up-latest') {
 		  $('#build1' + id).attr("class", "data-down");
 		}
-		else if ($(this).className == 'data-down') {
+		else if ($(this).attr('class') == 'data-down') {
 		  $('#build1' + id).attr("class", "data-up-latest");
 		}
       });
