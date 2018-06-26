@@ -87,13 +87,10 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-		if ($('#' + data).hasOwnProperty(0)) {
-          var val = $('#' + data)[0].textContent.split('> ')[1];
-		  console.log(parseFloat(settings.heroData[selectedHero][data]['values'][0]['value']));
-		  console.log(parseFloat(fullBuild[data]));
-		  console.log(parseFloat(val));
           if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
             markup += '<div id="' +  data  + '" class="data-up';
+			if ($('#' + data).hasOwnProperty(0)) {
+              var val = $('#' + data)[0].textContent.split('> ')[1];
 			  if (parseFloat(fullBuild[data]) > parseFloat(val)) {
                 markup += '-last">';
 		      }
