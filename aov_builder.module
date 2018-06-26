@@ -565,7 +565,7 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     'field_percent_pen_ad' => 'Percent Pen AD',
     'field_percent_pen_ap' => 'Percent Pen AP',
 	);
-	$markup = '<div id="' . $triggerElement . '_values">';
+	$markup = '<div id="' . $triggerElement . '_values"><h3>Build' + $triggerElement.split('Build')[1] + '</h3>';
 	foreach ($buildArray as $key => $label) {
 	  if ($triggerElement == 'build_2') {
 		$buildOneValue = $form_state->getValue('build_1');
