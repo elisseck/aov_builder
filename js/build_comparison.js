@@ -2,9 +2,7 @@
   Drupal.behaviors.build_comparison = {
     attach: function (context, settings) {
 	  $("#edit-build-1").attr("disabled", true);
-	  if (screen.width>=768) {
-	    $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
-	  }
+	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
     }
   };
   $(document).ready(function() {
