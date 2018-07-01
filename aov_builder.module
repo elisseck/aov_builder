@@ -18,7 +18,7 @@ function aov_builder_views_pre_execute(ViewExecutable $view) {
   if ($view->id() == 'builds') {
     $view_by_author = Views::getView('build_by_user');
 	dpm($view_by_author);
-    $yes = $view_by_author->build();
+    $yes = $view_by_author->build('entity_reference_1');
 	var_dump($yes);
     $query_by_author = $view_by_author->build_info['query'];
 
