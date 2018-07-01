@@ -22,7 +22,7 @@ function aov_builder_views_pre_execute(ViewExecutable $view) {
 
     $original_query = &$view->build_info['query'];
 
-    //$original_query->union($query_by_author);
+    $original_query->union($query_by_author);
   }
 }
 
