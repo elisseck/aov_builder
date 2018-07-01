@@ -17,14 +17,12 @@ use Drupal\Core\Database\Query\SelectInterface;
 function aov_builder_views_pre_execute(ViewExecutable $view) {
   if ($view->id() == 'builds' && $view->current_display == 'entity_reference_1') {
     $view_by_author = Views::getView('build_by_user');
-	dpm($view_by_author);
-    $yes = $view_by_author->build('entity_reference_1');
-	var_dump($yes);
+    $view_by_author->build('entity_reference_1');
     $query_by_author = $view_by_author->build_info['query'];
 
-    //$original_query = &$view->build_info['query'];
+    $original_query = &$view->build_info['query'];
 
-    //$original_query->union($query_by_author);
+    $original_query->union($query_by_author);
   }
 }
 
