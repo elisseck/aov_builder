@@ -9,6 +9,23 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\SettingsCommand;
 
 /**
+ * Implements hook_views_pre_execute().
+ */
+function union_views_pre_execute(ViewExecutable $view) {
+  if ($view->id() == 'builds') {
+	$displayObj = $view->getDisplay();
+	dpm($view);
+    $view_by_author = Views::getView('build_by_user');
+    $view_by_author->build();
+    $query_by_author = $view_by_author->build_info['query'];
+
+    $original_query = &$view->build_info['query'];
+
+    $original_query->union($query_by_author);
+  }
+} 
+
+/**
  * Implements hook_form_alter().
  */
 function aov_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
