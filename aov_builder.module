@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\SettingsCommand;
 use Drupal\views\Views;
 use Drupal\views\ViewExecutable;
+use Drupal\Core\Database\Query\SelectInterface;
 
 /**
  * Implements hook_views_pre_execute().
