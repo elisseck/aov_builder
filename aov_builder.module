@@ -11,7 +11,7 @@ use Drupal\Core\Ajax\SettingsCommand;
 /**
  * Implements hook_views_pre_execute().
  */
-function union_views_pre_execute(ViewExecutable $view) {
+function aov_builder_views_pre_execute(ViewExecutable $view) {
   if ($view->id() == 'builds') {
 	$displayObj = $view->getDisplay();
 	dpm($view);
@@ -23,7 +23,7 @@ function union_views_pre_execute(ViewExecutable $view) {
 
     $original_query->union($query_by_author);
   }
-} 
+}
 
 /**
  * Implements hook_form_alter().
