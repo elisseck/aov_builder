@@ -15,7 +15,7 @@ use Drupal\Core\Database\Query\SelectInterface;
  * Implements hook_views_pre_execute().
  */
 function aov_builder_views_pre_execute(ViewExecutable $view) {
-  if ($view->id() == 'builds') {
+  if ($view->id() == 'builds' && $view->current_display == 'entity_reference_1') {
     $view_by_author = Views::getView('build_by_user');
 	dpm($view_by_author);
     $yes = $view_by_author->build('entity_reference_1');
