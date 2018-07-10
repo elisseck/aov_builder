@@ -54,7 +54,7 @@
 	  "field_critical_damage": 0,
 	};
 	console.log(fullBuild);
-	var selectedHero = settings.heroData[buildId];
+	var selectedHero = Object.keys(settings.heroData[buildId])[0];
 	var selectedLevel = $("#edit-level-slider").val();
 	/*var selectedItems = $(".edit-items").map(function(){
       return this.value;
