@@ -95,7 +95,6 @@
 	fullBuild = addItems(settings.itemData, settings.itemData[buildId], fullBuild);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[buildId][selectedHero], selectedLevel, fullBuild);
-	console.log(fullBuild);
 	container.children().each(function() {
       var id = $(this).attr('id').split(buildNum)[1];
 	  if (id == 'field_hero_level') {
