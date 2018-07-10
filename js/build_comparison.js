@@ -3,6 +3,12 @@
     attach: function (context, settings) {
 	  $("#edit-build-1").attr("disabled", true);
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
+	  $("#edit-level-slider", context).once('build_comparison').each(function() {
+	    $(this).change(function() {
+		  generateBuild(settings, $("edit-build-1").val());
+		  generateBuild(settings, $("edit-build-2").val());
+        });
+	  });
     }
   };
   $(document).ready(function() {
@@ -24,7 +30,7 @@
     }
   });
   
-  function generateBuild(settings) {
+  function generateBuild(settings, buildId) {
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
 	  "field_ability_power": 0,
@@ -47,25 +53,25 @@
       "field_percent_pen_ap": 0,
 	  "field_critical_damage": 0,
 	};
-	var selectedHero = $("#edit-hero").val();
-	var selectedLevel = $("#edit-level").val();
-	var selectedItems = $(".edit-items").map(function(){
+	var selectedHero = settings.heroData[buildId];
+	var selectedLevel = $("#edit-level-slider").val();
+	/*var selectedItems = $(".edit-items").map(function(){
       return this.value;
-    }).get().join(',');
-	var selectedArcana = $(".edit-arcana").map(function(){
+    }).get().join(',');*/
+	/*var selectedArcana = $(".edit-arcana").map(function(){
       return this.value;
-    }).get().join(',');
-	var selectedSkillLevels = $(".edit-skill-levels").map(function(){
+    }).get().join(',');*/
+	/*var selectedSkillLevels = $(".edit-skill-levels").map(function(){
       return this.value;
-    }).get().join(',');
+    }).get().join(',');*/
 	//get base stats
-	fullBuild = getBaseStats(settings.heroData[selectedHero], fullBuild);
+	fullBuild = getBaseStats(settings.heroData[buildId][selectedHero], fullBuild);
 	//apply arcana first
-	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
+	fullBuild = addArcana(settings.arcanaData, settings.arcanaData[buildId], fullBuild);
 	//apply items next
-	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
+	fullBuild = addItems(settings.itemData, settings.itemData[buildId], fullBuild);
 	//apply level scaling
-	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
+	fullBuild = scaleByLevel(settings.heroData[buildId][selectedHero], selectedLevel, fullBuild);
 	//get skills last because they require fullBuild data
 	/*skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels, selectedHero, selectedLevel, fullBuild);*/
 	//output to visible container and hidden container to separate nice markup vs easy data values
@@ -111,10 +117,11 @@
 	  }
 	  num ++;
 	}
-	buildContainer.empty();
+	console.log(fullBuild);
+	//buildContainer.empty();
 	//build skill grid
 	/*var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);*/
-	buildContainer.append(markup);
+	//buildContainer.append(markup);
   }
 
   function getBaseStats(hero, fullBuild) {

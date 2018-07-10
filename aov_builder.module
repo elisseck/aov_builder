@@ -566,12 +566,6 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		$arcanaData[$build->id()] = "";
 	  }
 	}
-	dpm($heroData);
-	dpm($itemData);
-	dpm($arcanaData);
-    //$form['#attached']['drupalSettings']['heroData'] = $heroData;
-	//$form['#attached']['drupalSettings']['itemData'] = $itemData;
-	//$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
     $buildArray = array(
 	'field_hero_level' => 'Level',
     'field_ability_power' => 'Ability Power',
