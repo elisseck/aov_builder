@@ -547,12 +547,12 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	foreach ($builds as $build) {
 	  dpm($build);
 	  dpm($build->field_hero->getValue()[0]['target_id']);
-	  $heroData[$build] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	  $heroData[$build->id()] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
 	  $arr = array();
 	  foreach ($build->field_items->getValue() as $item) {
 	    array_push($arr, $item['target_id']);
 	  }
-	  $itemData[$build] = aov_builder_query_items(array('items' => $arr));
+	  $itemData[$build->id()] = aov_builder_query_items(array('items' => $arr));
 	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
 	  $arcanaArr = array();
 	  foreach ($allArcana as $arcana) {
@@ -561,9 +561,9 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 		}
 	  }
 	  if (count($arcanaArr) > 0) {
-	    $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
+	    $arcanaData[$build->id()] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
 	  } else {
-		$arcanaData[$build] = "";
+		$arcanaData[$build->id()] = "";
 	  }
 	}
 	dpm($heroData);
