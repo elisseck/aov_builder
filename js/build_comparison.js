@@ -236,7 +236,7 @@
   }
 
   function addItems(items, selectedItems, fullBuild) {
-	var arr = selectedItems.split(',');
+	var arr = selectedItems;
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
 	  if (items.hasOwnProperty(arr[i])) {
