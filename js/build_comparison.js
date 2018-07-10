@@ -7,6 +7,7 @@
 	    $(this).change(function() {
 		  generateBuild(settings, $("#edit-build-1").val(), $('#build_1_values'), 'build_1');
 		  generateBuild(settings, $("#edit-build-2").val(), $('#build_2_values'), 'build_2');
+		  applyClasses();
         });
 	  });
     }
@@ -29,6 +30,22 @@
       });
     }
   });
+  
+  function applyClasses() {
+    $('#build_2_values').children().each(function() {
+        var id = $(this).attr('id').split('build_2')[1];
+		var parts = $(this)[0].textContent.split(': ');
+		var parts1 = $('#build_1' + id).textContent.split(': ');
+		if (parseFloat(parts) > parseFloat(parts1)) {
+		  $(this).attr('class', 'data-up-last');
+		  $('#build_1' + id).attr("class", "data-down");
+		}
+		else if (parseFloat(parts) < parseFloat(parts1)) {
+		  $(this).attr('class', 'data-down');
+		  $('#build_1' + id).attr("class", "data-up-last");
+		}
+      });
+  }
   
   function generateBuild(settings, buildId, container, buildNum) {
 	//initialize build stats as numbers and grab our selected values
@@ -75,10 +92,14 @@
 	console.log(fullBuild);
 	container.children().each(function() {
       var id = $(this).attr('id').split(buildNum)[1];
+	  if (id == 'field_hero_level') {
+	    var parts = $(this)[0].textContent.split(': ');
+		$(this)[0].textContent = parts[0] + ': ' + selectedLevel;
+	  }
 	  for (var key in fullBuild) {
 	    if (id == key) {
 		  var parts = $(this)[0].textContent.split(': ');
-		  $(this)[0].textContent = parts[0] + ': ' + fullBuild[key];
+		  $(this)[0].textContent = parts[0] + ': ' + fullBuild[key].toFixed(2);
 		}
 	  }
     });
