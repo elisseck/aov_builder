@@ -554,12 +554,19 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
 	  $arcanaArr = array();
 	  foreach ($allArcana as $arcana) {
-	    array_push($arcanaArr, $arcana['target_id']);
+		if ($arcana['target_id'] !== 0) {
+	      array_push($arcanaArr, $arcana['target_id']);
+		}
 	  }
-	  dpm($allArcana);
-	  dpm($arcanaArr);
-	  $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
+	  if (count($arcanaArr) > 0) {
+	    $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
+	  } else {
+		$arcanaData[$build] = "";
+	  }
 	}
+	dpm($heroData);
+	dpm($itemData);
+	dpm($arcanaData);
     //$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	//$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	//$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
