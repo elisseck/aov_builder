@@ -5,8 +5,8 @@
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
 	  $("#edit-level-slider", context).once('build_comparison').each(function() {
 	    $(this).change(function() {
-		  generateBuild(settings, $("edit-build-1").val());
-		  generateBuild(settings, $("edit-build-2").val());
+		  generateBuild(settings, $("#edit-build-1").val());
+		  generateBuild(settings, $("#edit-build-2").val());
         });
 	  });
     }
