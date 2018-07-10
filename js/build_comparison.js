@@ -53,7 +53,6 @@
       "field_percent_pen_ap": 0,
 	  "field_critical_damage": 0,
 	};
-	console.log(fullBuild);
 	var selectedHero = Object.keys(settings.heroData[buildId])[0];
 	var selectedLevel = $("#edit-level-slider").val();
 	/*var selectedItems = $(".edit-items").map(function(){
@@ -66,16 +65,13 @@
       return this.value;
     }).get().join(',');*/
 	//get base stats
-	console.log(settings.heroData);
-	console.log(buildId);
-	console.log(selectedHero);
-	console.log(settings.heroData[buildId][selectedHero]);
 	fullBuild = getBaseStats(settings.heroData[buildId][selectedHero], fullBuild);
-	console.log(fullBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, settings.arcanaData[buildId], fullBuild);
 	console.log(fullBuild);
 	//apply items next
+	console.log(settings.itemData);
+	console.log(settings.itemData[buildId]);
 	fullBuild = addItems(settings.itemData, settings.itemData[buildId], fullBuild);
 	console.log(fullBuild);
 	//apply level scaling
