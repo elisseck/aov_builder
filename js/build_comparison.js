@@ -44,6 +44,10 @@
 		  $(this).attr('class', 'data-down');
 		  $('#build_1' + id).attr("class", "data-up-last");
 		}
+		else {
+	      $(this).attr('class', '');
+		  $('#build_1' + id).attr("class", "");
+		}
       });
   }
   
