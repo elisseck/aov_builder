@@ -66,6 +66,9 @@
       return this.value;
     }).get().join(',');*/
 	//get base stats
+	console.log(settings.heroData);
+	console.log(buildId);
+	console.log(selectedHero);
 	console.log(settings.heroData[buildId][selectedHero]);
 	fullBuild = getBaseStats(settings.heroData[buildId][selectedHero], fullBuild);
 	console.log(fullBuild);
