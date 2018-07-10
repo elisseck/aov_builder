@@ -53,6 +53,7 @@
       "field_percent_pen_ap": 0,
 	  "field_critical_damage": 0,
 	};
+	console.log(fullBuild);
 	var selectedHero = settings.heroData[buildId];
 	var selectedLevel = $("#edit-level-slider").val();
 	/*var selectedItems = $(".edit-items").map(function(){
@@ -66,12 +67,16 @@
     }).get().join(',');*/
 	//get base stats
 	fullBuild = getBaseStats(settings.heroData[buildId][selectedHero], fullBuild);
+	console.log(fullBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, settings.arcanaData[buildId], fullBuild);
+	console.log(fullBuild);
 	//apply items next
 	fullBuild = addItems(settings.itemData, settings.itemData[buildId], fullBuild);
+	console.log(fullBuild);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[buildId][selectedHero], selectedLevel, fullBuild);
+	console.log(fullBuild);
 	//get skills last because they require fullBuild data
 	/*skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels, selectedHero, selectedLevel, fullBuild);*/
 	//output to visible container and hidden container to separate nice markup vs easy data values
@@ -117,7 +122,7 @@
 	  }
 	  num ++;
 	}
-	console.log(fullBuild);
+	
 	//buildContainer.empty();
 	//build skill grid
 	/*var appended = appendToSkillContainer(skillContainer, skillBuild, settings.skillAndBonusData[selectedHero]);*/
