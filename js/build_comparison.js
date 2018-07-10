@@ -78,7 +78,7 @@
 	  for (var key in fullBuild) {
 	    if (id == key) {
 		  console.log(id);
-	      console.log($(this));
+	      console.log($(this).textContent);
 		}
 	  }
     });
