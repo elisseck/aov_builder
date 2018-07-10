@@ -89,8 +89,8 @@
 	/*var hiddenContainer = $('input[name="full_build_hidden"]');
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));*/
-	if (settings.heroData.hasOwnProperty(selectedHero)) {
-	  var markup = ("<div id=hero-title><h2>" + settings.heroData[selectedHero]['title'] + "</h2></div>");
+	if (settings.heroData.hasOwnProperty(buildId)) {
+	  var markup = ("<div id=hero-title><h2>" + settings.heroData[buildId][selectedHero]['title'] + "</h2></div>");
 	  markup += '<div id="data-key">Key: Base Value -> <span class="data-up">Improved Value</span> or <span class="data-up-last">Last Improved Value</span></div>';
 	}
 	var num = 0;
@@ -100,10 +100,10 @@
 	  }
 	  if (fullBuild.hasOwnProperty(data)) {
 		var label = "";
-		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
-		  label = settings.heroData[selectedHero][data]['labels'];
+		if (settings.heroData[buildId][selectedHero].hasOwnProperty(data)) {
+		  label = settings.heroData[buildId][selectedHero][data]['labels'];
 		}
-          if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
+          if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[buildId][selectedHero][data]['values'][0]['value'])) {
             markup += '<div id="' +  data  + '" class="data-up';
 			if ($('#' + data).hasOwnProperty(0)) {
               var val = $('#' + data)[0].textContent.split('> ')[1];
@@ -119,7 +119,7 @@
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " -> " + fullBuild[data].toFixed(2) + "</div>";
+		markup += "<strong>" + label + ":</strong> " + settings.heroData[buildId][selectedHero][data]['values'][0]['value'] + " -> " + fullBuild[data].toFixed(2) + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
