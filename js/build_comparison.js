@@ -77,8 +77,8 @@
       var id = $(this).attr('id').split(buildNum)[1];
 	  for (var key in fullBuild) {
 	    if (id == key) {
-		  console.log(id);
-	      console.log($(this)[0].textContent);
+		  var parts = $(this)[0].textContent.split(': ');
+		  $(this)[0].textContent = parts[0] + ': ' + fullBuild[key];
 		}
 	  }
     });
