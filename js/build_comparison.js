@@ -242,6 +242,7 @@
 
   function addItems(items, selectedItems, fullBuild) {
 	var arr = selectedItems;
+	console.log(arr);
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
 	  //if (items.hasOwnProperty(arr[i])) {
