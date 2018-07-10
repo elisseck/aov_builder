@@ -45,8 +45,8 @@
 		  $('#build_1' + id).attr("class", "data-up-last");
 		}
 		else {
-	      $(this).attr('class', '');
-		  $('#build_1' + id).attr("class", "");
+	      $(this).attr('class', 'data-same');
+		  $('#build_1' + id).attr("class", "data-same");
 		}
       });
   }
