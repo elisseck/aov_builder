@@ -244,17 +244,17 @@
 	var arr = selectedItems;
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
-	  if (items.hasOwnProperty(arr[i])) {
-		for (var key in items[arr[i]]) {
-	      if (items[arr[i]][key].hasOwnProperty(0)) {
+	  //if (items.hasOwnProperty(arr[i])) {
+		for (var key in arr[i]) {
+	      if (arr[i][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
-			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
+			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arr[i][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
-		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
+		      fullBuild[key] += parseFloat(arr[i][key][0]['value']);
 			}
 		  }
 		}
-	  }
+	  //}
 	}
 	return fullBuild;
   }
