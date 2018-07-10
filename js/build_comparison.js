@@ -276,7 +276,7 @@
       "field_percent_pen_ap": 0,
 	  "field_critical_damage": 0,
 	};*/
-    var selected = selectedArcana.split(',');
+    var selected = selectedArcana;
 	var len = selected.length;
 	for (var j = 0; j < len; j++) {
       if (arcana.hasOwnProperty(selected[j])) {
