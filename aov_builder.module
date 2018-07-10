@@ -545,6 +545,8 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
 	//load both builds either way on this form, since we need to compare
     $builds = node_load_multiple($nids);
 	foreach ($builds as $build) {
+	  dpm($build);
+	  dpm($build->field_hero->getValue()[0]['target_id']);
 	  $heroData[$build] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
 	  $arr = array();
 	  foreach ($build->field_items->getValue() as $item) {
