@@ -544,18 +544,22 @@ function aov_builder_loadBuild(array &$form, FormStateInterface $form_state) {
     $nids = $buildQuery->execute();
 	//load both builds either way on this form, since we need to compare
     $builds = node_load_multiple($nids);
-	$heroData = aov_builder_query_heroes(array('hero' => $builds[$triggerElementValue]->field_hero->getValue()[0]['target_id']));
-	$arr = array();
-	foreach ($builds[$triggerElementValue]->field_items->getValue() as $item) {
-	  array_push($arr, $item['target_id']);
+	foreach ($build in $builds) {
+	  $heroData[$build] = aov_builder_query_heroes(array('hero' => $build->field_hero->getValue()[0]['target_id']));
+	  $arr = array();
+	  foreach ($build->field_items->getValue() as $item) {
+	    array_push($arr, $item['target_id']);
+	  }
+	  $itemData[$build] = aov_builder_query_items(array('items' => $arr));
+	  $allArcana = array_merge($build->field_green_arcana->getValue(), $build->field_red_arcana->getValue(), $build->field_purple_arcana->getValue());
+	  $arcanaArr = array();
+	  foreach ($allArcana as $arcana) {
+	    array_push($arcanaArr, $arcana['target_id']);
+	  }
+	  dpm($allArcana);
+	  dpm($arcanaArr);
+	  $arcanaData[$build] = aov_builder_query_arcana(array('arcana' => $arcanaArr));
 	}
-	$itemData = aov_builder_query_items(array('items' => $arr));
-	$allArcana = array_merge($builds[$triggerElementValue]->field_green_arcana->getValue(), $builds[$triggerElementValue]->field_red_arcana->getValue(), $builds[$triggerElementValue]->field_purple_arcana->getValue());
-	$arcanaArr = array();
-	foreach ($allArcana as $arcana) {
-	  array_push($arcanaArr, $arcana['target_id']);
-	}
-	$arcanaData = aov_builder_query_arcana(array('arcana' => $arcanaArr));
     //$form['#attached']['drupalSettings']['heroData'] = $heroData;
 	//$form['#attached']['drupalSettings']['itemData'] = $itemData;
 	//$form['#attached']['drupalSettings']['arcanaData'] = $arcanaData;
