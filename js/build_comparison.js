@@ -5,8 +5,8 @@
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
 	  $("#edit-level-slider", context).once('build_comparison').each(function() {
 	    $(this).change(function() {
-		  generateBuild(settings, $("#edit-build-1").val());
-		  generateBuild(settings, $("#edit-build-2").val());
+		  generateBuild(settings, $("#edit-build-1").val(), $('#build_1_values'), 'build_1');
+		  generateBuild(settings, $("#edit-build-2").val(), $('#build_2_values'), 'build_2');
         });
 	  });
     }
@@ -30,7 +30,7 @@
     }
   });
   
-  function generateBuild(settings, buildId) {
+  function generateBuild(settings, buildId, container, buildNum) {
 	//initialize build stats as numbers and grab our selected values
 	var fullBuild = {
 	  "field_ability_power": 0,
@@ -73,15 +73,24 @@
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[buildId][selectedHero], selectedLevel, fullBuild);
 	console.log(fullBuild);
+	container.children().each(function() {
+      var id = $(this).attr('id').split(buildNum)[1];
+	  for (var key in fullBuild) {
+	    if (id == key) {
+		  console.log(id);
+	      console.log($(this));
+		}
+	  }
+    });
 	//get skills last because they require fullBuild data
 	/*skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels, selectedHero, selectedLevel, fullBuild);*/
 	//output to visible container and hidden container to separate nice markup vs easy data values
 	/*var skillContainer = $(".skill_build");*/
-	var buildContainer = $(".full_build");
+	//var buildContainer = $(".full_build");
 	/*var hiddenContainer = $('input[name="full_build_hidden"]');
 	hiddenContainer.val("");
 	hiddenContainer.val(JSON.stringify(fullBuild));*/
-	if (settings.heroData.hasOwnProperty(buildId)) {
+	/*if (settings.heroData.hasOwnProperty(buildId)) {
 	  var markup = ("<div id=hero-title><h2>" + settings.heroData[buildId][selectedHero]['title'] + "</h2></div>");
 	  markup += '<div id="data-key">Key: Base Value -> <span class="data-up">Improved Value</span> or <span class="data-up-last">Last Improved Value</span></div>';
 	}
@@ -117,7 +126,7 @@
         markup += '</div>';
 	  }
 	  num ++;
-	}
+	}*/
 	
 	//buildContainer.empty();
 	//build skill grid
@@ -277,23 +286,24 @@
 	  "field_critical_damage": 0,
 	};*/
     var selected = selectedArcana;
-	var len = selected.length;
+	var len = Object.keys(selected).length;
 	for (var j = 0; j < len; j++) {
-      if (arcana.hasOwnProperty(selected[j])) {
-	    for (var key in arcana[selected[j]]) {
-		  if (arcana[selected[j]][key].hasOwnProperty('values')) {
-		    if (arcana[selected[j]][key]['values'].hasOwnProperty(0)) {
+      //if (arcana.hasOwnProperty(selected[j])) {
+		var r = Object.keys(selected)[j];
+	    for (var key in selected[r]) {
+		  if (selected[r][key].hasOwnProperty('values')) {
+		    if (selected[r][key]['values'].hasOwnProperty(0)) {
 		      if (key == "field_movement_speed_percent") {
-			    fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100));
+			    fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(selected[r][key]['values'][0]['value'])/100));
 			    /*arcanaBuild["field_movement_speed"] += (parseFloat(arcana[selected[j]][key]['values'][0]['value'])/100);*/
 			  } else if (fullBuild.hasOwnProperty(key)) {
-		        fullBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);
+		        fullBuild[key] += parseFloat(selected[r][key]['values'][0]['value']);
 			    /*arcanaBuild[key] += parseFloat(arcana[selected[j]][key]['values'][0]['value']);*/
 			  }
 		    }
 		  }
 		}
-	  }
+	  //}
 	}
 	/*arcanaContainer = $(".arcana_build");
 	appendToArcanaContainer(arcanaContainer, arcanaBuild);*/
