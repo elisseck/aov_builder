@@ -68,12 +68,8 @@
 	fullBuild = getBaseStats(settings.heroData[buildId][selectedHero], fullBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, settings.arcanaData[buildId], fullBuild);
-	console.log(fullBuild);
 	//apply items next
-	console.log(settings.itemData);
-	console.log(settings.itemData[buildId]);
 	fullBuild = addItems(settings.itemData, settings.itemData[buildId], fullBuild);
-	console.log(fullBuild);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[buildId][selectedHero], selectedLevel, fullBuild);
 	console.log(fullBuild);
@@ -245,11 +241,7 @@
 	var len = Object.keys(arr).length;
 	for (var i = 0; i < len; i++) {
       var k = Object.keys(arr)[i];
-	  console.log(k);
-	  //if (items.hasOwnProperty(arr[i])) {
 		for (var key in arr[k]) {
-			console.log(key);
-			console.log(arr[k][key]);
 	      if (arr[k][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arr[k][key][0]['value'])/100));
@@ -258,7 +250,6 @@
 			}
 		  }
 		}
-	  //}
 	}
 	return fullBuild;
   }
