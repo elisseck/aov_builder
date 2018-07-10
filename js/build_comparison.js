@@ -242,8 +242,7 @@
 
   function addItems(items, selectedItems, fullBuild) {
 	var arr = selectedItems;
-	console.log(arr);
-	var len = arr.length;
+	var len = Object.keys(arr).length;
 	for (var i = 0; i < len; i++) {
       var k = Object.keys(arr)[i];
 	  console.log(k);
