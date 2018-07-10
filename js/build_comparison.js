@@ -245,15 +245,16 @@
 	console.log(arr);
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
+      var k = Object.keys(arr)[i];
 	  //if (items.hasOwnProperty(arr[i])) {
-		for (var key in arr[i]) {
+		for (var key in arr[k]) {
 			console.log(key);
-			console.log(arr[i][key]);
-	      if (arr[i][key].hasOwnProperty(0)) {
+			console.log(arr[k][key]);
+	      if (arr[k][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
-			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arr[i][key][0]['value'])/100));
+			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arr[k][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
-		      fullBuild[key] += parseFloat(arr[i][key][0]['value']);
+		      fullBuild[key] += parseFloat(arr[k][key][0]['value']);
 			}
 		  }
 		}
