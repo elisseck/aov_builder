@@ -246,6 +246,7 @@
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
       var k = Object.keys(arr)[i];
+	  console.log(k);
 	  //if (items.hasOwnProperty(arr[i])) {
 		for (var key in arr[k]) {
 			console.log(key);
