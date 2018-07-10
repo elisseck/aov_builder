@@ -246,6 +246,8 @@
 	for (var i = 0; i < len; i++) {
 	  //if (items.hasOwnProperty(arr[i])) {
 		for (var key in arr[i]) {
+			console.log(key);
+			console.log(arr[i][key]);
 	      if (arr[i][key].hasOwnProperty(0)) {
 			if (key == "field_movement_speed_percent") {
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(arr[i][key][0]['value'])/100));
