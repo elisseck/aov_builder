@@ -35,7 +35,9 @@
     $('#build_2_values').children().each(function() {
         var id = $(this).attr('id').split('build_2')[1];
 		var parts = $(this)[0].textContent.split(': ');
+		console.log(parts);
 		var parts1 = $('#build_1' + id).textContent.split(': ');
+		console.log(parts1);
 		if (parseFloat(parts) > parseFloat(parts1)) {
 		  $(this).attr('class', 'data-up-last');
 		  $('#build_1' + id).attr("class", "data-down");
