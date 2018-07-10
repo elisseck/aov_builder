@@ -5,10 +5,12 @@
 	  $("#ajax_placeholder_build_1, #ajax_placeholder_build_2").insertAfter(".js-form-item-build-2");
 	  $("#edit-level-slider", context).once('build_comparison').each(function() {
 	    $(this).change(function() {
-		  generateBuild(settings, $("#edit-build-1").val(), $('#build_1_values'), 'build_1');
-		  generateBuild(settings, $("#edit-build-2").val(), $('#build_2_values'), 'build_2');
-		  applyClasses();
-        });
+	      if ($('#ajax_placeholder_build_1').children().length > 0 && $('#ajax_placeholder_build_2').children().length > 0) {
+		    generateBuild(settings, $("#edit-build-1").val(), $('#build_1_values'), 'build_1');
+		    generateBuild(settings, $("#edit-build-2").val(), $('#build_2_values'), 'build_2');
+		    applyClasses();
+		  }
+          });
 	  });
     }
   };
