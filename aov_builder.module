@@ -308,7 +308,7 @@ function aov_builder_query_arcana($params = NULL) {
   $query = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'arcana');
-  if (isset($params['aracana'])) {
+  if (isset($params['arcana'])) {
     $query->condition('nid', $params['arcana'], 'IN');
   }
   $nids = $query->execute();
