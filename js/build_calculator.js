@@ -268,7 +268,7 @@
 				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
 				  if (key == 'field_scaling' && passiveData[item].hasOwnProperty('field_scaling_stat')) {
 				    passiveValue[item][key] = parseFloat(passiveData[item][key]['values'][0]['value']) * parseFloat(fullBuild[passiveData[item]['field_scaling_stat']['values']]);
-				  } else if (key == 'field_bonus_damage_level_1') && passiveData[item].hasOwnProperty('field_bonus_damage_per_level') {
+				  } else if (key == 'field_bonus_damage_level_1' && passiveData[item].hasOwnProperty('field_bonus_damage_per_level')) {
 					passiveValue[item][key] = parseFloat(passiveData[item][key]['values'][0]['value']) * parseFloat(selectedLevel) - 1; 
 				  }
 				}
