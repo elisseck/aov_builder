@@ -275,10 +275,66 @@ function aov_builder_query_items($params = NULL) {
   }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
+  $passiveKeys = array(
+  "body",
+  "field_bonus_damage_level_1",
+  "field_bonus_damage_per_level",
+  "field_damage_over_time",
+  "field_output_type",
+  "field_scaling",
+  "field_scaling_stat",
+  "field_skill_reference",
+  );
+  $passiveQuery = \Drupal::entityQuery('node')
+    ->condition('status', 1)
+    ->condition('type', 'bonus')
+	->condition('field_item_reference', $nids, 'IN');
+  $passiveNids = $passiveQuery->execute();
+  $passiveNodes = entity_load_multiple('node', $passiveNids);
+  //get scaling stats from term
+  $termQuery = \Drupal::entityQuery('taxonomy_term')
+   ->condition('vid', 'scaling_stats');
+  $tids = $termQuery->execute();
+  $statTerms = entity_load_multiple('taxonomy_term', $tids);
+  //get output types from term
+  $outputQuery = \Drupal::entityQuery('taxonomy_term')
+   ->condition('vid', 'output_type');
+  $stids = $outputQuery->execute();
+  $outputTerms = entity_load_multiple('taxonomy_term', $stids);
+
   foreach ($nodes as $node) {
     $nid = $node->id();
 	foreach ($itemKeys as $key) {
 	  $data[$nid][$key] = $node->get($key)->getValue();
+	  foreach ($passiveNodes as $pNode) {
+		if ($pNode->get('field_item_reference')->getValue()) {
+	      $itemID = $pNode->get('field_item_reference')->getValue()[0]['target_id'];
+		}
+		if ($pNode->get('field_scaling_stat')->getValue()) {
+		  $pStatTarget = $pNode->get('field_scaling_stat')->getValue()[0]['target_id'];
+		}
+		if ($bpNode->get('field_output_type')->getValue()) {
+		  $pOutputTarget = $pNode->get('field_output_type')->getValue()[0]['target_id'];
+		}
+	    $pNid = $pNode->id();
+		if ($itemID == $nid) {
+	      foreach ($passiveKeys as $pKey) {
+			if ($pKey == 'field_scaling_stat') {
+			  if ($statTerms[$bStatTarget]) {
+			    $data[$nid]['passives'][$pNid][$pKey]['values'] = strip_tags($statTerms[$pStatTarget]->get('description')->value);
+				$data[$nid]['passives'][$pNid][$pKey]['termname'] = $statTerms[$pStatTarget]->getName();
+			  }
+			} else if ($pKey == 'field_output_type') {
+			  if ($outputTerms[$pOutputTarget]) {
+			    $data[$nid]['passives'][$pNid][$pKey]['values'] = strip_tags($outputTerms[$pOutputTarget]->get('description')->value);
+				$data[$nid]['passives'][$pNid][$pKey]['termname'] = $outputTerms[$pOutputTarget]->getName();
+			  }
+			} else {
+			  $data[$nid]['passives'][$pNid][$pKey]['values'] = $pNode->get($pKey)->getValue();
+			}
+	      }
+		}
+      }
 	}
   }
   return $data;

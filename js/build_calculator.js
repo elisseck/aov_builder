@@ -62,7 +62,7 @@
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
 	//apply items next
-	fullBuild = addItems(settings.itemData, selectedItems, fullBuild);
+	fullBuild = addItems(settings.itemData, selectedItems, fullBuild, selectedLevel);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
 	//get skills last because they require fullBuild data
@@ -227,7 +227,11 @@
 	}
   }
 
-  function addItems(items, selectedItems, fullBuild) {
+  function addItems(items, selectedItems, fullBuild, selectedLevel) {
+	var bonusScales = {
+	  "field_bonus_damage_level_1": "field_bonus_damage_per_level",
+	  "field_scaling": "field_scaling_stat",
+	}
 	var arr = selectedItems.split(',');
 	var len = arr.length;
 	for (var i = 0; i < len; i++) {
@@ -238,12 +242,43 @@
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
+			} else if (key == "passives") {
+			  var passives = processPassives(items[arr[i]][key], fullBuild, bonusScales, selectedLevel);
+			  for (var item in passives) {
+				for (var key in passives[item]) {
+			      fullBuild[key] += parseFloat(passives[item][key]);
+				}
+			  }
 			}
 		  }
 		}
 	  }
 	}
 	return fullBuild;
+  }
+  
+  function processPassives(passiveData, fullBuild, bonusScales, selectedLevel) {
+	for (var item in passiveData) {
+	  for (var key in passiveData[item]) {
+        if (passiveData[item].hasOwnProperty(key)) {
+		  if (passiveData[item][key].hasOwnProperty('values')) {
+		    if (passiveData[item][key]['values'].hasOwnProperty(0)) {
+			  if (passiveData[item][key]['values'][0].hasOwnProperty('value')) {
+			    if (bonusScales.hasOwnProperty(key)) {
+				  //if it's a scaling field, scale value by the current fullBuild value for the scaling stat
+				  if (key == 'field_scaling' && passiveData[item].hasOwnProperty('field_scaling_stat')) {
+				    passiveValue[item][key] = parseFloat(passiveData[item][key]['values'][0]['value']) * parseFloat(fullBuild[passiveData[item]['field_scaling_stat']['values']]);
+				  } else if (key == 'field_bonus_damage_level_1') && passiveData[item].hasOwnProperty('field_bonus_damage_per_level') {
+					passiveValue[item][key] = parseFloat(passiveData[item][key]['values'][0]['value']) * parseFloat(selectedLevel) - 1; 
+				  }
+				}
+			  }
+			}
+		  }
+        }
+	  }
+	}
+    return passiveValue;
   }
 
   function addArcana(arcana, selectedArcana, fullBuild) {
