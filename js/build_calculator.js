@@ -258,6 +258,7 @@
   }
   
   function processPassives(passiveData, fullBuild, bonusScales, selectedLevel) {
+	var passiveValue = {};
 	for (var item in passiveData) {
 	  for (var key in passiveData[item]) {
         if (passiveData[item].hasOwnProperty(key)) {
