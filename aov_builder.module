@@ -313,7 +313,7 @@ function aov_builder_query_items($params = NULL) {
 		if ($pNode->get('field_scaling_stat')->getValue()) {
 		  $pStatTarget = $pNode->get('field_scaling_stat')->getValue()[0]['target_id'];
 		}
-		if ($bpNode->get('field_output_type')->getValue()) {
+		if ($pNode->get('field_output_type')->getValue()) {
 		  $pOutputTarget = $pNode->get('field_output_type')->getValue()[0]['target_id'];
 		}
 	    $pNid = $pNode->id();
