@@ -242,13 +242,13 @@
 			  fullBuild["field_movement_speed"] += (fullBuild["field_movement_speed"] * (parseFloat(items[arr[i]][key][0]['value'])/100));
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
-			} else if (key == "passives") {
-			  var passives = processPassives(items[arr[i]][key], fullBuild, bonusScales, selectedLevel);
-			  for (var item in passives) {
-				for (var key in passives[item]) {
-			      fullBuild[key] += parseFloat(passives[item][key]);
-				}
-			  }
+			}
+		  } else {
+			var passives = processPassives(items[arr[i]][key], fullBuild, bonusScales, selectedLevel);
+			for (var item in passives) {
+		      for (var key in passives[item]) {
+			    fullBuild[key] += parseFloat(passives[item][key]);
+		      }
 			}
 		  }
 		}
