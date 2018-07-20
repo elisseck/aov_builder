@@ -274,7 +274,9 @@
 				  if (key == 'field_scaling' && passiveData[item].hasOwnProperty('field_scaling_stat')) {
 				    passiveValue[item][passiveData[item]['field_output_stat']['values']] = parseFloat(passiveData[item][key]['values'][0]['value']) * parseFloat(fullBuild[passiveData[item]['field_scaling_stat']['values']]);
 				  } else if (key == 'field_bonus_damage_level_1' && passiveData[item].hasOwnProperty('field_bonus_damage_per_level') && passiveData[item].hasOwnProperty(key)) {
-					passiveValue[item][passiveData[item]['field_output_type']['values']] = parseFloat(passiveData[item][key]['values'][0]['value']) + (parseFloat(passiveData[item]['field_bonus_damage_per_level']['values'][0]['value']) * (parseFloat(selectedLevel) - 1)); 
+					if (passiveData[item][key]['values'].hasOwnProperty(0) && passiveData[item]['field_bonus_damage_per_level']['values'].hasOwnProperty(0)) {
+					  passiveValue[item][passiveData[item]['field_output_type']['values']] = parseFloat(passiveData[item][key]['values'][0]['value']) + (parseFloat(passiveData[item]['field_bonus_damage_per_level']['values'][0]['value']) * (parseFloat(selectedLevel) - 1)); 
+				    } 
 				  }
 				}
 			  }
