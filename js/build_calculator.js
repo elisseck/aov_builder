@@ -46,6 +46,27 @@
       "field_percent_pen_ap": 0,
 	  "field_critical_damage": 0,
 	};
+	var partBuild = {
+	  "field_ability_power": 0,
+      "field_armor": 0,
+      "field_attack_damage": 0,
+      "field_attack_speed": 0,
+      "field_cdr": 0,
+      "field_crit_chance": 0,
+      "field_flat_pen_ad": 0,
+      "field_flat_pen_ap": 0,
+      "field_hp": 0,
+      "field_hp_regen_5_seconds": 0,
+      "field_life_steal": 0,
+      "field_magic_defense": 0,
+      "field_magic_life_steal": 0,
+      "field_mana": 0,
+      "field_mana_regen_5_seconds": 0,
+      "field_movement_speed": 0,
+      "field_percent_pen_ad": 0,
+      "field_percent_pen_ap": 0,
+	  "field_critical_damage": 0,
+	};
 	var selectedHero = $("#edit-hero").val();
 	var selectedLevel = $("#edit-level").val();
 	var selectedItems = $(".edit-items").map(function(){
@@ -59,12 +80,15 @@
     }).get().join(',');
 	//get base stats
 	fullBuild = getBaseStats(settings.heroData[selectedHero], fullBuild);
+	partBuild = getBaseStats(settings.heroData[selectedHero], partBuild);
 	//apply arcana first
 	fullBuild = addArcana(settings.arcanaData, selectedArcana, fullBuild);
+	partBuild = addArcana(settings.arcanaData, selectedArcana, partBuild);
 	//apply items next
 	fullBuild = addItems(settings.itemData, selectedItems, fullBuild, selectedLevel);
 	//apply level scaling
 	fullBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, fullBuild);
+	partBuild = scaleByLevel(settings.heroData[selectedHero], selectedLevel, partBuild);
 	//get skills last because they require fullBuild data
 	skillBuild = getSkills(settings.skillAndBonusData[selectedHero], selectedSkillLevels, selectedHero, selectedLevel, fullBuild);
 	//output to visible container and hidden container to separate nice markup vs easy data values
@@ -87,7 +111,7 @@
 		if (settings.heroData[selectedHero].hasOwnProperty(data)) {
 		  label = settings.heroData[selectedHero][data]['labels'];
 		}
-          if (parseFloat(fullBuild[data]) > parseFloat(settings.heroData[selectedHero][data]['values'][0]['value'])) {
+          if (parseFloat(fullBuild[data]) > parseFloat(partBuild[data])) {
             markup += '<div id="' +  data  + '" class="data-up';
 			if ($('#' + data).hasOwnProperty(0)) {
               var val = $('#' + data)[0].textContent.split('> ')[1];
@@ -103,7 +127,7 @@
 		} else {
 		  markup += '<div id="' +  data  + '">';
 		}
-		markup += "<strong>" + label + ":</strong> " + settings.heroData[selectedHero][data]['values'][0]['value'] + " -> " + fullBuild[data].toFixed(2) + "</div>";
+		markup += "<strong>" + label + ":</strong> " + partBuild[data].toFixed(2) + " -> " + fullBuild[data].toFixed(2) + "</div>";
 	  }
 	  if (num % 5 === 4) {
         markup += '</div>';
@@ -276,7 +300,7 @@
 				  } else if (key == 'field_bonus_damage_level_1' && passiveData[item].hasOwnProperty('field_bonus_damage_per_level') && passiveData[item].hasOwnProperty(key)) {
 					if (passiveData[item][key]['values'].hasOwnProperty(0) && passiveData[item]['field_bonus_damage_per_level']['values'].hasOwnProperty(0)) {
 					  passiveValue[item][passiveData[item]['field_output_type']['values']] = parseFloat(passiveData[item][key]['values'][0]['value']) + (parseFloat(passiveData[item]['field_bonus_damage_per_level']['values'][0]['value']) * (parseFloat(selectedLevel) - 1)); 
-				    } 
+				    }
 				  }
 				}
 			  }
