@@ -20,7 +20,7 @@
         });
       }
     }
-	addDelimiters();
+	$.once('delimiters', addDelimiters());
     }
   };
   
