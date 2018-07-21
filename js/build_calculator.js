@@ -20,8 +20,32 @@
         });
       }
     }
+	addDelimiters();
     }
   };
+  
+  function addDelimiters() {
+	//Add Item Category Delimiters
+	$(".edit-items option[value='365']").before($('<option disabled="disabled">Attack Items</option>'));
+    $(".edit-items option[value='360']").after($('<option disabled="disabled">Magic Items</option>'));
+	$(".edit-items option[value='1179']").after($('<option disabled="disabled">Defense Items</option>'));
+	$(".edit-items option[value='1182']").after($('<option disabled="disabled">Movement Items</option>'));
+	$(".edit-items option[value='433']").after($('<option disabled="disabled">Jungling Items</option>'));
+	//Add Arcana Delimiters
+	$(".edit-arcana option[value='298']").after($('<option disabled="disabled">Tier 1</option>'));
+	$(".edit-arcana option[value='308']").after($('<option disabled="disabled">Tier 2</option>'));
+	$(".edit-arcana option[value='310']").before($('<option disabled="disabled">Tier 3</option>'));
+
+	$(".edit-arcana option[value='342']").after($('<option disabled="disabled">Tier 1</option>'));
+	$(".edit-arcana option[value='348']").after($('<option disabled="disabled">Tier 2</option>'));
+	$(".edit-arcana option[value='346']").before($('<option disabled="disabled">Tier 3</option>'));
+
+	$(".edit-arcana option[value='318']").after($('<option disabled="disabled">Tier 1</option>'));
+	$(".edit-arcana option[value='328']").after($('<option disabled="disabled">Tier 2</option>'));
+	$(".edit-arcana option[value='332']").before($('<option disabled="disabled">Tier 3</option>'));
+	
+	
+  }
 
   function generateBuild(settings) {
 	//initialize build stats as numbers and grab our selected values
