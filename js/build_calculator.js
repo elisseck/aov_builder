@@ -291,9 +291,8 @@
 			} else if (fullBuild.hasOwnProperty(key)) {
 		      fullBuild[key] += parseFloat(items[arr[i]][key][0]['value']);
 			}
-		  } else {
+		  }/* else {
 			var passives = processPassives(items[arr[i]][key], fullBuild, bonusScales, selectedLevel);
-			console.log(passives);
 			for (var item in passives) {
 		      for (var key in passives[item]) {
 				if (fullBuild.hasOwnProperty(key)) {
@@ -301,7 +300,7 @@
 				}
 		      }
 			}
-		  }
+		  }*/
 		}
 	  }
 	}

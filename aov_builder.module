@@ -275,7 +275,7 @@ function aov_builder_query_items($params = NULL) {
   }
   $nids = $query->execute();
   $nodes = entity_load_multiple('node', $nids);
-  $passiveKeys = array(
+  /*$passiveKeys = array(
   "body",
   "field_bonus_damage_level_1",
   "field_bonus_damage_per_level",
@@ -300,13 +300,13 @@ function aov_builder_query_items($params = NULL) {
   $outputQuery = \Drupal::entityQuery('taxonomy_term')
    ->condition('vid', 'output_type');
   $stids = $outputQuery->execute();
-  $outputTerms = entity_load_multiple('taxonomy_term', $stids);
+  $outputTerms = entity_load_multiple('taxonomy_term', $stids);*/
 
   foreach ($nodes as $node) {
     $nid = $node->id();
 	foreach ($itemKeys as $key) {
 	  $data[$nid][$key] = $node->get($key)->getValue();
-	  foreach ($passiveNodes as $pNode) {
+	  /*foreach ($passiveNodes as $pNode) {
 		if ($pNode->get('field_item_reference')->getValue()) {
 	      $itemID = $pNode->get('field_item_reference')->getValue()[0]['target_id'];
 		}
@@ -334,7 +334,7 @@ function aov_builder_query_items($params = NULL) {
 			}
 	      }
 		}
-      }
+      }*/
 	}
   }
   return $data;
