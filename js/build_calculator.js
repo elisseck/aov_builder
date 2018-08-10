@@ -264,7 +264,6 @@
 		 
 	  }
 	}
-	console.log(skillBuild);
 	return skillBuild;
   }
 
@@ -489,7 +488,7 @@
 		} else {
 		  markup += '<div id="' + skill + '-field-output-value" class="skill-field-output-value">';
 		}
-	  markup += 'Output Value: ' + skillBuild[skill]['final_value'] + '</div>';
+	  markup += 'Output Value: ' + skillBuild[skill]['final_value'].toFixed(2) + '</div>';
 	  markup += '<div class="skill-output-type">Output Type: ' + skillBuild[skill]['field_output_type'] + '</div>';
 	  if (skillBuild[skill]['bonuses']) {
 		markup += '<div class="bonuses"><h4>Additional Effects</h4>';
@@ -515,7 +514,7 @@
 		  } else {
 		    markup += '<div id="' + skill + '-' + bonus + '-field-output-value" class="bonus-output-value">';
 		  }
-		  markup += 'Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'] + '</div>';
+		  markup += 'Output Value: ' + skillBuild[skill]['bonuses'][bonus]['final_value'].toFixed(2) + '</div>';
 		  markup += '<div class="bonus-output-type">Output Type: ' + skillBuild[skill]['bonuses'][bonus]['field_output_type'] + '</div>';
 	    }
 		markup += '</div>';
