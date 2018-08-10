@@ -211,7 +211,8 @@
 						} else {
 						  switch(skill) {
 							case 720:
-							  if(parseFloat(heroLevel) < 5) {
+							console.log('skill is 720');
+							  if (parseFloat(heroLevel) < 5) {
 								skillBuild[skill][key] = 25;
 							  } else if (parseFloat(heroLevel) < 9) {
 								skillBuild[skill][key] = 30;
