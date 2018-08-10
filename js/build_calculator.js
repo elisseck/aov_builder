@@ -20,7 +20,7 @@
         });
       }
     }
-	$.once('delimiters', addDelimiters());
+	$.one('delimiters', addDelimiters());
     }
   };
   
@@ -209,7 +209,22 @@
 						if (key == 'field_cooldown') {
 						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						} else {
-				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+						  switch(skill) {
+							case 720:
+							  if(parseFloat(heroLevel) < 5) {
+								skillBuild[skill][key] = 25;
+							  } else if (parseFloat(heroLevel) < 9) {
+								skillBuild[skill][key] = 30;
+							  } else if (parseFloat(heroLevel) < 13) {
+								skillBuild[skill][key] = 35;
+							  } else {
+								skillBuild[skill][key] = 40;
+							  }
+							break;
+
+						    default:
+				              skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+						  }
 						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
 						if (key == 'field_cooldown') {
@@ -556,5 +571,9 @@
 	  }
 	}
 	return bonusBuild;
+  }
+  
+  function zuka_the_chi() {
+    
   }
 })(jQuery, Drupal);
