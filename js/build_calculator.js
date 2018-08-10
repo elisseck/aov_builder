@@ -211,7 +211,6 @@
 						} else {
 				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						  }
-						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
 						if (key == 'field_cooldown') {
 						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(levels[0]) - 1));
