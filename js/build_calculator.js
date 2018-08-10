@@ -264,6 +264,7 @@
 		  skillBuild[skill]['final_value'] = 'WTF';
 	  }
 	}
+	console.log(skillBuild);
 	return skillBuild;
   }
 
