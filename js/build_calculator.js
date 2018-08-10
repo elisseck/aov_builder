@@ -20,7 +20,7 @@
         });
       }
     }
-	$.one('delimiters', addDelimiters());
+	addDelimiters();
     }
   };
   
@@ -209,22 +209,7 @@
 						if (key == 'field_cooldown') {
 						  skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) - (parseFloat(skills[skill]['field_cooldown_per_level']['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						} else {
-						  switch(skill) {
-							case 720:
-							console.log('skill is 720');
-							  if (parseFloat(heroLevel) < 5) {
-								skillBuild[skill][key] = 25;
-							  } else if (parseFloat(heroLevel) < 9) {
-								skillBuild[skill][key] = 30;
-							  } else if (parseFloat(heroLevel) < 13) {
-								skillBuild[skill][key] = 35;
-							  } else {
-								skillBuild[skill][key] = 40;
-							  }
-							break;
-
-						    default:
-				              skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
+				          skillBuild[skill][key] = parseFloat(skills[skill][key]['values'][0]['value']) + (parseFloat(skills[skill][skillScales[key]]['values'][0]['value']) * (parseFloat(heroLevel) - 1));
 						  }
 						}
 				      } else if (skills[skill]['field_skill_type']['values'][0]['value'] == 'Skill 1') {
@@ -263,6 +248,19 @@
 	  skillBuild[skill]['title'] = skills[skill]['title']['values'];
 	  //generate final output by adding attribute scaled value to level scaled value last
 	  skillBuild[skill]['final_value'] = parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1']);
+	  //Special cases
+	  switch(skill) {
+		case '720':
+		  if (parseFloat(heroLevel) < 5) {
+		    skillBuild[skill]['final_value'] = 25;
+		  } else if (parseFloat(heroLevel) < 9) {
+		    skillBuild[skill]['final_value'] = 30;
+		  } else if (parseFloat(heroLevel) < 13) {
+		    skillBuild[skill]['final_value'] = 35;
+		  } else {
+		    skillBuild[skill]['final_value'] = 40;
+		  }
+		break;
 	}
 	return skillBuild;
   }
