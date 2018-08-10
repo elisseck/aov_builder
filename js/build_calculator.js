@@ -241,7 +241,6 @@
 		    }
 		  }
 		}
-	  }
 	  //stragglers with weird structure
 	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['termname'];
 	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['termname'];
@@ -263,6 +262,7 @@
 		break;
 		default:
 		  skillBuild[skill]['final_value'] = 'WTF';
+	  }
 	}
 	return skillBuild;
   }
