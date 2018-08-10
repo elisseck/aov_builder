@@ -261,6 +261,8 @@
 		    skillBuild[skill]['final_value'] = 40;
 		  }
 		break;
+		default:
+		  skillBuild[skill]['final_value'] = 'WTF';
 	}
 	return skillBuild;
   }
