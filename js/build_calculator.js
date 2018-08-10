@@ -261,7 +261,7 @@
 		  }
 		break;
 		default:
-		  skillBuild[skill]['final_value'] = 'WTF';
+		 
 	  }
 	}
 	console.log(skillBuild);
