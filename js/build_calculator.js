@@ -240,6 +240,7 @@
 		    }
 		  }
 		}
+	  }
 	  //stragglers with weird structure
 	  skillBuild[skill]['field_scaling_stat'] = skills[skill]['field_scaling_stat']['termname'];
 	  skillBuild[skill]['field_output_type'] = skills[skill]['field_output_type']['termname'];
@@ -573,8 +574,5 @@
 	}
 	return bonusBuild;
   }
-  
-  function zuka_the_chi() {
-    
-  }
+
 })(jQuery, Drupal);
