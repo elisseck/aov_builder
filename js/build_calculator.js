@@ -249,6 +249,7 @@
 	  skillBuild[skill]['final_value'] = parseFloat(skillBuild[skill]['field_scaling']) + parseFloat(skillBuild[skill]['field_level_1']);
 	  //Special cases
 	  switch(skill) {
+		//Zuka Passive
 		case '720':
 		  if (parseFloat(heroLevel) < 5) {
 		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.25;
@@ -260,9 +261,11 @@
 		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.40;
 		  }
 		break;
+		//Zanis Passive
 		case '709':
 		  skillBuild[skill]['final_value'] = 200;
 		break;
+		//Xenial Passive
 		case '700':
 		 if (parseFloat(heroLevel) < 5) {
 		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.04;
@@ -276,14 +279,21 @@
 			skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.08;
 		  }
 		break;
+		//WW Passive
 		case '692':
 		  skillBuild[skill]['final_value'] = 84 + (parseFloat(heroLevel) * 6.4);
 		break;
+		//Wisp Passive
 		case '688':
 		  skillBuild[skill]['final_value'] = 400 + (parseFloat(heroLevel) * 65);
 		break;
+		//Veera Passive
 		case '680':
 		  skillBuild[skill]['final_value'] = -30 + (parseFloat(heroLevel) * -2.8);
+		break;
+		//Omen Passive
+		case '608':
+		  skillBuild[skill]['final_value'] = 60;
 		break;
 		default:
 		 
