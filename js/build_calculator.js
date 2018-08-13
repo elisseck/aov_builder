@@ -276,6 +276,9 @@
 			skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.08;
 		  }
 		break;
+		case '692':
+		  skillBuild[skill]['final_value'] = 84 + (parseFloat(heroLevel) * 6.4);
+		break;
 		default:
 		 
 	  }
