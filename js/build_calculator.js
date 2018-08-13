@@ -259,6 +259,8 @@
 		  } else {
 		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.40;
 		  }
+		case '709':
+		  skillBuild[skill]['final_value'] = 200;
 		break;
 		default:
 		 
