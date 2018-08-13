@@ -449,6 +449,20 @@
   }
 
   function appendToSkillContainer(container, skillBuild, skillBaseData) {
+	for (var skill in skillBuild) {
+	  switch(skillBuild[skill]['field_skill_type'][0]['value']) {
+		case 'Passive':
+		console.log(Object.keys(this));
+		break;
+		case 'Skill 1':
+		break;
+		case 'Skill 2':
+		break;
+		case 'Ultimate':
+		break;
+		default:
+	  }
+	}
     var markup = '';
 	for (var skill in skillBuild) {
 	  var passive = '';

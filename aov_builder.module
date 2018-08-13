@@ -397,14 +397,11 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
   $skillQuery = \Drupal::entityQuery('node')
     ->condition('status', 1)
     ->condition('type', 'skill')
-	->sort('field_skill_type', 'ASC');
   if (isset($params['hero'])) {
     $skillQuery->condition('field_hero', $params['hero'], 'IN');
   }
   $skillNids = $skillQuery->execute();
   $skillNodes = entity_load_multiple('node', $skillNids);
-  dpm($skillNids);
-  dpm($skillQuery);
   //get bonuses
   $bonusKeys = array(
   "body",
