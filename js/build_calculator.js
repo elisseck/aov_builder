@@ -449,23 +449,6 @@
   }
 
   function appendToSkillContainer(container, skillBuild, skillBaseData) {
-	for (var skill in skillBuild) {
-	  switch(skillBuild[skill]['field_skill_type'][0]['value']) {
-		case 'Passive':
-		skillBuild[0] = skillBuild[skill];
-		break;
-		case 'Skill 1':
-		skillBuild[1] = skillBuild[skill];
-		break;
-		case 'Skill 2':
-		skillBuild[2] = skillBuild[skill];
-		break;
-		case 'Ultimate':
-		skillBuild[3] = skillBuild[skill];
-		break;
-		default:
-	  }
-	}
     var markup = '';
 	for (var skill in skillBuild) {
 	  var passive = '';
@@ -540,6 +523,7 @@
 	}
 	container.empty();
 	container.append(markup);
+	$('.skills-final-passive').prependTo(container);
   }
   
   function processBonuses(bonusData, levels, skillType, fullBuild, bonusScales, heroLevel) {
