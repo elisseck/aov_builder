@@ -259,8 +259,22 @@
 		  } else {
 		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.40;
 		  }
+		break;
 		case '709':
 		  skillBuild[skill]['final_value'] = 200;
+		break;
+		case '700':
+		 if (parseFloat(heroLevel) < 5) {
+		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.04;
+		  } else if (parseFloat(heroLevel) < 8) {
+		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.05;
+		  } else if (parseFloat(heroLevel) < 11) {
+		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.06;
+		  } else if (parseFloat(heroLevel) < 14) {
+		    skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.07;
+		  } else {
+			skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_hp']) * 0.08;
+		  }
 		break;
 		default:
 		 
