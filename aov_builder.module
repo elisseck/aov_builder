@@ -396,7 +396,7 @@ function aov_builder_query_skills_and_bonuses($params = NULL) {
   );
   $skillQuery = \Drupal::entityQuery('node')
     ->condition('status', 1)
-    ->condition('type', 'skill');
+    ->condition('type', 'skill')
 	->sort('field_skill_type', 'DESC');
   if (isset($params['hero'])) {
     $skillQuery->condition('field_hero', $params['hero'], 'IN');
