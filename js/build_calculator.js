@@ -299,6 +299,18 @@
 		case '592':
 		  skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.05;
 		break;
+		//Moren Passive
+		case '588':
+		  skillBuild[skill]['final_value'] = parseFloat(heroLevel) + 15;
+		break;
+		//Moren skill 1
+		case '589':
+		  skillBuild[skill]['final_value'] = 40;
+		break;
+		//Cresht passive
+		case '589':
+		  skillBuild[skill]['final_value'] = -50;
+		break;
 		default:
 		 
 	  }
