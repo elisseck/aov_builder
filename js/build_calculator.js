@@ -295,6 +295,10 @@
 		case '608':
 		  skillBuild[skill]['final_value'] = 60;
 		break;
+		//Murad Passive
+		case '592':
+		  skillBuild[skill]['final_value'] = parseFloat(fullBuild['field_attack_damage']) * 0.05;
+		break;
 		default:
 		 
 	  }
